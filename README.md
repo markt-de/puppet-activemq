@@ -34,7 +34,7 @@ The module is designed for Hiera, so there may be some rough edges when used wit
 ### Basic usage
 
 The minimum configuration should at least specify the desired version and the checksum of the distribution archive.
-The checksum is available from ActiveMQ's download page.
+The checksum is available from ActiveMQ's [download page](https://activemq.apache.org/components/artemis/download/).
 
 ```puppet
 class { 'java': }
