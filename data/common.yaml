@@ -1,0 +1,107 @@
+---
+activemq::admin_password: 'password'
+activemq::admin_user: 'admin'
+activemq::bootstrap_template: 'activemq/bootstrap.xml.epp'
+activemq::broker_template: 'activemq/broker.xml.epp'
+activemq::checksum: ~
+activemq::checksum_type: 'sha512'
+activemq::cluster: false
+activemq::cluster_name: ~
+activemq::cluster_password: 'clusterpassword'
+activemq::cluster_user: 'clusteradmin'
+activemq::cluster_topology: {}
+activemq::distribution_name: 'apache-artemis'
+# NOTE: Only the CURRENT release is available from Apache's mirror sites.
+# All older releases are ONLY available from Apache's archive site.
+activemq::download_url: "http://archive.apache.org/dist/activemq/activemq-artemis/%{lookup('activemq::version')}/%%{}s"
+activemq::group: 'activemq'
+activemq::install_base: '/opt'
+activemq::instance_defaults:
+  acceptors:
+    artemis:
+      enable: true
+      port: "%{lookup('activemq::port')}"
+      protocols:
+        - 'CORE'
+        - 'AMQP'
+      settings:
+        - 'amqpCredits=1000'
+        - 'amqpLowCredits=300'
+        - 'amqpMinLargeMessageSize=102400'
+        - 'amqpDuplicateDetection=true'
+    amqp:
+      enable: true
+      port: 5672
+      protocols:
+        - 'AMQP'
+      settings:
+        - 'amqpCredits=1000'
+        - 'amqpLowCredits=300'
+        - 'amqpMinLargeMessageSize=102400'
+        - 'amqpDuplicateDetection=true'
+    hortneq:
+      enable: false
+      port: 5445
+      protocols:
+        - 'HORNETQ'
+        - 'STOMP'
+      settings:
+        - 'anycastPrefix=jms.queue.'
+        - 'multicastPrefix=jms.topic.'
+    mqtt:
+      enable: false
+      port: 1883
+      protocols:
+        - 'MQTT'
+    stomp:
+      enable: false
+      port: 61613
+      protocols:
+        - 'STOMP'
+  # Shared settings that should be used for ALL acceptors.
+  acceptor_settings:
+    - 'tcpSendBufferSize=1048576'
+    - 'tcpReceiveBufferSize=1048576'
+    - 'amqpMinLargeMessageSize=102400'
+    - 'useEpoll=true'
+  allow_failback: true
+  bind: '%{fqdn}'
+  broadcast_groups:
+    - name: 'bg-group1'
+      group_address: '231.7.7.7'
+      group_port: 9876
+      broadcast_period: 5000
+  check_for_live_server: true
+  connectors: {}
+  discovery_groups:
+    - name: 'dg-group1'
+      group_address: '231.7.7.7'
+      group_port: 9876
+      refresh_timeout: 10000
+  failover_on_shutdown: true
+  ha_policy: 'replication'
+  journal_buffer_timeout: 2500000
+  journal_datasync: true
+  journal_max_io: 4096
+  journal_type: 'asyncio'
+  max_disk_usage: 90
+  max_hops: 0
+  message_load_balancing: 'on_demand'
+  persistence: true
+  port: 61616
+  role: 'master'
+  vote_on_replication_failure: true
+activemq::instances: {}
+activemq::instances_base: '/var/lib/activemq-brokers'
+activemq::manage_account: true
+activemq::manage_instances_base: true
+activemq::port: 61616
+activemq::server_discovery: 'dynamic'
+activemq::service_enable: true
+activemq::service_ensure: 'running'
+activemq::service_file: "/etc/systemd/system/%{lookup('activemq::service_name')}@.service"
+activemq::service_name: 'activemq'
+activemq::service_template: 'activemq/service_systemd.epp'
+activemq::symlink_name: 'activemq'
+activemq::user: 'activemq'
+activemq::version: ~

@@ -1,0 +1,21 @@
+[Unit]
+Description="ActiveMQ Artemis instance %i"
+After=network.target
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=<%= $activemq::user %>
+Group=<%= $activemq::group %>
+Type=forking
+PIDFile=<%= $activemq::instances_base %>/%i/data/artemis.pid
+ExecStart=<%= $activemq::instances_base %>/%i/bin/artemis-service start
+ExecStop=<%= $activemq::instances_base %>/%i/bin/artemis-service stop
+Restart=always
+RestartSec=10
+# A workaround for Java signal handling
+SuccessExitStatus=143
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
