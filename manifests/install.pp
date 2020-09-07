@@ -55,8 +55,8 @@ class activemq::install {
   if $activemq::manage_instances_base {
     file { $activemq::instances_base:
       ensure => directory,
-      owner  => 'root',
-      group  => 0,
+      owner  => $activemq::user,
+      group  => $activemq::group,
       mode   => '0755',
     }
   }
