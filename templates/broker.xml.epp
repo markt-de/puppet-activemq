@@ -165,19 +165,20 @@ under the License.
 <%   } -%>
                <cluster-name><%= $activemq::cluster_name %></cluster-name>
 <%   if $ha_policy == 'replication' { -%>
+               <initial-replication-sync-timeout><%= $initial_replication_sync_timeout %></initial-replication-sync-timeout>
 <%     if $check_for_live_server and $role == 'master' { -%>
-                 <check-for-live-server>true</check-for-live-server>
+               <check-for-live-server>true</check-for-live-server>
 <%     } -%>
 <%     if $vote_on_replication_failure and $role == 'master' { -%>
-                 <vote-on-replication-failure>true</vote-on-replication-failure>
+               <vote-on-replication-failure>true</vote-on-replication-failure>
 <%     } -%>
 <%   } -%>
 <%   if $ha_policy == 'shared-storage' { -%>
 <%     if $allow_failback and $role == 'slave' { -%>
-                 <allow-failback>true</allow-failback>
+               <allow-failback>true</allow-failback>
 <%     } -%>
 <%     if $failover_on_shutdown and $role == 'master' { -%>
-                 <failover-on-shutdown>true</failover-on-shutdown>
+               <failover-on-shutdown>true</failover-on-shutdown>
 <%     } -%>
 <%   } -%>
             </<%= $role %>>

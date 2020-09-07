@@ -80,6 +80,7 @@ activemq::instance_defaults:
       refresh_timeout: 10000
   failover_on_shutdown: true
   ha_policy: 'replication'
+  initial_replication_sync_timeout: 30000
   journal_buffer_timeout: 2500000
   journal_datasync: true
   journal_max_io: 4096

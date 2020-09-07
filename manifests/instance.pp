@@ -26,6 +26,7 @@ define activemq::instance (
   Array $discovery_groups,
   Boolean $failover_on_shutdown,
   Enum['live-only','replication','shared-storage'] $ha_policy,
+  Integer $initial_replication_sync_timeout,
   Integer $journal_buffer_timeout,
   Boolean $journal_datasync,
   Integer $journal_max_io,
