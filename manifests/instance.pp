@@ -15,6 +15,12 @@
 #   The value will be matched against `$facts['networking']['fqdn']`.
 #   This is especially useful for cluster configurations.
 #
+# @param web_bind
+#   The host name to use for embedded web server.
+#
+# @param web_port
+#   The port to use for embedded web server.
+#
 define activemq::instance (
   Hash[String[1], Hash] $acceptors,
   Array $acceptor_settings,
@@ -38,6 +44,8 @@ define activemq::instance (
   Integer $port,
   Enum['master','slave'] $role,
   Boolean $vote_on_replication_failure,
+  String $web_bind,
+  Integer $web_port,
   # Optional parameters
   Optional[Integer] $global_max_size_mb = undef,
   Optional[String] $group = undef,
@@ -183,6 +191,22 @@ define activemq::instance (
         'port'                        => $port,
         'role'                        => $role,
         'vote_on_replication_failure' => $vote_on_replication_failure,
+        }
+      ),
+      require => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
+    # Create bootstrap.xml configuration file.
+    file { "instance ${name} bootstrap.xml":
+      ensure  => 'present',
+      path    => $bootstrap_xml,
+      mode    => '0644',
+      content => epp($activemq::bootstrap_template,{
+        'broker_xml' => $broker_xml,
+        'web_bind'   => $web_bind,
+        'web_port'   => $web_port,
         }
       ),
       require => [

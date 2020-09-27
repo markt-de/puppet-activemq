@@ -66,7 +66,8 @@
 #   Whether or not to create the directory specified in `$instances_base`.
 #
 # @param port
-#   Specifies the port to use for the artemis acceptor/service.
+#   Specifies the port to use for the artemis connector and will also be used
+#   as default port for the acceptor.
 #
 # @param server_discovery
 #   Controls how servers can propagate their connection details.

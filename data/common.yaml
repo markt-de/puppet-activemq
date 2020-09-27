@@ -92,6 +92,8 @@ activemq::instance_defaults:
   port: 61616
   role: 'master'
   vote_on_replication_failure: true
+  web_bind: 'localhost'
+  web_port: 8161
 activemq::instances: {}
 activemq::instances_base: '/var/lib/activemq-brokers'
 activemq::manage_account: true
