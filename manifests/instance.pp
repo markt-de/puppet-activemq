@@ -4,6 +4,9 @@
 #   Configure which IP address to listen on. Should be either a FQDN
 #   or an IP address.
 #
+# @param log_level
+#   The log levels to use for the various configured loggers.
+#
 # @param service_enable
 #   Specifies whether the service should be enabled for this instance.
 #
@@ -37,6 +40,7 @@ define activemq::instance (
   Boolean $journal_datasync,
   Integer $journal_max_io,
   Enum['asyncio','mapped','nio'] $journal_type,
+  Hash $log_level,
   Integer $max_disk_usage,
   Integer $max_hops,
   Enum['off','strict','on_demand'] $message_load_balancing,
@@ -66,6 +70,7 @@ define activemq::instance (
     $instance_dir = "${activemq::instances_base}/${name}"
     $bootstrap_xml = "${instance_dir}/etc/bootstrap.xml"
     $broker_xml = "${instance_dir}/etc/broker.xml"
+    $logging_properties = "${instance_dir}/etc/logging.properties"
     $instance_service = "${activemq::service_name}@${name}"
     $installer_cmd = "${activemq::install_base}/${activemq::symlink_name}/bin/artemis"
 
@@ -207,6 +212,20 @@ define activemq::instance (
         'broker_xml' => $broker_xml,
         'web_bind'   => $web_bind,
         'web_port'   => $web_port,
+        }
+      ),
+      require => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
+    # Create logging.properties configuration file.
+    file { "instance ${name} logging.properties":
+      ensure  => 'present',
+      path    => $logging_properties,
+      mode    => '0644',
+      content => epp($activemq::logging_template,{
+        'log_level' => $log_level,
         }
       ),
       require => [

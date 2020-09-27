@@ -114,6 +114,7 @@ class activemq (
   Hash $instance_defaults,
   Hash[String[1], Hash] $instances,
   Stdlib::Compat::Absolute_path $instances_base,
+  String $logging_template,
   Boolean $manage_account,
   Boolean $manage_instances_base,
   Integer $port,

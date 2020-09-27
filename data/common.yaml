@@ -85,6 +85,13 @@ activemq::instance_defaults:
   journal_datasync: true
   journal_max_io: 4096
   journal_type: 'asyncio'
+  log_level:
+    artemis: 'INFO'
+    audit.base: 'ERROR'
+    audit.message: 'ERROR'
+    audit.resource: 'ERROR'
+    console: 'ERROR'
+    root: 'INFO'
   max_disk_usage: 90
   max_hops: 0
   message_load_balancing: 'on_demand'
@@ -96,6 +103,7 @@ activemq::instance_defaults:
   web_port: 8161
 activemq::instances: {}
 activemq::instances_base: '/var/lib/activemq-brokers'
+activemq::logging_template: 'activemq/logging.properties.epp'
 activemq::manage_account: true
 activemq::manage_instances_base: true
 activemq::port: 61616
