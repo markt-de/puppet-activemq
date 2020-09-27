@@ -36,7 +36,7 @@ logger.org.apache.activemq.audit.base.level=<%= $log_level['audit.base'] %>
 logger.org.apache.activemq.audit.base.handlers=AUDIT_FILE
 logger.org.apache.activemq.audit.base.useParentHandlers=false
 
-logger.org.apache.activemq.audit.resource.level=<%= $log_level['auti.resource'] %>
+logger.org.apache.activemq.audit.resource.level=<%= $log_level['audit.resource'] %>
 logger.org.apache.activemq.audit.resource.handlers=AUDIT_FILE
 logger.org.apache.activemq.audit.resource.useParentHandlers=false
 
