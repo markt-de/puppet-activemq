@@ -27,7 +27,7 @@ logger.org.apache.activemq.artemis.journal.level=<%= $log_level['artemis'] %>
 logger.org.apache.activemq.artemis.utils.level=<%= $log_level['artemis'] %>
 logger.org.apache.activemq.artemis.jms.level=<%= $log_level['artemis'] %>
 logger.org.apache.activemq.artemis.integration.bootstrap.level=<%= $log_level['artemis'] %>
-logger.org.eclipse.jetty.level=WARN
+logger.org.eclipse.jetty.level=<%= $log_level['jetty'] %>
 # Root logger handlers
 logger.handlers=FILE,CONSOLE
 

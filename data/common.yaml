@@ -91,6 +91,7 @@ activemq::instance_defaults:
     audit.message: 'ERROR'
     audit.resource: 'ERROR'
     console: 'ERROR'
+    jetty: 'WARN'
     root: 'INFO'
   max_disk_usage: 90
   max_hops: 0
