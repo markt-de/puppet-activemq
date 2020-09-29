@@ -246,18 +246,18 @@ under the License.
          </address>
       </addresses>
 
-      <!-- Uncomment the following if you want to use the Standard LoggingActiveMQServerPlugin pluging to log in events
+<%   if (($broker_plugins =~ Hash) and ($broker_plugins.length > 0)) { -%>
       <broker-plugins>
-         <broker-plugin class-name="org.apache.activemq.artemis.core.server.plugin.impl.LoggingActiveMQServerPlugin">
-            <property key="LOG_ALL_EVENTS" value="true"/>
-            <property key="LOG_CONNECTION_EVENTS" value="true"/>
-            <property key="LOG_SESSION_EVENTS" value="true"/>
-            <property key="LOG_CONSUMER_EVENTS" value="true"/>
-            <property key="LOG_DELIVERING_EVENTS" value="true"/>
-            <property key="LOG_SENDING_EVENTS" value="true"/>
-            <property key="LOG_INTERNAL_EVENTS" value="true"/>
+<%     $broker_plugins.each |$key, $value| { -%>
+         <broker-plugin class-name="<%= $key %>">
+<%       if (('properties' in $value) and ($value['properties'] =~ Hash)) { -%>
+<%         $value['properties'].each |$prop_key, $prop_value| { -%>
+            <property key="<%= $prop_key %>" value="<%= $prop_value %>"/>
+<%         } -%>
+<%       } -%>
          </broker-plugin>
+<%     } -%>
       </broker-plugins>
-      -->
+<%   } -%>
    </core>
 </configuration>

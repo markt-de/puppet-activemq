@@ -4,6 +4,10 @@
 #   Configure which IP address to listen on. Should be either a FQDN
 #   or an IP address.
 #
+# @param broker_plugins
+#   A Hash containing a list of broker plugins and their configuration.
+#   Each plugin can be enabled by setting `enable` to `true`.
+#
 # @param log_level
 #   The log levels to use for the various configured loggers.
 #
@@ -30,6 +34,7 @@ define activemq::instance (
   Boolean $allow_failback,
   String $bind,
   Array $broadcast_groups,
+  Hash[String[1], Hash] $broker_plugins,
   Boolean $check_for_live_server,
   Hash[String[1], Hash] $connectors,
   Array $discovery_groups,
@@ -118,7 +123,7 @@ define activemq::instance (
     # Iterate over all acceptors to validate and update their configuration.
     # This keeps this complexity away from the templates.
     $_acceptors = $acceptors.reduce({}) |$memo, $x| {
-      # A nested hash contains the acceptor configuration.
+      # A nested hash contains the configuration.
       if ($x[1] =~ Hash) {
         # Fail if basic information is missing.
         if ( !('port' in $x[1]) or !('protocols' in $x[1]) ) {
@@ -167,6 +172,23 @@ define activemq::instance (
       $memo + {$x[0] => $_values}
     }
 
+    # Iterate over all broker plugins. Only enabled plugins will be passed
+    # to the template.
+    $_broker_plugins = $broker_plugins.reduce({}) |$memo, $x| {
+      # A nested hash contains the configuration.
+      if ($x[1] =~ Hash) {
+        # Fail if basic information is missing.
+        if (!('enable' in $x[1]) or !($x[1]['enable'] =~ Boolean)) {
+          fail("Invalid \$broker_plugins configuration, invalid or missing value for \$enable in plugin ${x[0]} for instance ${name}.")
+        }
+        if ($x[1]['enable'] == true) {
+          $memo + {$x[0] => $x[1]}
+        }
+      } else {
+        fail("Invalid \$broker_plugins configuration, expected a Hash but got something else in plugin ${x[0]} for instance ${name}.")
+      }
+    }
+
     # Create broker.xml configuration file.
     file { "instance ${name} broker.xml":
       ensure  => 'present',
@@ -177,6 +199,7 @@ define activemq::instance (
         'allow_failback'                   => $allow_failback,
         'bind'                             => $bind,
         'broadcast_groups'                 => $broadcast_groups,
+        'broker_plugins'                   => $_broker_plugins,
         'check_for_live_server'            => $check_for_live_server,
         'connectors'                       => $connectors,
         'discovery_groups'                 => $discovery_groups,

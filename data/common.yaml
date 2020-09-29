@@ -71,6 +71,17 @@ activemq::instance_defaults:
       group_address: '231.7.7.7'
       group_port: 9876
       broadcast_period: 5000
+  broker_plugins:
+    org.apache.activemq.artemis.core.server.plugin.impl.LoggingActiveMQServerPlugin:
+      enable: false
+      properties:
+        LOG_ALL_EVENTS: true
+        LOG_CONNECTION_EVENTS: true
+        LOG_CONSUMER_EVENTS: true
+        LOG_DELIVERING_EVENTS: true
+        LOG_INTERNAL_EVENTS: true
+        LOG_SENDING_EVENTS: true
+        LOG_SESSION_EVENTS: true
   check_for_live_server: true
   connectors: {}
   discovery_groups:
