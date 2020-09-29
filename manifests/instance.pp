@@ -1,5 +1,9 @@
 # @summary Create an instance of ActiveMQ Artemis broker
 #
+# @param addresses
+#   A hash containing configuration for addresses (messaging endpoints),
+#   queues and routing types.
+#
 # @param bind
 #   Configure which IP address to listen on. Should be either a FQDN
 #   or an IP address.
@@ -31,6 +35,7 @@
 define activemq::instance (
   Hash[String[1], Hash] $acceptors,
   Array $acceptor_settings,
+  Hash[String[1], Hash] $addresses,
   Boolean $allow_failback,
   String $bind,
   Array $broadcast_groups,
@@ -196,6 +201,7 @@ define activemq::instance (
       mode    => '0640',
       content => epp($activemq::broker_template,{
         'acceptors'                        => $_acceptors,
+        'addresses'                        => $addresses,
         'allow_failback'                   => $allow_failback,
         'bind'                             => $bind,
         'broadcast_groups'                 => $broadcast_groups,

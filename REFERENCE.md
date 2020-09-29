@@ -264,6 +264,13 @@ Create an instance of ActiveMQ Artemis broker
 
 The following parameters are available in the `activemq::instance` defined type.
 
+##### `addresses`
+
+Data type: `Hash[String[1], Hash]`
+
+A hash containing configuration for addresses (messaging endpoints),
+queues and routing types.
+
 ##### `bind`
 
 Data type: `String`

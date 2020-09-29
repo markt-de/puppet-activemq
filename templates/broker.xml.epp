@@ -233,18 +233,38 @@ under the License.
          </address-setting>
       </address-settings>
 
+<%   if ($addresses =~ Hash) { -%>
       <addresses>
-         <address name="DLQ">
-            <anycast>
-               <queue name="DLQ" />
-            </anycast>
+<%     $addresses.each |$key, $value| { -%>
+<%#      # Only add enabled items. -%>
+<%       if (('enable' in $value) and ($value['enable'] == true)) { -%>
+         <address name="<%= $key %>">
+<%#        # Add opening tag for routing type. -%>
+<%         if ('type' in $value) { -%>
+            <<%= $value['type'] %>>
+<%         } -%>
+<%#        # Iterate over all queues (if available). -%>
+<%         if (('queues' in $value) and ($value['queues'] =~ Hash)) { -%>
+<%           $value['queues'].each |$q_key, $q_value| { -%>
+               <queue name="<%= $q_key %>">
+<%#            # Iterate over all filters (if available). -%>
+<%             if (('filters' in $q_value) and ($q_value['filters'] =~ Array)) { -%>
+<%               $q_value['filters'].each |$filter| { -%>
+                 <filter string="<%= $filter %>"/>
+<%               } -%>
+<%             } -%>
+               </queue>
+<%           } -%>
+<%         } -%>
+<%#        # Add closing tag for routing type. -%>
+<%         if ('type' in $value) { -%>
+            </<%= $value['type'] %>>
+<%         } -%>
          </address>
-         <address name="ExpiryQueue">
-            <anycast>
-               <queue name="ExpiryQueue" />
-            </anycast>
-         </address>
+<%       } -%>
+<%     } -%>
       </addresses>
+<%   } -%>
 
 <%   if (($broker_plugins =~ Hash) and ($broker_plugins.length > 0)) { -%>
       <broker-plugins>

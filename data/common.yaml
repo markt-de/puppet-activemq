@@ -65,6 +65,24 @@ activemq::instance_defaults:
     - 'tcpReceiveBufferSize=1048576'
     - 'amqpMinLargeMessageSize=102400'
     - 'useEpoll=true'
+  addresses:
+    DLQ:
+      enable: true
+      type: 'anycast'
+      queues:
+        DLQ: {}
+    ExpiryQueue:
+      enable: true
+      type: 'anycast'
+      queues:
+        ExpiryQueue: {}
+    FilterExample:
+      enable: false
+      type: 'anycast'
+      queues:
+        FilterExample:
+          filters:
+            - "color='red'"
   allow_failback: true
   bind: '%{fqdn}'
   broadcast_groups:
