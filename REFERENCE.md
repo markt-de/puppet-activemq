@@ -13,7 +13,7 @@
 #### Private Classes
 
 * `activemq::install`: Install ActiveMQ distribution archive
-* `activemq::service`: Setup ActiveMQ system service
+* `activemq::service`: Setup ActiveMQ multi-instance system service
 
 ### Defined types
 
@@ -106,6 +106,14 @@ Specifies the download location. It should contain a `%s` string which
 is automatically replaced with the actual filename during installation.
 The latter makes it easier to use mirror redirection URLs.
 
+##### `gid`
+
+Data type: `Optional[Integer]`
+
+Specifies an optional GID that should be used when creating the group.
+
+Default value: ``undef``
+
 ##### `group`
 
 Data type: `String`
@@ -158,7 +166,8 @@ Whether or not to create the directory specified in `$instances_base`.
 
 Data type: `Integer`
 
-Specifies the port to use for the artemis acceptor/service.
+Specifies the port to use for the artemis connector and will also be used
+as default port for the acceptor.
 
 ##### `server_discovery`
 
@@ -198,6 +207,14 @@ Data type: `String`
 Controls the name of a version-independent symlink. It will always point
 to the release specified by `$version`.
 
+##### `uid`
+
+Data type: `Optional[Integer]`
+
+Specifies an optional UID that should be used when creating the user.
+
+Default value: ``undef``
+
 ##### `user`
 
 Data type: `String`
@@ -220,6 +237,12 @@ Data type: `String`
 
 
 ##### `broker_template`
+
+Data type: `String`
+
+
+
+##### `logging_template`
 
 Data type: `String`
 
@@ -248,6 +271,19 @@ Data type: `String`
 Configure which IP address to listen on. Should be either a FQDN
 or an IP address.
 
+##### `broker_plugins`
+
+Data type: `Hash[String[1], Hash]`
+
+A Hash containing a list of broker plugins and their configuration.
+Each plugin can be enabled by setting `enable` to `true`.
+
+##### `log_level`
+
+Data type: `Hash`
+
+The log levels to use for the various configured loggers.
+
 ##### `service_enable`
 
 Data type: `Optional[Boolean]`
@@ -263,6 +299,28 @@ Data type: `Optional[Enum['running','stopped']]`
 Specifies the desired service state for this instance.
 
 Default value: ``undef``
+
+##### `target_host`
+
+Data type: `Optional[String]`
+
+Specifies the target host where this instance should be installed.
+The value will be matched against `$facts['networking']['fqdn']`.
+This is especially useful for cluster configurations.
+
+Default value: ``undef``
+
+##### `web_bind`
+
+Data type: `String`
+
+The host name to use for embedded web server.
+
+##### `web_port`
+
+Data type: `Integer`
+
+The port to use for embedded web server.
 
 ##### `acceptors`
 
@@ -315,6 +373,12 @@ Data type: `Boolean`
 ##### `ha_policy`
 
 Data type: `Enum['live-only','replication','shared-storage']`
+
+
+
+##### `initial_replication_sync_timeout`
+
+Data type: `Integer`
 
 
 
