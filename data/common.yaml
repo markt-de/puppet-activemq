@@ -126,5 +126,6 @@ activemq::service_file: "/etc/systemd/system/%{lookup('activemq::service_name')}
 activemq::service_name: 'activemq'
 activemq::service_template: 'activemq/service_systemd.epp'
 activemq::symlink_name: 'activemq'
+activemq::uid: 15000
 activemq::user: 'activemq'
 activemq::version: ~

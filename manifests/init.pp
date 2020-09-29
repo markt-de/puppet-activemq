@@ -89,6 +89,9 @@
 #   Controls the name of a version-independent symlink. It will always point
 #   to the release specified by `$version`.
 #
+# @param uid
+#   Specifies an optional UID that should be used when creating the user.
+#
 # @param user
 #   Specifies the name of the user to use for the service/instance.
 #
@@ -130,6 +133,7 @@ class activemq (
   Optional[String] $checksum = undef,
   Optional[String] $checksum_type = undef,
   Optional[String] $cluster_name = undef,
+  Optional[Integer] $uid = undef,
 ) {
   # Perform basic installation steps
   class { 'activemq::install': }

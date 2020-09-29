@@ -45,6 +45,7 @@ class activemq::install {
     }
     -> user { $activemq::user:
       ensure     => present,
+      uid        => $activemq::uid,
       gid        => $activemq::group,
       home       => $activemq::instances_base,
       managehome => false,
