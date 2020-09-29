@@ -42,6 +42,7 @@ class activemq::install {
   if $activemq::manage_account {
     group { $activemq::group:
       ensure => present,
+      gid    => $activemq::gid,
     }
     -> user { $activemq::user:
       ensure     => present,

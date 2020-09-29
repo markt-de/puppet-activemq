@@ -14,6 +14,7 @@ activemq::distribution_name: 'apache-artemis'
 # NOTE: Only the CURRENT release is available from Apache's mirror sites.
 # All older releases are ONLY available from Apache's archive site.
 activemq::download_url: "http://archive.apache.org/dist/activemq/activemq-artemis/%{lookup('activemq::version')}/%%{}s"
+activemq::gid: 15000
 activemq::group: 'activemq'
 activemq::install_base: '/opt'
 activemq::instance_defaults:

@@ -38,6 +38,9 @@
 #   is automatically replaced with the actual filename during installation.
 #   The latter makes it easier to use mirror redirection URLs.
 #
+# @param gid
+#   Specifies an optional GID that should be used when creating the group.
+#
 # @param group
 #   Specifies the name of the group to use for the service/instance.
 #
@@ -133,6 +136,7 @@ class activemq (
   Optional[String] $checksum = undef,
   Optional[String] $checksum_type = undef,
   Optional[String] $cluster_name = undef,
+  Optional[Integer] $gid = undef,
   Optional[Integer] $uid = undef,
 ) {
   # Perform basic installation steps
