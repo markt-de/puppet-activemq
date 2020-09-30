@@ -226,7 +226,12 @@ under the License.
 <%       if (($a_value =~ Hash) and ('enable' in $a_value) and ($a_value['enable'] == true)) { -%>
 <%#        # Search for address settings and add them. -%>
 <%         if (('settings' in $a_value) and ($a_value['settings'] =~ Hash)) { -%>
+<%#          # Check if a wildcard is configured. -%>
+<%           if ('wildcard' in $a_value) { -%>
+         <address-setting match="<%= $a_key %><%= $a_value['wildcard'] %>">
+<%           } else { -%>
          <address-setting match="<%= $a_key %>">
+<%           } -%>
 <%#          # Add settings. -%>
 <%           $a_value['settings'].each |$key, $value| { -%>
             <<%= $key %>><%= $value%></<%= $key %>>

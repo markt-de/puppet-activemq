@@ -121,10 +121,12 @@ activemq::instance_defaults:
       # duplicate this entry in global $address_settings.
       settings:
         max-delivery-attempts: 10
-        max-redelivery-delay: '100000'
+        max-redelivery-delay: 100000
         redelivery-collision-avoidance-factor: '0.15'
         redelivery-delay: 5000
         redelivery-delay-multiplier: '1.5'
+      # An optional wildcard that will be used when adding the address settings.
+      wildcard: '#'
   allow_failback: true
   bind: '%{fqdn}'
   broadcast_groups:
