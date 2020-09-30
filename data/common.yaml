@@ -65,6 +65,35 @@ activemq::instance_defaults:
     - 'tcpReceiveBufferSize=1048576'
     - 'amqpMinLargeMessageSize=102400'
     - 'useEpoll=true'
+  # Global address settings. Individual settings can also be managed
+  # in $addresses.
+  address_settings:
+    - match: 'activemq.management#'
+      enable: true
+      settings:
+        address-full-policy: 'PAGE'
+        auto-create-addresses: true
+        auto-create-jms-queues: true
+        auto-create-jms-topics: true
+        auto-create-queues: true
+        dead-letter-address: 'DLQ'
+        expiry-address: 'ExpiryQueue'
+        max-size-bytes: -1
+        message-counter-history-day-limit: 10
+        redelivery-delay: 0
+    - match: '#'
+      enable: true
+      settings:
+        address-full-policy: 'PAGE'
+        auto-create-addresses: true
+        auto-create-jms-queues: true
+        auto-create-jms-topics: true
+        auto-create-queues: true
+        dead-letter-address: 'DLQ'
+        expiry-address: 'ExpiryQueue'
+        max-size-bytes: -1
+        message-counter-history-day-limit: 10
+        redelivery-delay: 0
   addresses:
     DLQ:
       enable: true
@@ -83,6 +112,19 @@ activemq::instance_defaults:
         FilterExample:
           filters:
             - "color='red'"
+    SettingsExample:
+      enable: false
+      type: 'anycast'
+      queues:
+        SettingsExample: {}
+      # Manage address settings. This way it is not necessary to
+      # duplicate this entry in global $address_settings.
+      settings:
+        max-delivery-attempts: 10
+        max-redelivery-delay: '100000'
+        redelivery-collision-avoidance-factor: '0.15'
+        redelivery-delay: 5000
+        redelivery-delay-multiplier: '1.5'
   allow_failback: true
   bind: '%{fqdn}'
   broadcast_groups:

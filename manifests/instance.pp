@@ -1,5 +1,9 @@
 # @summary Create an instance of ActiveMQ Artemis broker
 #
+# @param address_settings
+#   A hash containing global address settings. This is especially useful
+#   for wildcard/catch all matches.
+#
 # @param addresses
 #   A hash containing configuration for addresses (messaging endpoints),
 #   queues and routing types.
@@ -35,6 +39,7 @@
 define activemq::instance (
   Hash[String[1], Hash] $acceptors,
   Array $acceptor_settings,
+  Array $address_settings,
   Hash[String[1], Hash] $addresses,
   Boolean $allow_failback,
   String $bind,
@@ -201,6 +206,7 @@ define activemq::instance (
       mode    => '0640',
       content => epp($activemq::broker_template,{
         'acceptors'                        => $_acceptors,
+        'address_settings'                 => $address_settings,
         'addresses'                        => $addresses,
         'allow_failback'                   => $allow_failback,
         'bind'                             => $bind,

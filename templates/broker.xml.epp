@@ -203,34 +203,39 @@ under the License.
       </security-settings>
 
       <address-settings>
-         <!-- if you define auto-create on certain queues, management has to be auto-create -->
-         <address-setting match="activemq.management#">
-            <dead-letter-address>DLQ</dead-letter-address>
-            <expiry-address>ExpiryQueue</expiry-address>
-            <redelivery-delay>0</redelivery-delay>
-            <!-- with -1 only the global-max-size is in use for limiting -->
-            <max-size-bytes>-1</max-size-bytes>
-            <message-counter-history-day-limit>10</message-counter-history-day-limit>
-            <address-full-policy>PAGE</address-full-policy>
-            <auto-create-queues>true</auto-create-queues>
-            <auto-create-addresses>true</auto-create-addresses>
-            <auto-create-jms-queues>true</auto-create-jms-queues>
-            <auto-create-jms-topics>true</auto-create-jms-topics>
+<%#  # Iterate over all global address settings. -%>
+<%   if ($address_settings =~ Array) { -%>
+<%     $address_settings.each |$item| { -%>
+<%#      # Only add enabled items. -%>
+<%       if (($item =~ Hash) and ('enable' in $item) and ($item['enable'] == true)) { -%>
+         <address-setting match="<%= $item['match'] %>">
+<%#        # Add settings. -%>
+<%         if (('settings' in $item) and ($item['settings'] =~ Hash)) { -%>
+<%           $item['settings'].each |$key, $value| { -%>
+            <<%= $key %>><%= $value%></<%= $key %>>
+<%           } -%>
+<%         } -%>
          </address-setting>
-         <!--default for catch all-->
-         <address-setting match="#">
-            <dead-letter-address>DLQ</dead-letter-address>
-            <expiry-address>ExpiryQueue</expiry-address>
-            <redelivery-delay>0</redelivery-delay>
-            <!-- with -1 only the global-max-size is in use for limiting -->
-            <max-size-bytes>-1</max-size-bytes>
-            <message-counter-history-day-limit>10</message-counter-history-day-limit>
-            <address-full-policy>PAGE</address-full-policy>
-            <auto-create-queues>true</auto-create-queues>
-            <auto-create-addresses>true</auto-create-addresses>
-            <auto-create-jms-queues>true</auto-create-jms-queues>
-            <auto-create-jms-topics>true</auto-create-jms-topics>
+<%       } -%>
+<%     } -%>
+<%   } -%>
+<%#  # Iterate over all addresses to find individual settings. -%>
+<%   if ($addresses =~ Hash) { -%>
+<%     $addresses.each |$a_key, $a_value| { -%>
+<%#      # Only add enabled items. -%>
+<%       if (($a_value =~ Hash) and ('enable' in $a_value) and ($a_value['enable'] == true)) { -%>
+<%#        # Search for address settings and add them. -%>
+<%         if (('settings' in $a_value) and ($a_value['settings'] =~ Hash)) { -%>
+         <address-setting match="<%= $a_key %>">
+<%#          # Add settings. -%>
+<%           $a_value['settings'].each |$key, $value| { -%>
+            <<%= $key %>><%= $value%></<%= $key %>>
+<%           } -%>
          </address-setting>
+<%         } -%>
+<%       } -%>
+<%     } -%>
+<%   } -%>
       </address-settings>
 
 <%   if ($addresses =~ Hash) { -%>
