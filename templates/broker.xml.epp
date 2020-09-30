@@ -186,21 +186,26 @@ under the License.
       </ha-policy>
 <% } -%>
 
+<%   if (('enable' in $security) and ($security['enable'] == true)) { -%>
       <security-settings>
-         <security-setting match="#">
-            <permission type="createNonDurableQueue" roles="amq"/>
-            <permission type="deleteNonDurableQueue" roles="amq"/>
-            <permission type="createDurableQueue" roles="amq"/>
-            <permission type="deleteDurableQueue" roles="amq"/>
-            <permission type="createAddress" roles="amq"/>
-            <permission type="deleteAddress" roles="amq"/>
-            <permission type="consume" roles="amq"/>
-            <permission type="browse" roles="amq"/>
-            <permission type="send" roles="amq"/>
-            <!-- we need this otherwise ./artemis data imp wouldn't work -->
-            <permission type="manage" roles="amq"/>
+<%#    # Iterate over all security settings. -%>
+<%     if (('settings' in $security) and ($security['settings'] =~ Hash)) { -%>
+<%       $security['settings'].each |$s_key, $s_value| { -%>
+<%#        # Only add enabled items. -%>
+<%         if (($s_value =~ Hash) and ('enable' in $s_value) and ($s_value['enable'] == true)) { -%>
+         <security-setting match="<%= $s_value['match'] %>">
+<%#          # Add permissions. -%>
+<%           if (('permissions' in $s_value) and ($s_value['permissions'] =~ Hash)) { -%>
+<%             $s_value['permissions'].each |$key, $value| { -%>
+            <permission type="<%= $key %>" roles="<%= $value %>"/>
+<%             } -%>
+<%           } -%>
          </security-setting>
+<%         } -%>
+<%       } -%>
+<%     } -%>
       </security-settings>
+<%   } -%>
 
       <address-settings>
 <%#  # Iterate over all global address settings. -%>

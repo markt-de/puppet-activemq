@@ -175,6 +175,37 @@ activemq::instance_defaults:
   persistence: true
   port: 61616
   role: 'master'
+  security:
+    enable: true
+    settings:
+      # The default security rule to grant all rights to the admin user.
+      Catchall:
+        enable: true
+        match: '#'
+        # Grant permissions to roles. Use a comma-separated list to specify
+        # multiple roles.
+        permissions:
+          browse: 'amq'
+          consume: 'amq'
+          createAddress: 'amq'
+          createDurableQueue: 'amq'
+          createDurableQueue: 'amq'
+          deleteAddress: 'amq'
+          deleteDurableQueue: 'amq'
+          deleteNonDurableQueue: 'amq'
+          # required, otherwise ./artemis data imp wouldn't work
+          manage: 'amq'
+          send: 'amq'
+    # NOTE: The main admin user is missing from this list, it is configured with
+    # $admin_user and $admin_password instead.
+    users:
+      myuser:
+        enable: false
+        password: 'secret'
+        # Assign roles to this user. Use 'true' to enable and 'false' to
+        # disable a role.
+        roles:
+          amq: true
   vote_on_replication_failure: true
   web_bind: 'localhost'
   web_port: 8161

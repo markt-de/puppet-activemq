@@ -264,6 +264,13 @@ Create an instance of ActiveMQ Artemis broker
 
 The following parameters are available in the `activemq::instance` defined type.
 
+##### `address_settings`
+
+Data type: `Hash[String[1], Hash]`
+
+A hash containing global address settings. This is especially useful
+for wildcard/catch all matches.
+
 ##### `addresses`
 
 Data type: `Hash[String[1], Hash]`
@@ -282,7 +289,7 @@ or an IP address.
 
 Data type: `Hash[String[1], Hash]`
 
-A Hash containing a list of broker plugins and their configuration.
+A hash containing a list of broker plugins and their configuration.
 Each plugin can be enabled by setting `enable` to `true`.
 
 ##### `log_level`
@@ -290,6 +297,12 @@ Each plugin can be enabled by setting `enable` to `true`.
 Data type: `Hash`
 
 The log levels to use for the various configured loggers.
+
+##### `security`
+
+Data type: `Hash`
+
+A hash containing the security configuration, includes users and roles.
 
 ##### `service_enable`
 

@@ -13,11 +13,14 @@
 #   or an IP address.
 #
 # @param broker_plugins
-#   A Hash containing a list of broker plugins and their configuration.
+#   A hash containing a list of broker plugins and their configuration.
 #   Each plugin can be enabled by setting `enable` to `true`.
 #
 # @param log_level
 #   The log levels to use for the various configured loggers.
+#
+# @param security
+#   A hash containing the security configuration, includes users and roles.
 #
 # @param service_enable
 #   Specifies whether the service should be enabled for this instance.
@@ -62,6 +65,7 @@ define activemq::instance (
   Boolean $persistence,
   Integer $port,
   Enum['master','slave'] $role,
+  Hash $security,
   Boolean $vote_on_replication_failure,
   String $web_bind,
   Integer $web_port,
@@ -231,6 +235,7 @@ define activemq::instance (
         'persistence'                      => $persistence,
         'port'                             => $port,
         'role'                             => $role,
+        'security'                         => $security,
         'vote_on_replication_failure'      => $vote_on_replication_failure,
         }
       ),
