@@ -68,7 +68,8 @@ activemq::instance_defaults:
   # Global address settings. Individual settings can also be managed
   # in $addresses.
   address_settings:
-    - match: 'activemq.management#'
+    management:
+      match: 'activemq.management#'
       enable: true
       settings:
         address-full-policy: 'PAGE'
@@ -81,7 +82,8 @@ activemq::instance_defaults:
         max-size-bytes: -1
         message-counter-history-day-limit: 10
         redelivery-delay: 0
-    - match: '#'
+    catchall:
+      match: '#'
       enable: true
       settings:
         address-full-policy: 'PAGE'

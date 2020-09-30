@@ -204,14 +204,14 @@ under the License.
 
       <address-settings>
 <%#  # Iterate over all global address settings. -%>
-<%   if ($address_settings =~ Array) { -%>
-<%     $address_settings.each |$item| { -%>
+<%   if ($address_settings =~ Hash) { -%>
+<%     $address_settings.each |$a_key, $a_value| { -%>
 <%#      # Only add enabled items. -%>
-<%       if (($item =~ Hash) and ('enable' in $item) and ($item['enable'] == true)) { -%>
-         <address-setting match="<%= $item['match'] %>">
+<%       if (($a_value =~ Hash) and ('enable' in $a_value) and ($a_value['enable'] == true)) { -%>
+         <address-setting match="<%= $a_value['match'] %>">
 <%#        # Add settings. -%>
-<%         if (('settings' in $item) and ($item['settings'] =~ Hash)) { -%>
-<%           $item['settings'].each |$key, $value| { -%>
+<%         if (('settings' in $a_value) and ($a_value['settings'] =~ Hash)) { -%>
+<%           $a_value['settings'].each |$key, $value| { -%>
             <<%= $key %>><%= $value%></<%= $key %>>
 <%           } -%>
 <%         } -%>

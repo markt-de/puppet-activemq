@@ -39,7 +39,7 @@
 define activemq::instance (
   Hash[String[1], Hash] $acceptors,
   Array $acceptor_settings,
-  Array $address_settings,
+  Hash[String[1], Hash] $address_settings,
   Hash[String[1], Hash] $addresses,
   Boolean $allow_failback,
   String $bind,
