@@ -1,0 +1,10 @@
+<%# Add internal/system role for main admin user. -%>
+<% if !empty($admin_user) { -%>
+amq = <%= $admin_user %>
+<% } -%>
+<%# Add additional role/user mappings. -%>
+<% if (('enable' in $security) and ($security['enable'] == true)) { -%>
+<%   $role_mappings.each |$_role, $_members| { -%>
+<%= $_role %> = <%= $_members.join(',') %>
+<%   } -%>
+<% } -%>

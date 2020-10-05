@@ -196,14 +196,15 @@ activemq::instance_defaults:
           # required, otherwise ./artemis data imp wouldn't work
           manage: 'amq'
           send: 'amq'
-    # NOTE: The main admin user is missing from this list, it is configured with
-    # $admin_user and $admin_password instead.
+    # NOTE: The main admin user should not be added to this user list. It should
+    # be configured using $admin_user and $admin_password instead.
     users:
       myuser:
         enable: false
         password: 'secret'
         # Assign roles to this user. Use 'true' to enable and 'false' to
-        # disable a role.
+        # disable a role. Roles that are not listed here are not enabled
+        # for this user.
         roles:
           amq: true
   vote_on_replication_failure: true
@@ -212,9 +213,13 @@ activemq::instance_defaults:
 activemq::instances: {}
 activemq::instances_base: '/var/lib/activemq-brokers'
 activemq::logging_template: 'activemq/logging.properties.epp'
+activemq::login_template: 'activemq/login.config.epp'
 activemq::manage_account: true
 activemq::manage_instances_base: true
+activemq::manage_roles: true
+activemq::manage_users: true
 activemq::port: 61616
+activemq::roles_properties_template: 'activemq/roles.properties.epp'
 activemq::server_discovery: 'dynamic'
 activemq::service_enable: true
 activemq::service_ensure: 'running'
@@ -224,4 +229,5 @@ activemq::service_template: 'activemq/service_systemd.epp'
 activemq::symlink_name: 'activemq'
 activemq::uid: 15000
 activemq::user: 'activemq'
+activemq::users_properties_template: 'activemq/users.properties.epp'
 activemq::version: ~

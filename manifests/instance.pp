@@ -90,8 +90,11 @@ define activemq::instance (
     $bootstrap_xml = "${instance_dir}/etc/bootstrap.xml"
     $broker_xml = "${instance_dir}/etc/broker.xml"
     $logging_properties = "${instance_dir}/etc/logging.properties"
+    $login_config = "${instance_dir}/etc/login.config"
     $instance_service = "${activemq::service_name}@${name}"
     $installer_cmd = "${activemq::install_base}/${activemq::symlink_name}/bin/artemis"
+    $roles_properties = "${instance_dir}/etc/artemis-roles.properties"
+    $users_properties = "${instance_dir}/etc/artemis-users.properties"
 
     # Command to create new instances.
     # NOTE: We pass all parameters, although we will replace the configuration
@@ -203,6 +206,50 @@ define activemq::instance (
       }
     }
 
+    # Get a list of all role/user mappings.
+    if (('users' in $security) and ($security['users'] =~ Hash)) {
+
+      # Iterate over all users to find roles.
+      $_roles = $security['users'].reduce([]) |$memo, $x| {
+        # A nested hash contains the user configuration.
+        if ($x[1] =~ Hash) {
+          # Skip users that are not enabled.
+          if (('enable' in $x[1]) and ($x[1]['enable'] == true) and ('roles' in $x[1])) {
+            # Get all roles from this user.
+            $_roles_tmp = $x[1]['roles'].reduce([]) |$m2, $z| {
+              # Only add roles that are in use (=enabled).
+              if (($z[0] =~ String) and ($z[1] =~ Boolean) and ($z[1] == true)) {
+                $m2 + "${z[0]}"
+              } else { $m2 }
+            }
+            if ($_roles_tmp =~ Array and !empty($_roles_tmp)) {
+              $memo + $_roles_tmp
+            } else { $memo }
+          } else { $memo }
+        } else {
+          fail("Invalid \$security configuration, expected a Hash but got something else for user ${x[0]} for instance ${name}.")
+        }
+      }.unique()
+
+      # Next iterate over all roles and collect their users.
+      $_role_mappings = $_roles.reduce({}) |$memo, $x| {
+        $_users_tmp = $security['users'].reduce([]) |$m, $z| {
+          # Skip users that are not enabled.
+          if (('enable' in $z[1]) and ($z[1]['enable'] == true) and ('roles' in $z[1])) {
+            # Check if role can be found for this user and is enabled.
+            if ($x in $z[1]['roles']) {
+              $m + $z[0]
+            } else { $m }
+          } else { $m }
+        }
+        $memo + {$x => $_users_tmp}
+      }
+    } else {
+      # Default values to keep everyone happy.
+      $_roles = []
+      $_role_mappings = {}
+    }
+
     # Create broker.xml configuration file.
     file { "instance ${name} broker.xml":
       ensure  => 'present',
@@ -272,6 +319,53 @@ define activemq::instance (
       require => [
         Exec["create instance ${name}"]
       ],
+    }
+
+    # Create login.config file.
+    file { "instance ${name} login.config":
+      ensure  => 'present',
+      path    => $login_config,
+      mode    => '0644',
+      content => epp($activemq::login_template),
+      require => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
+    # Create artemis-users.properties file.
+    if ($activemq::manage_users) {
+      file { "instance ${name} artemis-users.properties":
+        ensure  => 'present',
+        path    => $users_properties,
+        mode    => '0644',
+        content => epp($activemq::users_properties_template,{
+          'admin_password' => $activemq::admin_password,
+          'admin_user'     => $activemq::admin_user,
+          'security'       => $security,
+          }
+        ),
+        require => [
+          Exec["create instance ${name}"]
+        ],
+      }
+    }
+
+    # Create artemis-roles.properties file.
+    if ($activemq::manage_roles) {
+      file { "instance ${name} artemis-roles.properties":
+        ensure  => 'present',
+        path    => $roles_properties,
+        mode    => '0644',
+        content => epp($activemq::roles_properties_template,{
+          'admin_user'    => $activemq::admin_user,
+          'role_mappings' => $_role_mappings,
+          'security'      => $security,
+          }
+        ),
+        require => [
+          Exec["create instance ${name}"]
+        ],
+      }
     }
 
     # Check if service should be enabled.

@@ -1,0 +1,14 @@
+<%# Add main admin user. -%>
+<% if (!empty($admin_user) and !empty($admin_password)) { -%>
+<%= $admin_user %> = <%= $admin_password %>
+<% } -%>
+<%# Add additional users. -%>
+<% if (('enable' in $security) and ($security['enable'] == true)) { -%>
+<%   if (('users' in $security) and ($security['users'] =~ Hash)) { -%>
+<%     $security['users'].each |$key, $value| { -%>
+<%       if (('enable' in $value) and ($value['enable'] == true)) { -%>
+<%= $key %> = <%= $value['password'] %>
+<%       } -%>
+<%     } -%>
+<%   } -%>
+<% } -%>

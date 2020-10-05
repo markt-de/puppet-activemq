@@ -68,6 +68,12 @@
 # @param manage_instances_base
 #   Whether or not to create the directory specified in `$instances_base`.
 #
+# @param manage_roles
+#   Whether or not to manage ActiveMQ roles.
+#
+# @param manage_users
+#   Whether or not to manage ActiveMQ users.
+#
 # @param port
 #   Specifies the port to use for the artemis connector and will also be used
 #   as default port for the acceptor.
@@ -121,9 +127,13 @@ class activemq (
   Hash[String[1], Hash] $instances,
   Stdlib::Compat::Absolute_path $instances_base,
   String $logging_template,
+  String $login_template,
   Boolean $manage_account,
   Boolean $manage_instances_base,
+  Boolean $manage_roles,
+  Boolean $manage_users,
   Integer $port,
+  String $roles_properties_template,
   Enum['dynamic','static'] $server_discovery,
   Boolean $service_enable,
   Enum['running','stopped'] $service_ensure,
@@ -132,6 +142,7 @@ class activemq (
   String $service_template,
   String $symlink_name,
   String $user,
+  String $users_properties_template,
   String $version,
   Optional[String] $checksum = undef,
   Optional[String] $checksum_type = undef,
