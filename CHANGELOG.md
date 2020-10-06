@@ -2,10 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## Release 0.1.0
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-**Features**
+## v1.0.0
+Initial release
 
-**Bugfixes**
-
-**Known Issues**
+[Unreleased]: https://github.com/markt-de/puppet-activemq/compare/v1.0.0...HEAD

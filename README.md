@@ -15,6 +15,7 @@
     - [Security, Roles, Users and Queues](#security-roles-users-and-queues)
     - [Custom configuration](#custom-configuration)
 1. [Reference](#reference)
+1. [Limitations](#limitations)
 1. [Development](#development)
     - [Contributing](#contributing)
     - [Fork](#fork)
@@ -200,6 +201,10 @@ The module is designed for Hiera so it is highly recommended if you need to chan
 ## Reference
 
 Classes and parameters are documented in [REFERENCE.md](REFERENCE.md).
+
+## Limitations
+
+Upgrades of ActiveMQ Artemis are currently not supported, but this feature is planned for a later release of this module.
 
 ## Development
 

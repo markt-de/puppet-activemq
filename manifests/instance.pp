@@ -219,7 +219,7 @@ define activemq::instance (
             $_roles_tmp = $x[1]['roles'].reduce([]) |$m2, $z| {
               # Only add roles that are in use (=enabled).
               if (($z[0] =~ String) and ($z[1] =~ Boolean) and ($z[1] == true)) {
-                $m2 + "${z[0]}"
+                $m2 + $z[0]
               } else { $m2 }
             }
             if ($_roles_tmp =~ Array and !empty($_roles_tmp)) {
