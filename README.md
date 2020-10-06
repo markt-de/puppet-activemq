@@ -12,6 +12,7 @@
     - [Basic usage](#basic-usage)
     - [Multiple instances](#multiple-instances)
     - [Clusters](#clusters)
+    - [Security, Roles, Users and Queues](#security-roles-users-and-queues)
     - [Custom configuration](#custom-configuration)
 1. [Reference](#reference)
 1. [Development](#development)
@@ -33,18 +34,20 @@ The module is designed for Hiera, so there may be some rough edges when used wit
 
 ### Basic usage
 
-The minimum configuration should at least specify the desired version and the checksum of the distribution archive.
+The minimum configuration should at least specify the admin password, the desired version and the checksum of the distribution archive.
 The checksum is available from ActiveMQ's [download page](https://activemq.apache.org/components/artemis/download/).
 
 ```puppet
 class { 'java': }
 class { 'activemq':
+  admin_password => 'seCReT'
+  admin_user => 'admin'
   checksum => '84b5a65d8eb2fc8cf3f17df524d586b0c6a2acfa9a09089d5ffdfc1323ff99dfdc775b2e95eec264cfeddc4742839ba9b0f3269351a5c955dd4bbf6d5ec5dfa9',
   version => '2.14.0',
 }
 ```
 
-The will install and configure a standalone instance of ActiveMQ Artemis.
+This will install and configure a standalone instance of ActiveMQ Artemis.
 
 ### Multiple instances
 
@@ -52,9 +55,33 @@ Multiple instances can be setup like this:
 
 ```puppet
 $instances = {
-  'instance1' => { bind => '127.0.0.1', port => 61616 },
-  'instance2' => { bind => '127.0.0.1', port => 62616 },
-  'instance3' => { bind => '127.0.0.1', port => 63616 },
+  'instance1' => {
+    bind => '127.0.0.1',
+    port => 61616,
+    web_port => 8161,
+    acceptors => {
+      artemis => { port => 61616 },
+      amqp => { port => 5672 },
+    },
+  },
+  'instance2' => {
+    bind => '127.0.0.1',
+    port => 62616,
+    web_port => 8261,
+    acceptors => {
+      artemis => { port => 62616 },
+      amqp => { port => 5772 },
+    },
+  },
+  'instance3' => {
+    bind => '127.0.0.1',
+    port => 63616,
+    web_port => 8361,
+    acceptors => {
+      artemis => { port => 63616 },
+      amqp => { port => 5872 },
+    },
+  }
 }
 
 class { 'java': }
@@ -64,6 +91,8 @@ class { 'activemq':
   version => '2.14.0',
 }
 ```
+
+Note that you need to modify the port numbers for each instance when running on the same host (as demonstrated in this example), so that they do not try to bind on the same IP:PORT combination.
 
 Instead of using the `$instances` parameter, the defined type can also be used directly:
 
@@ -80,12 +109,39 @@ Complex cluster configurations are also supported. You should provide a complete
 
 ```puppet
 $cluster_topology = {
-  'node1' => { target_host => 'server1.example.com', bind => '10.0.0.1', group => 'green' },
-  'node2' => { target_host => 'server3.example.com', bind => '10.0.0.2', group => 'green', role => 'slave' },
-  'node3' => { target_host => 'server2.example.com', bind => '10.0.0.3', group => 'yellow' },
-  'node4' => { target_host => 'server1.example.com', bind => '10.0.0.4', group => 'yellow', role => 'slave' },
-  'node5' => { target_host => 'server3.example.com', bind => '10.0.0.5', group => 'white' },
-  'node6' => { target_host => 'server2.example.com', bind => '10.0.0.6', group => 'white', role => 'slave' },
+  'node1' => {
+    target_host => 'server1.example.com',
+    bind => '10.0.0.1',
+    group => 'green'
+  },
+  'node2' => {
+    target_host => 'server3.example.com',
+    bind => '10.0.0.2',
+    group => 'green',
+    role => 'slave'
+  },
+  'node3' => {
+    target_host => 'server2.example.com',
+    bind => '10.0.0.3',
+    group => 'yellow'
+  },
+  'node4' => {
+    target_host => 'server1.example.com',
+    bind => '10.0.0.4',
+    group => 'yellow',
+    role => 'slave'
+  },
+  'node5' => {
+    target_host => 'server3.example.com',
+    bind => '10.0.0.5',
+    group => 'white'
+  },
+  'node6' => {
+    target_host => 'server2.example.com',
+    bind => '10.0.0.6',
+    group => 'white',
+    role => 'slave'
+  },
 }
 
 class { 'java': }
@@ -93,6 +149,8 @@ class { 'activemq':
   checksum => '84b5a65d8eb2fc8cf3f17df524d586b0c6a2acfa9a09089d5ffdfc1323ff99dfdc775b2e95eec264cfeddc4742839ba9b0f3269351a5c955dd4bbf6d5ec5dfa9',
   cluster => true,
   cluster_name => 'cluster001',
+  cluster_password => 'seCReT'
+  cluster_user => 'clusteradmin'
   cluster_topology => $cluster_topology,
   instances => $cluster_topology,
   server_discovery => 'static',
@@ -102,7 +160,13 @@ class { 'activemq':
 
 Note that the parameters `$cluster_topology` and `$instances` both use the same values. If this configuration is used on host `server1.example.com`, then the module ensures that only instances `node1` and `node4` are installed, all other instances are ignored and will be installed only on the specified target host.
 
+Also note that this examples assumes that each instance is running on it's own IP address. If multiple instances share the same IP address you need to change the port numbers to avoid conflicts (see "Multiple instances").
+
 The `$cluster_topology` parameter is also used by the module to setup communication between cluster nodes (depending on your configuration).
+
+### Security, Roles, Users and Queues
+
+The instance configuration can be changed by using the required parameter or by modifying `$activemq::instance_defaults` (which will apply to all instances). The module data contains pretty verbose examples on how to configure queues, roles and users. Please open a GitHub issue if these examples require further explanation.
 
 ### Custom configuration
 
@@ -128,6 +192,8 @@ class { 'activemq':
   },
 }
 ```
+
+Please have a look at the examples in the module data to find all supported settings.
 
 The module is designed for Hiera so it is highly recommended if you need to change the default configuration.
 

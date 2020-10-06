@@ -162,6 +162,18 @@ Data type: `Boolean`
 
 Whether or not to create the directory specified in `$instances_base`.
 
+##### `manage_roles`
+
+Data type: `Boolean`
+
+Whether or not to manage ActiveMQ roles.
+
+##### `manage_users`
+
+Data type: `Boolean`
+
+Whether or not to manage ActiveMQ users.
+
 ##### `port`
 
 Data type: `Integer`
@@ -248,7 +260,25 @@ Data type: `String`
 
 
 
+##### `login_template`
+
+Data type: `String`
+
+
+
+##### `roles_properties_template`
+
+Data type: `String`
+
+
+
 ##### `service_template`
+
+Data type: `String`
+
+
+
+##### `users_properties_template`
 
 Data type: `String`
 
