@@ -264,6 +264,8 @@ define activemq::instance (
         'broadcast_groups'                 => $broadcast_groups,
         'broker_plugins'                   => $_broker_plugins,
         'check_for_live_server'            => $check_for_live_server,
+        'cluster_password'                 => $activemq::cluster_password,
+        'cluster_user'                     => $activemq::cluster_user,
         'connectors'                       => $connectors,
         'discovery_groups'                 => $discovery_groups,
         'failover_on_shutdown'             => $failover_on_shutdown,

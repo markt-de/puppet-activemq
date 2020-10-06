@@ -72,8 +72,8 @@ under the License.
       </acceptors>
 
 <% if $activemq::cluster { -%>
-      <cluster-user>clusteradmin</cluster-user>
-      <cluster-password>clusterpasswd</cluster-password>
+      <cluster-user><%= $cluster_user %></cluster-user>
+      <cluster-password><%= $cluster_password %></cluster-password>
 
 <%   if $activemq::server_discovery == 'dynamic' { -%>
 
