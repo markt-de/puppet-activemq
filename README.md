@@ -18,7 +18,6 @@
 1. [Limitations](#limitations)
 1. [Development](#development)
     - [Contributing](#contributing)
-    - [Fork](#fork)
 
 ## Overview
 
