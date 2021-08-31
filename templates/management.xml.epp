@@ -45,7 +45,7 @@
 <%         if (($m_options =~ Hash) and ('enable' in $m_options) and ($m_options['enable'] == true)) { -%>
 <%#          # Only generate role-access entries. -%>
 <%           if ($m_name != 'default-access') { -%>
-         <match domain="<%= $m_options['domain'] %>" <% if !empty($m_options['key']) { %>key="<%= $m_options['key'] %>"<% } %>>
+         <match domain="<%= $m_options['domain'] %>"<% if !empty($m_options['key']) { %> key="<%= $m_options['key'] %>"<% } %>>
 <%#            # Add access permissions. -%>
 <%             $m_options['methods'].each |$mtd_name, $mtd_roles| { -%>
             <access method="<%= $mtd_name %>" roles="<%= $mtd_roles %>"/>
