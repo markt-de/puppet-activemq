@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 * Let Puppet maintain `management.xml` (existing config will be overwritten)
+* Add new parameter `$hawtio_role` to manage HAWTIO_ROLE in artemis.profile
 
 ## [v1.0.0]
 Initial release

@@ -122,6 +122,7 @@ class activemq (
   String $distribution_name,
   String $download_url,
   String $group,
+  String $hawtio_role,
   Stdlib::Compat::Absolute_path $install_base,
   Hash $instance_defaults,
   Hash[String[1], Hash] $instances,

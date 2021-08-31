@@ -16,6 +16,7 @@ activemq::distribution_name: 'apache-artemis'
 activemq::download_url: "http://archive.apache.org/dist/activemq/activemq-artemis/%{lookup('activemq::version')}/%%{}s"
 activemq::gid: 15000
 activemq::group: 'activemq'
+activemq::hawtio_role: 'amq'
 activemq::install_base: '/opt'
 activemq::instance_defaults:
   acceptors:

@@ -96,6 +96,7 @@ define activemq::instance (
     $installer_cmd = "${activemq::install_base}/${activemq::symlink_name}/bin/artemis"
     $roles_properties = "${instance_dir}/etc/artemis-roles.properties"
     $users_properties = "${instance_dir}/etc/artemis-users.properties"
+    $artemis_profile = "${instance_dir}/etc/artemis.profile"
 
     # Command to create new instances.
     # NOTE: We pass all parameters, although we will replace the configuration
@@ -385,6 +386,18 @@ define activemq::instance (
       }
     }
 
+    # Configure HAWTIO role.
+    file_line { "instance ${name} set HAWTIO_ROLE":
+      ensure             => 'present',
+      path               => $artemis_profile,
+      line               => "HAWTIO_ROLE=\'${$activemq::hawtio_role}\'",
+      match              => '^HAWTIO_ROLE=',
+      append_on_no_match => false,
+      require            => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
     # Check if service should be enabled.
     $_service_enable = $service_enable ? {
       undef   => $activemq::service_enable,
@@ -403,12 +416,14 @@ define activemq::instance (
         Class['activemq::install'],
         File["instance ${name} broker.xml"],
         File["instance ${name} management.xml"],
+        File_line["instance ${name} set HAWTIO_ROLE"],
       ],
       require   => [
         File["instance ${name} broker.xml"],
         File["instance ${name} management.xml"],
         File["instance ${name} artemis-users.properties"],
         File["instance ${name} artemis-roles.properties"],
+        File_line["instance ${name} set HAWTIO_ROLE"],
       ],
     }
 
