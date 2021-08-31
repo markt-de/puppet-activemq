@@ -89,6 +89,7 @@ define activemq::instance (
     $instance_dir = "${activemq::instances_base}/${name}"
     $bootstrap_xml = "${instance_dir}/etc/bootstrap.xml"
     $broker_xml = "${instance_dir}/etc/broker.xml"
+    $management_xml = "${instance_dir}/etc/management.xml"
     $logging_properties = "${instance_dir}/etc/logging.properties"
     $login_config = "${instance_dir}/etc/login.config"
     $instance_service = "${activemq::service_name}@${name}"
@@ -293,6 +294,20 @@ define activemq::instance (
       ],
     }
 
+    # Create management.xml configuration file.
+    file { "instance ${name} management.xml":
+      ensure  => 'present',
+      path    => $management_xml,
+      mode    => '0640',
+      content => epp($activemq::management_template,{
+        'security' => $security,
+        }
+      ),
+      require => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
     # Create bootstrap.xml configuration file.
     file { "instance ${name} bootstrap.xml":
       ensure  => 'present',
@@ -387,9 +402,13 @@ define activemq::instance (
       subscribe => [
         Class['activemq::install'],
         File["instance ${name} broker.xml"],
+        File["instance ${name} management.xml"],
       ],
       require   => [
         File["instance ${name} broker.xml"],
+        File["instance ${name} management.xml"],
+        File["instance ${name} artemis-users.properties"],
+        File["instance ${name} artemis-roles.properties"],
       ],
     }
 

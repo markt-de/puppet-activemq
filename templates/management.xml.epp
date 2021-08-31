@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements. See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License. You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<management-context xmlns="http://activemq.org/schema">
+   <authorisation>
+      <whitelist>
+         <entry domain="hawtio"/>
+      </whitelist>
+
+<%#    # Check if management can be found in security settings. -%>
+<%     if (('settings' in $security) and ($security['settings'] =~ Hash) and ('management' in $security['settings'])) { -%>
+
+      <default-access>
+<%       $security['settings']['management'].each |$m_name, $m_options| { -%>
+<%#        # Only add enabled items. -%>
+<%         if (($m_options =~ Hash) and ('enable' in $m_options) and ($m_options['enable'] == true)) { -%>
+<%#          # Check for magic name to generate default-access tag. -%>
+<%           if ($m_name == 'default-access') { -%>
+<%#            # Add access permissions. -%>
+<%             $m_options['methods'].each |$mtd_name, $mtd_roles| { -%>
+         <access method="<%= $mtd_name %>" roles="<%= $mtd_roles %>"/>
+<%             } -%>
+<%           } -%>
+<%         } -%>
+<%       } -%>
+      </default-access>
+
+      <role-access>
+<%       $security['settings']['management'].each |$m_name, $m_options| { -%>
+<%#        # Only add enabled items. -%>
+<%         if (($m_options =~ Hash) and ('enable' in $m_options) and ($m_options['enable'] == true)) { -%>
+<%#          # Only generate role-access entries. -%>
+<%           if ($m_name != 'default-access') { -%>
+         <match domain="<%= $m_options['domain'] %>" <% if !empty($m_options['key']) { %>key="<%= $m_options['key'] %>"<% } %>>
+<%#            # Add access permissions. -%>
+<%             $m_options['methods'].each |$mtd_name, $mtd_roles| { -%>
+            <access method="<%= $mtd_name %>" roles="<%= $mtd_roles %>"/>
+<%             } -%>
+         </match>
+<%           } -%>
+<%         } -%>
+<%       } -%>
+      </role-access>
+<%     } -%>
+
+   </authorisation>
+</management-context>

@@ -177,6 +177,28 @@ activemq::instance_defaults:
   role: 'master'
   security:
     enable: true
+    # The default security rule to grant management access.
+    management:
+      # This is a magic name to generate the <default-access> tag.
+      default-access:
+        enable: true
+        domain: 'org.apache.activemq.artemis'
+        methods:
+          'list*': 'amq'
+          'get*': 'amq'
+          'is*': 'amq'
+          'set*': 'amq'
+          '*': 'amq'
+      # This generates a new <match> tag inside <role-access>.
+      ArtemisDefault:
+        enable: true
+        domain: 'org.apache.activemq.artemis'
+        methods:
+          'list*': 'amq'
+          'get*': 'amq'
+          'is*': 'amq'
+          'set*': 'amq'
+          '*': 'amq'
     settings:
       # The default security rule to grant all rights to the admin user.
       Catchall:
@@ -218,6 +240,7 @@ activemq::manage_account: true
 activemq::manage_instances_base: true
 activemq::manage_roles: true
 activemq::manage_users: true
+activemq::management_template: 'activemq/management.xml.epp'
 activemq::port: 61616
 activemq::roles_properties_template: 'activemq/roles.properties.epp'
 activemq::server_discovery: 'dynamic'

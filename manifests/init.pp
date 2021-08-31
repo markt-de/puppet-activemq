@@ -132,6 +132,7 @@ class activemq (
   Boolean $manage_instances_base,
   Boolean $manage_roles,
   Boolean $manage_users,
+  String $management_template,
   Integer $port,
   String $roles_properties_template,
   Enum['dynamic','static'] $server_discovery,
