@@ -200,6 +200,12 @@ activemq::instance_defaults:
           'is*': 'amq'
           'set*': 'amq'
           '*': 'amq'
+    # Connectors for the management API.
+    management_connectors:
+      Local:
+        enable: false
+        host: 'localhost'
+        port: 1099
     settings:
       # The default security rule to grant all rights to the admin user.
       Catchall:

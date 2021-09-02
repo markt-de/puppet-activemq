@@ -16,6 +16,16 @@
   ~ limitations under the License.
   -->
 <management-context xmlns="http://activemq.org/schema">
+<%# Check if management connectors can be found. -%>
+<% if (('management_connectors' in $security) and ($security['management_connectors'] =~ Hash)) { -%>
+<%   $security['management_connectors'].each |$mc_name, $mc_options| { -%>
+<%     if (($mc_options =~ Hash) and ('enable' in $mc_options) and ($mc_options['enable'] == true)
+          and ('host' in $mc_options) and ('port' in $mc_options)) { -%>
+   <connector connector-port="$mc_options['port']" connector-host="$mc_options['host']"/>
+<%     } -%>
+<%   } -%>
+<% } -%>
+
    <authorisation>
       <whitelist>
          <entry domain="hawtio"/>
