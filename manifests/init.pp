@@ -78,6 +78,12 @@
 #   Specifies the port to use for the artemis connector and will also be used
 #   as default port for the acceptor.
 #
+# @param proxy_server
+#  Specify a proxy server, with port number if needed. ie: https://example.com:8080
+#  
+# @param proxy_type
+#  Specify the proxy_type: proxy server type (none|http|https|ftp) 
+#  
 # @param server_discovery
 #   Controls how servers can propagate their connection details.
 #
@@ -149,6 +155,8 @@ class activemq (
   Optional[String] $checksum = undef,
   Optional[String] $checksum_type = undef,
   Optional[String] $cluster_name = undef,
+  Optional[String] $proxy_server = undef,
+  Optional[String] $proxy_type = undef,
   Optional[Integer] $gid = undef,
   Optional[Integer] $uid = undef,
 ) {
