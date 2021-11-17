@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## v1.0.0 - 2020-10-06
 Initial release
 
-[Unreleased]: https://github.com/markt-de/puppet-activemq/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/markt-de/puppet-activemq/compare/v1.2.0...HEAD
+[v1.2.0]: https://github.com/markt-de/puppet-activemq/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/markt-de/puppet-activemq/compare/v1.0.0...v1.1.0
 [#2]: https://github.com/markt-de/puppet-activemq/pull/2
