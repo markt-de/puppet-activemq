@@ -29,6 +29,8 @@ class activemq::install {
     creates       => $install_dir,
     extract       => true,
     cleanup       => true,
+    proxy_server  => $activemq::proxy_server,
+    proxy_type    => $activemq::proxy_type,
   }
 
   # Set symlink to current version.
