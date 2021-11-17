@@ -5,6 +5,8 @@ activemq::bootstrap_template: 'activemq/bootstrap.xml.epp'
 activemq::broker_template: 'activemq/broker.xml.epp'
 activemq::checksum: ~
 activemq::checksum_type: 'sha512'
+activemq::proxy_server: undef
+activemq::proxy_type: undef
 activemq::cluster: false
 activemq::cluster_name: ~
 activemq::cluster_password: 'clusterpassword'
