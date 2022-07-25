@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 * Adopt namespace changes in bootstrap.xml and management.xml (backwards-compatible)
 * Update OS support, module dependencies and PDK
+* Set variable ARTEMIS_HOME to symlink location in artemis.profile
 
 ### Fixed
 * Fix puppet-lint offenses

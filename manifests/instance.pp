@@ -381,6 +381,18 @@ define activemq::instance (
       ],
     }
 
+    # Configure ARTEMIS_HOME.
+    file_line { "instance ${name} set ARTEMIS_HOME":
+      ensure             => 'present',
+      path               => $artemis_profile,
+      line               => "ARTEMIS_HOME=\'${$activemq::install_base}/${$activemq::symlink_name}\'",
+      match              => '^ARTEMIS_HOME=',
+      append_on_no_match => false,
+      require            => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
     # Check if service should be enabled.
     $_service_enable = $service_enable ? {
       undef   => $activemq::service_enable,
@@ -409,7 +421,5 @@ define activemq::instance (
         File_line["instance ${name} set HAWTIO_ROLE"],
       ],
     }
-
-    # TODO: Upgrade an instance
   }
 }
