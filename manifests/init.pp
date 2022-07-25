@@ -176,10 +176,9 @@ class activemq (
     # Collect connectors for ALL cluster nodes. This is only required when
     # using static connectors, but we will use this opportunity to validate
     # the cluster topology (to some degree).
-    $_static_connectors = $cluster_topology.reduce({}) |$memo, $x| {
+    $_static_connectors = $cluster_topology.reduce( {}) |$memo, $x| {
       # A nested hash contains the instance configuration.
       if ($x[1] =~ Hash) {
-
         # Fail if no "bind" option was specified.
         if ( !('bind' in $x[1]) ) {
           fail("Invalid \$cluster_topology, no value for \$bind in instance ${x[0]}.")
@@ -188,7 +187,7 @@ class activemq (
         # Check if "port" option can be found.
         if ( !('port' in $x[1]) ) {
           # Use default value when not found.
-          $_values = $x[1].deep_merge({'port' => $port})
+          $_values = $x[1].deep_merge( { 'port' => $port })
         } else {
           $_values = $x[1]
         }
@@ -196,7 +195,7 @@ class activemq (
         fail("Invalid \$cluster_topology, expected a Hash but got something else for instance ${x[0]}.")
       }
       # Auto-generated connectors are prefixed with "artemis-".
-      $memo + {"artemis-${x[0]}" => $_values}
+      $memo + { "artemis-${x[0]}" => $_values }
     }
   } else {
     $_static_connectors = {}
@@ -215,14 +214,14 @@ class activemq (
     } else {
       # When using dynamic connectors, then only add the connector for this
       # local instance.
-      $_final_config = $_pre_config.deep_merge({
-        'connectors' => {
-          # Auto-generated connectors are prefixed with "artemis-".
-          "artemis-${name}" => {
-            'bind' => $_pre_config['bind'],
-            'port' => $_pre_config['port'],
-          }
-        }
+      $_final_config = $_pre_config.deep_merge( {
+          'connectors' => {
+            # Auto-generated connectors are prefixed with "artemis-".
+            "artemis-${name}" => {
+              'bind' => $_pre_config['bind'],
+              'port' => $_pre_config['port'],
+            },
+          },
       })
     }
 

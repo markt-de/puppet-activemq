@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 * Adopt namespace changes in bootstrap.xml and management.xml (backwards-compatible)
+* Update OS support, module dependencies and PDK
+
+### Fixed
+* Fix puppet-lint offenses
 
 ## [v1.2.0] - 2021-09-02
 

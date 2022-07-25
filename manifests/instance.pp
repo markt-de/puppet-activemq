@@ -84,7 +84,6 @@ define activemq::instance (
 
   # Check if this instance should be installed on this host.
   if (empty($target_host) or ($target_host == $facts['networking']['fqdn'])) {
-
     # Construct paths and filenames for this insance.
     $instance_dir = "${activemq::instances_base}/${name}"
     $bootstrap_xml = "${instance_dir}/etc/bootstrap.xml"
@@ -104,20 +103,20 @@ define activemq::instance (
     # are still supported in the selected release of ActiveMQ Artemis. The
     # installer will fail on unsupported options.
     $create_command = join([
-      $installer_cmd,
-      'create',
-      $instance_dir,
-      '--aio',
-      '--autocreate',
-      '--clustered',
-      '--replicated',
-      "--cluster-user \'${activemq::cluster_user}\'",
-      "--cluster-password \'${activemq::cluster_password}\'",
-      "--name ${name}",
-      "--host ${bind}",
-      '--require-login',
-      "--user \'${activemq::admin_user}\'",
-      "--password \'${activemq::admin_password}\'",
+        $installer_cmd,
+        'create',
+        $instance_dir,
+        '--aio',
+        '--autocreate',
+        '--clustered',
+        '--replicated',
+        "--cluster-user \'${activemq::cluster_user}\'",
+        "--cluster-password \'${activemq::cluster_password}\'",
+        "--name ${name}",
+        "--host ${bind}",
+        '--require-login',
+        "--user \'${activemq::admin_user}\'",
+        "--password \'${activemq::admin_password}\'",
     ], ' ')
 
     # Run installer to create a new instance
@@ -141,7 +140,7 @@ define activemq::instance (
 
     # Iterate over all acceptors to validate and update their configuration.
     # This keeps this complexity away from the templates.
-    $_acceptors = $acceptors.reduce({}) |$memo, $x| {
+    $_acceptors = $acceptors.reduce( {}) |$memo, $x| {
       # A nested hash contains the configuration.
       if ($x[1] =~ Hash) {
         # Fail if basic information is missing.
@@ -178,22 +177,20 @@ define activemq::instance (
         $_settings_list = join($_settings, ';')
 
         # Finally merge with all other options.
-        $_values = $x[1].deep_merge(
-          {
+        $_values = $x[1].deep_merge( {
             'protocols_list' => $_protocols_list,
             'settings' => $_settings,
             'settings_list' => $_settings_list,
-          }
-        )
+        })
       } else {
         fail("Invalid \$acceptors configuration, expected a Hash but got something else in acceptor ${x[0]} for instance ${name}.")
       }
-      $memo + {$x[0] => $_values}
+      $memo + { $x[0] => $_values }
     }
 
     # Iterate over all broker plugins. Only enabled plugins will be passed
     # to the template.
-    $_broker_plugins = $broker_plugins.reduce({}) |$memo, $x| {
+    $_broker_plugins = $broker_plugins.reduce( {}) |$memo, $x| {
       # A nested hash contains the configuration.
       if ($x[1] =~ Hash) {
         # Fail if basic information is missing.
@@ -201,7 +198,7 @@ define activemq::instance (
           fail("Invalid \$broker_plugins configuration, invalid or missing value for \$enable in plugin ${x[0]} for instance ${name}.")
         }
         if ($x[1]['enable'] == true) {
-          $memo + {$x[0] => $x[1]}
+          $memo + { $x[0] => $x[1] }
         }
       } else {
         fail("Invalid \$broker_plugins configuration, expected a Hash but got something else in plugin ${x[0]} for instance ${name}.")
@@ -210,9 +207,8 @@ define activemq::instance (
 
     # Get a list of all role/user mappings.
     if (('users' in $security) and ($security['users'] =~ Hash)) {
-
       # Iterate over all users to find roles.
-      $_roles = $security['users'].reduce([]) |$memo, $x| {
+      $_roles = $security['users'].reduce( []) |$memo, $x| {
         # A nested hash contains the user configuration.
         if ($x[1] =~ Hash) {
           # Skip users that are not enabled.
@@ -234,7 +230,7 @@ define activemq::instance (
       }.unique()
 
       # Next iterate over all roles and collect their users.
-      $_role_mappings = $_roles.reduce({}) |$memo, $x| {
+      $_role_mappings = $_roles.reduce( {}) |$memo, $x| {
         $_users_tmp = $security['users'].reduce([]) |$m, $z| {
           # Skip users that are not enabled.
           if (('enable' in $z[1]) and ($z[1]['enable'] == true) and ('roles' in $z[1])) {
@@ -244,7 +240,7 @@ define activemq::instance (
             } else { $m }
           } else { $m }
         }
-        $memo + {$x => $_users_tmp}
+        $memo + { $x => $_users_tmp }
       }
     } else {
       # Default values to keep everyone happy.
@@ -254,42 +250,40 @@ define activemq::instance (
 
     # Create broker.xml configuration file.
     file { "instance ${name} broker.xml":
-      ensure  => 'present',
       path    => $broker_xml,
       mode    => '0640',
       content => epp($activemq::broker_template,{
-        'acceptors'                        => $_acceptors,
-        'address_settings'                 => $address_settings,
-        'addresses'                        => $addresses,
-        'allow_failback'                   => $allow_failback,
-        'bind'                             => $bind,
-        'broadcast_groups'                 => $broadcast_groups,
-        'broker_plugins'                   => $_broker_plugins,
-        'check_for_live_server'            => $check_for_live_server,
-        'cluster_password'                 => $activemq::cluster_password,
-        'cluster_user'                     => $activemq::cluster_user,
-        'connectors'                       => $connectors,
-        'discovery_groups'                 => $discovery_groups,
-        'failover_on_shutdown'             => $failover_on_shutdown,
-        'global_max_size_mb'               => $global_max_size_mb,
-        'group'                            => $group,
-        'ha_policy'                        => $ha_policy,
-        'initial_replication_sync_timeout' => $initial_replication_sync_timeout,
-        'journal_buffer_timeout'           => $journal_buffer_timeout,
-        'journal_datasync'                 => $journal_datasync,
-        'journal_max_io'                   => $journal_max_io,
-        'journal_type'                     => upcase($journal_type),
-        'name'                             => $name,
-        'max_disk_usage'                   => $max_disk_usage,
-        'max_hops'                         => $max_hops,
-        'message_load_balancing'           => upcase($message_load_balancing),
-        'persistence'                      => $persistence,
-        'port'                             => $port,
-        'role'                             => $role,
-        'security'                         => $security,
-        'vote_on_replication_failure'      => $vote_on_replication_failure,
-        }
-      ),
+          'acceptors'                        => $_acceptors,
+          'address_settings'                 => $address_settings,
+          'addresses'                        => $addresses,
+          'allow_failback'                   => $allow_failback,
+          'bind'                             => $bind,
+          'broadcast_groups'                 => $broadcast_groups,
+          'broker_plugins'                   => $_broker_plugins,
+          'check_for_live_server'            => $check_for_live_server,
+          'cluster_password'                 => $activemq::cluster_password,
+          'cluster_user'                     => $activemq::cluster_user,
+          'connectors'                       => $connectors,
+          'discovery_groups'                 => $discovery_groups,
+          'failover_on_shutdown'             => $failover_on_shutdown,
+          'global_max_size_mb'               => $global_max_size_mb,
+          'group'                            => $group,
+          'ha_policy'                        => $ha_policy,
+          'initial_replication_sync_timeout' => $initial_replication_sync_timeout,
+          'journal_buffer_timeout'           => $journal_buffer_timeout,
+          'journal_datasync'                 => $journal_datasync,
+          'journal_max_io'                   => $journal_max_io,
+          'journal_type'                     => upcase($journal_type),
+          'name'                             => $name,
+          'max_disk_usage'                   => $max_disk_usage,
+          'max_hops'                         => $max_hops,
+          'message_load_balancing'           => upcase($message_load_balancing),
+          'persistence'                      => $persistence,
+          'port'                             => $port,
+          'role'                             => $role,
+          'security'                         => $security,
+          'vote_on_replication_failure'      => $vote_on_replication_failure,
+      }),
       require => [
         Exec["create instance ${name}"]
       ],
@@ -297,13 +291,11 @@ define activemq::instance (
 
     # Create management.xml configuration file.
     file { "instance ${name} management.xml":
-      ensure  => 'present',
       path    => $management_xml,
       mode    => '0640',
       content => epp($activemq::management_template,{
-        'security' => $security,
-        }
-      ),
+          'security' => $security,
+      }),
       require => [
         Exec["create instance ${name}"]
       ],
@@ -311,15 +303,13 @@ define activemq::instance (
 
     # Create bootstrap.xml configuration file.
     file { "instance ${name} bootstrap.xml":
-      ensure  => 'present',
       path    => $bootstrap_xml,
       mode    => '0644',
       content => epp($activemq::bootstrap_template,{
-        'broker_xml' => $broker_xml,
-        'web_bind'   => $web_bind,
-        'web_port'   => $web_port,
-        }
-      ),
+          'broker_xml' => $broker_xml,
+          'web_bind'   => $web_bind,
+          'web_port'   => $web_port,
+      }),
       require => [
         Exec["create instance ${name}"]
       ],
@@ -327,13 +317,11 @@ define activemq::instance (
 
     # Create logging.properties configuration file.
     file { "instance ${name} logging.properties":
-      ensure  => 'present',
       path    => $logging_properties,
       mode    => '0644',
       content => epp($activemq::logging_template,{
-        'log_level' => $log_level,
-        }
-      ),
+          'log_level' => $log_level,
+      }),
       require => [
         Exec["create instance ${name}"]
       ],
@@ -341,7 +329,6 @@ define activemq::instance (
 
     # Create login.config file.
     file { "instance ${name} login.config":
-      ensure  => 'present',
       path    => $login_config,
       mode    => '0644',
       content => epp($activemq::login_template),
@@ -353,15 +340,13 @@ define activemq::instance (
     # Create artemis-users.properties file.
     if ($activemq::manage_users) {
       file { "instance ${name} artemis-users.properties":
-        ensure  => 'present',
         path    => $users_properties,
         mode    => '0644',
         content => epp($activemq::users_properties_template,{
-          'admin_password' => $activemq::admin_password,
-          'admin_user'     => $activemq::admin_user,
-          'security'       => $security,
-          }
-        ),
+            'admin_password' => $activemq::admin_password,
+            'admin_user'     => $activemq::admin_user,
+            'security'       => $security,
+        }),
         require => [
           Exec["create instance ${name}"]
         ],
@@ -371,15 +356,13 @@ define activemq::instance (
     # Create artemis-roles.properties file.
     if ($activemq::manage_roles) {
       file { "instance ${name} artemis-roles.properties":
-        ensure  => 'present',
         path    => $roles_properties,
         mode    => '0644',
         content => epp($activemq::roles_properties_template,{
-          'admin_user'    => $activemq::admin_user,
-          'role_mappings' => $_role_mappings,
-          'security'      => $security,
-          }
-        ),
+            'admin_user'    => $activemq::admin_user,
+            'role_mappings' => $_role_mappings,
+            'security'      => $security,
+        }),
         require => [
           Exec["create instance ${name}"]
         ],
