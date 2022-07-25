@@ -16,7 +16,11 @@
   ~ limitations under the License.
   -->
 
+<% if versioncmp($activemq::version, '2.21.0') >= 0 { -%>
 <broker xmlns="http://activemq.apache.org/schema">
+<% } else { -%>
+<broker xmlns="http://activemq.org/schema">
+<% } -%>
 
    <jaas-security domain="activemq"/>
 

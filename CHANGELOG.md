@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 * Add possibility to install behind proxy ([#2])
+* Add compatibility with version 2.21.0 and later
 
 ### Changed
-* Adopt namespace changes in bootstrap.xml and management.xml for version 2.21.0
-* Requires ActiveMQ Artemis version 2.21.0 or later
+* Adopt namespace changes in bootstrap.xml and management.xml (backwards-compatible)
 
 ## [v1.2.0] - 2021-09-02
 

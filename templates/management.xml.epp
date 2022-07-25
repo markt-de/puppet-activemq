@@ -15,7 +15,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<% if versioncmp($activemq::version, '2.21.0') >= 0 { -%>
 <management-context xmlns="http://activemq.apache.org/schema">
+<% } else { -%>
+<management-context xmlns="http://activemq.org/schema">
+<% } -%>
 <%# Check if management connectors can be found. -%>
 <% if (('management_connectors' in $security) and ($security['management_connectors'] =~ Hash)) { -%>
 <%   $security['management_connectors'].each |$mc_name, $mc_options| { -%>
