@@ -5,8 +5,6 @@ activemq::bootstrap_template: 'activemq/bootstrap.xml.epp'
 activemq::broker_template: 'activemq/broker.xml.epp'
 activemq::checksum: ~
 activemq::checksum_type: 'sha512'
-activemq::proxy_server: undef
-activemq::proxy_type: 'none'
 activemq::cluster: false
 activemq::cluster_name: ~
 activemq::cluster_password: 'clusterpassword'
@@ -251,6 +249,8 @@ activemq::manage_roles: true
 activemq::manage_users: true
 activemq::management_template: 'activemq/management.xml.epp'
 activemq::port: 61616
+activemq::proxy_server: ~
+activemq::proxy_type: 'none'
 activemq::roles_properties_template: 'activemq/roles.properties.epp'
 activemq::server_discovery: 'dynamic'
 activemq::service_enable: true
