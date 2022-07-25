@@ -15,7 +15,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<management-context xmlns="http://activemq.org/schema">
+<management-context xmlns="http://activemq.apache.org/schema">
 <%# Check if management connectors can be found. -%>
 <% if (('management_connectors' in $security) and ($security['management_connectors'] =~ Hash)) { -%>
 <%   $security['management_connectors'].each |$mc_name, $mc_options| { -%>
