@@ -6,6 +6,12 @@
 # @param admin_user
 #   Specifies the name of the user to use for standalone instances.
 #
+# @param bootstrap_template
+#   The template used to generate bootstrap.xml.
+#
+# @param broker_template
+#   The template used to generate broker.xml.
+#
 # @param checksum
 #   Specifies the checksum for the distribution archive, which will be verified
 #   after downloading the file and before starting the installation.
@@ -44,6 +50,9 @@
 # @param group
 #   Specifies the name of the group to use for the service/instance.
 #
+# @param hawtio_role
+#   Access to the JMX web console is only allow to users with this role.
+#
 # @param install_base
 #   Specifies the installation directory. This directory must already exist.
 #   A subdirectory for every version is automatically created.
@@ -62,6 +71,12 @@
 #   This directory must already exist. A subdirectory for every instance is
 #   automatically created.
 #
+# @param logging_template
+#   The template used to generate logging.properties.
+#
+# @param login_template
+#   The template used to generate login.config.
+#
 # @param manage_account
 #   Whether or not to create the user and group.
 #
@@ -74,6 +89,9 @@
 # @param manage_users
 #   Whether or not to manage ActiveMQ users.
 #
+# @param management_template
+#   The template used to generate management.xml.
+#
 # @param port
 #   Specifies the port to use for the artemis connector and will also be used
 #   as default port for the acceptor.
@@ -84,6 +102,9 @@
 # @param proxy_type
 #  Specify the proxy_type: proxy server type (none|http|https|ftp) 
 #  
+# @param roles_properties_template
+#   The template used to generate roles.properties.
+#
 # @param server_discovery
 #   Controls how servers can propagate their connection details.
 #
@@ -100,6 +121,9 @@
 #   Controls the name of the system service. Must NOT be changed while
 #   instances are running.
 #
+# @param service_template
+#   The template used to generate the service definition.
+#
 # @param symlink_name
 #   Controls the name of a version-independent symlink. It will always point
 #   to the release specified by `$version`.
@@ -109,6 +133,9 @@
 #
 # @param user
 #   Specifies the name of the user to use for the service/instance.
+#
+# @param users_properties_template
+#   The template used to generate users.properties.
 #
 # @param version
 #   Specifies the version of ActiveMQ (Artemis) to install and use. No default

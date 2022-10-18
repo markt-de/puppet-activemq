@@ -1,5 +1,11 @@
 # @summary Create an instance of ActiveMQ Artemis broker
 #
+# @param acceptors
+#   ActiveMQ Artemis acceptors.
+#
+# @param acceptor_settings
+#   Shared settings that should be used for ALL acceptors.
+#
 # @param address_settings
 #   A hash containing global address settings. This is especially useful
 #   for wildcard/catch all matches.
@@ -8,16 +14,76 @@
 #   A hash containing configuration for addresses (messaging endpoints),
 #   queues and routing types.
 #
+# @param allow_failback
+#   Should stop backup on live restart.
+#
 # @param bind
 #   Configure which IP address to listen on. Should be either a FQDN
 #   or an IP address.
+#
+# @param broadcast_groups
+#   ActiveMQ Artemis broadcast groups.
 #
 # @param broker_plugins
 #   A hash containing a list of broker plugins and their configuration.
 #   Each plugin can be enabled by setting `enable` to `true`.
 #
+# @param check_for_live_server
+#   Used for a live server to verify if there are other nodes with the same ID on the topology.
+#
+# @param connectors
+#   ActiveMQ Artemis connectors.
+#
+# @param discovery_groups
+#   ActiveMQ Artemis discovery groups.
+#
+# @param failover_on_shutdown
+#   This will cause a HA failover to occur on normal server shutdown.
+#
+# @param global_max_size_mb
+#   The amount in Mb before all addresses are considered full.
+#
+# @param group
+#   The group for ActiveMQ Artemis.
+#
+# @param ha_policy
+#   ActiveMQ Artemis HA policy.
+#
+# @param initial_replication_sync_timeout
+#   Timeout for initial replication to complete.
+#
+# @param journal_buffer_timeout
+#   The flush timeout for the journal buffer.
+#
+# @param journal_datasync
+#   Whether ActiveMQ Artemis will use msync/fsync on journal operations.
+#
+# @param journal_max_io
+#   The maximum number of write requests that can be in the ASYNCIO queue at any one time.
+#
+# @param journal_type
+#   The type of journal to use.
+#
 # @param log_level
 #   The log levels to use for the various configured loggers.
+#
+# @param max_disk_usage
+#   The max percentage of data to use from disks. The broker will block while the disk is full. Disable by setting -1.
+#
+# @param max_hops
+#   Maximum number of hops cluster topology is propagated.
+#
+# @param message_load_balancing
+#   Specifies how messages should be load balanced.
+#
+# @param persistence
+#   Whether the server will use the file based journal for persistence.
+#
+# @param port
+#   The port to use.
+#
+# @param role
+#   The replication role.
 #
 # @param security
 #   A hash containing the security configuration, includes users and roles.
@@ -32,6 +98,9 @@
 #   Specifies the target host where this instance should be installed.
 #   The value will be matched against `$facts['networking']['fqdn']`.
 #   This is especially useful for cluster configurations.
+#
+# @param vote_on_replication_failure
+#   Configuration for classic replication (not needed for Pluggable Quorum Vote Replication).
 #
 # @param web_bind
 #   The host name to use for embedded web server.

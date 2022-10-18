@@ -41,6 +41,18 @@ Data type: `String`
 
 Specifies the name of the user to use for standalone instances.
 
+##### `bootstrap_template`
+
+Data type: `String`
+
+The template used to generate bootstrap.xml.
+
+##### `broker_template`
+
+Data type: `String`
+
+The template used to generate broker.xml.
+
 ##### `checksum`
 
 Data type: `Optional[String]`
@@ -120,6 +132,12 @@ Data type: `String`
 
 Specifies the name of the group to use for the service/instance.
 
+##### `hawtio_role`
+
+Data type: `String`
+
+Access to the JMX web console is only allow to users with this role.
+
 ##### `install_base`
 
 Data type: `Stdlib::Compat::Absolute_path`
@@ -150,6 +168,18 @@ Specifies the directory where broker instances should be installed.
 This directory must already exist. A subdirectory for every instance is
 automatically created.
 
+##### `logging_template`
+
+Data type: `String`
+
+The template used to generate logging.properties.
+
+##### `login_template`
+
+Data type: `String`
+
+The template used to generate login.config.
+
 ##### `manage_account`
 
 Data type: `Boolean`
@@ -174,12 +204,40 @@ Data type: `Boolean`
 
 Whether or not to manage ActiveMQ users.
 
+##### `management_template`
+
+Data type: `String`
+
+The template used to generate management.xml.
+
 ##### `port`
 
 Data type: `Integer`
 
 Specifies the port to use for the artemis connector and will also be used
 as default port for the acceptor.
+
+##### `proxy_server`
+
+Data type: `Optional[String]`
+
+Specify a proxy server, with port number if needed. ie: https://example.com:8080
+
+Default value: ``undef``
+
+##### `proxy_type`
+
+Data type: `Optional[String]`
+
+Specify the proxy_type: proxy server type (none|http|https|ftp)
+
+Default value: ``undef``
+
+##### `roles_properties_template`
+
+Data type: `String`
+
+The template used to generate roles.properties.
 
 ##### `server_discovery`
 
@@ -212,6 +270,12 @@ Data type: `String`
 Controls the name of the system service. Must NOT be changed while
 instances are running.
 
+##### `service_template`
+
+Data type: `String`
+
+The template used to generate the service definition.
+
 ##### `symlink_name`
 
 Data type: `String`
@@ -233,6 +297,12 @@ Data type: `String`
 
 Specifies the name of the user to use for the service/instance.
 
+##### `users_properties_template`
+
+Data type: `String`
+
+The template used to generate users.properties.
+
 ##### `version`
 
 Data type: `String`
@@ -241,48 +311,6 @@ Specifies the version of ActiveMQ (Artemis) to install and use. No default
 value is provided on purpose, to avoid prevent new users from using a
 outdated version and to avoid unexpected updates by later changing the
 default value.
-
-##### `bootstrap_template`
-
-Data type: `String`
-
-
-
-##### `broker_template`
-
-Data type: `String`
-
-
-
-##### `logging_template`
-
-Data type: `String`
-
-
-
-##### `login_template`
-
-Data type: `String`
-
-
-
-##### `roles_properties_template`
-
-Data type: `String`
-
-
-
-##### `service_template`
-
-Data type: `String`
-
-
-
-##### `users_properties_template`
-
-Data type: `String`
-
-
 
 ## Defined types
 
@@ -293,6 +321,18 @@ Create an instance of ActiveMQ Artemis broker
 #### Parameters
 
 The following parameters are available in the `activemq::instance` defined type.
+
+##### `acceptors`
+
+Data type: `Hash[String[1], Hash]`
+
+ActiveMQ Artemis acceptors.
+
+##### `acceptor_settings`
+
+Data type: `Array`
+
+Shared settings that should be used for ALL acceptors.
 
 ##### `address_settings`
 
@@ -308,12 +348,24 @@ Data type: `Hash[String[1], Hash]`
 A hash containing configuration for addresses (messaging endpoints),
 queues and routing types.
 
+##### `allow_failback`
+
+Data type: `Boolean`
+
+Should stop backup on live restart.
+
 ##### `bind`
 
 Data type: `String`
 
 Configure which IP address to listen on. Should be either a FQDN
 or an IP address.
+
+##### `broadcast_groups`
+
+Data type: `Array`
+
+ActiveMQ Artemis broadcast groups.
 
 ##### `broker_plugins`
 
@@ -322,11 +374,123 @@ Data type: `Hash[String[1], Hash]`
 A hash containing a list of broker plugins and their configuration.
 Each plugin can be enabled by setting `enable` to `true`.
 
+##### `check_for_live_server`
+
+Data type: `Boolean`
+
+Used for a live server to verify if there are other nodes with the same ID on the topology.
+
+##### `connectors`
+
+Data type: `Hash[String[1], Hash]`
+
+ActiveMQ Artemis connectors.
+
+##### `discovery_groups`
+
+Data type: `Array`
+
+ActiveMQ Artemis discovery groups.
+
+##### `failover_on_shutdown`
+
+Data type: `Boolean`
+
+This will cause a HA failover to occur on normal server shutdown.
+
+##### `global_max_size_mb`
+
+Data type: `Optional[Integer]`
+
+The amount in Mb before all addresses are considered full.
+
+Default value: ``undef``
+
+##### `group`
+
+Data type: `Optional[String]`
+
+The group for ActiveMQ Artemis.
+
+Default value: ``undef``
+
+##### `ha_policy`
+
+Data type: `Enum['live-only','replication','shared-storage']`
+
+ActiveMQ Artemis HA policy.
+
+##### `initial_replication_sync_timeout`
+
+Data type: `Integer`
+
+Timeout for initial replication to complete.
+
+##### `journal_buffer_timeout`
+
+Data type: `Integer`
+
+The flush timeout for the journal buffer.
+
+##### `journal_datasync`
+
+Data type: `Boolean`
+
+Whether ActiveMQ Artemis will use msync/fsync on journal operations.
+
+##### `journal_max_io`
+
+Data type: `Integer`
+
+The maximum number of write requests that can be in the ASYNCIO queue at any one time.
+
+##### `journal_type`
+
+Data type: `Enum['asyncio','mapped','nio']`
+
+The type of journal to use.
+
 ##### `log_level`
 
 Data type: `Hash`
 
 The log levels to use for the various configured loggers.
+
+##### `max_disk_usage`
+
+Data type: `Integer`
+
+The max percentage of data to use from disks. The broker will block while the disk is full. Disable by setting -1.
+
+##### `max_hops`
+
+Data type: `Integer`
+
+Maximum number of hops cluster topology is propagated.
+
+##### `message_load_balancing`
+
+Data type: `Enum['off','strict','on_demand']`
+
+Specifies how messages should be load balanced.
+
+##### `persistence`
+
+Data type: `Boolean`
+
+Whether the server will use the file based journal for persistence.
+
+##### `port`
+
+Data type: `Integer`
+
+The port to use.
+
+##### `role`
+
+Data type: `Enum['master','slave']`
+
+The replication role.
 
 ##### `security`
 
@@ -360,6 +524,12 @@ This is especially useful for cluster configurations.
 
 Default value: ``undef``
 
+##### `vote_on_replication_failure`
+
+Data type: `Boolean`
+
+Configuration for classic replication (not needed for Pluggable Quorum Vote Replication).
+
 ##### `web_bind`
 
 Data type: `String`
@@ -371,146 +541,4 @@ The host name to use for embedded web server.
 Data type: `Integer`
 
 The port to use for embedded web server.
-
-##### `acceptors`
-
-Data type: `Hash[String[1], Hash]`
-
-
-
-##### `acceptor_settings`
-
-Data type: `Array`
-
-
-
-##### `allow_failback`
-
-Data type: `Boolean`
-
-
-
-##### `broadcast_groups`
-
-Data type: `Array`
-
-
-
-##### `check_for_live_server`
-
-Data type: `Boolean`
-
-
-
-##### `connectors`
-
-Data type: `Hash[String[1], Hash]`
-
-
-
-##### `discovery_groups`
-
-Data type: `Array`
-
-
-
-##### `failover_on_shutdown`
-
-Data type: `Boolean`
-
-
-
-##### `ha_policy`
-
-Data type: `Enum['live-only','replication','shared-storage']`
-
-
-
-##### `initial_replication_sync_timeout`
-
-Data type: `Integer`
-
-
-
-##### `journal_buffer_timeout`
-
-Data type: `Integer`
-
-
-
-##### `journal_datasync`
-
-Data type: `Boolean`
-
-
-
-##### `journal_max_io`
-
-Data type: `Integer`
-
-
-
-##### `journal_type`
-
-Data type: `Enum['asyncio','mapped','nio']`
-
-
-
-##### `max_disk_usage`
-
-Data type: `Integer`
-
-
-
-##### `max_hops`
-
-Data type: `Integer`
-
-
-
-##### `message_load_balancing`
-
-Data type: `Enum['off','strict','on_demand']`
-
-
-
-##### `persistence`
-
-Data type: `Boolean`
-
-
-
-##### `port`
-
-Data type: `Integer`
-
-
-
-##### `role`
-
-Data type: `Enum['master','slave']`
-
-
-
-##### `vote_on_replication_failure`
-
-Data type: `Boolean`
-
-
-
-##### `global_max_size_mb`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: ``undef``
-
-##### `group`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
 
