@@ -2,6 +2,7 @@
 fixtures:
   forge_modules:
     archive: "puppet/archive"
+    java: "puppetlabs/java"
     stdlib: "puppetlabs/stdlib"
   repositories:
     facts: "https://github.com/puppetlabs/puppetlabs-facts.git"

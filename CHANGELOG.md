@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 * Add new parameters: `$java_args`, `$java_xms`, `$java_xmx`
-* Add basic unit tests
+* Add basic unit/acceptance tests
 * Add documentation for all parameters
 
 ### Changed

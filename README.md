@@ -42,8 +42,8 @@ class { 'java': }
 class { 'activemq':
   admin_password => 'seCReT',
   admin_user => 'admin',
-  checksum => '84b5a65d8eb2fc8cf3f17df524d586b0c6a2acfa9a09089d5ffdfc1323ff99dfdc775b2e95eec264cfeddc4742839ba9b0f3269351a5c955dd4bbf6d5ec5dfa9',
-  version => '2.14.0',
+  checksum => 'a73331cb959bb0ba9667414682c279bc9ce2aec4c8fecbcdee4670bf9d63bf66010c8c55a6b727b1ad6d51bbccadd663b96a70b867721d9388d54a9391c6af85',
+  version => '2.23.1',
 }
 ```
 
@@ -86,9 +86,9 @@ $instances = {
 
 class { 'java': }
 class { 'activemq':
-  checksum => '84b5a65d8eb2fc8cf3f17df524d586b0c6a2acfa9a09089d5ffdfc1323ff99dfdc775b2e95eec264cfeddc4742839ba9b0f3269351a5c955dd4bbf6d5ec5dfa9',
+  checksum => 'a73331cb959bb0ba9667414682c279bc9ce2aec4c8fecbcdee4670bf9d63bf66010c8c55a6b727b1ad6d51bbccadd663b96a70b867721d9388d54a9391c6af85',
   instances => $instances,
-  version => '2.14.0',
+  version => '2.23.1',
 }
 ```
 
