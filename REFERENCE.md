@@ -168,6 +168,20 @@ Specifies the directory where broker instances should be installed.
 This directory must already exist. A subdirectory for every instance is
 automatically created.
 
+##### `java_args`
+
+Options for the JVM. Be careful to not override required default options.
+The syntax may look a bit off, but this way it's possible to replace
+certain values or to remove an option by adding the value 'DISABLED'.
+
+##### `java_xms`
+
+The initial Java heap size.
+
+##### `java_xmx`
+
+The maximum Java heap size.
+
 ##### `logging_template`
 
 Data type: `String`
@@ -434,17 +448,23 @@ Options for the JVM. Be careful to not override required default options.
 The syntax may look a bit off, but this way it's possible to replace
 certain values or to remove an option by adding the value 'DISABLED'.
 
+Default value: `$activemq::java_args`
+
 ##### `java_xms`
 
 Data type: `String`
 
 The initial Java heap size.
 
+Default value: `$activemq::java_xms`
+
 ##### `java_xmx`
 
 Data type: `String`
 
 The maximum Java heap size.
+
+Default value: `$activemq::java_xmx`
 
 ##### `journal_buffer_timeout`
 

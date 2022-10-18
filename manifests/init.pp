@@ -71,6 +71,17 @@
 #   This directory must already exist. A subdirectory for every instance is
 #   automatically created.
 #
+# @param java_args
+#   Options for the JVM. Be careful to not override required default options.
+#   The syntax may look a bit off, but this way it's possible to replace
+#   certain values or to remove an option by adding the value 'DISABLED'.
+#
+# @param java_xms
+#   The initial Java heap size.
+#
+# @param java_xmx
+#   The maximum Java heap size.
+#
 # @param logging_template
 #   The template used to generate logging.properties.
 #
@@ -160,6 +171,9 @@ class activemq (
   Hash $instance_defaults,
   Hash[String[1], Hash] $instances,
   Stdlib::Compat::Absolute_path $instances_base,
+  Hash $java_args,
+  String $java_xms,
+  String $java_xmx,
   String $logging_template,
   String $login_template,
   Boolean $manage_account,
