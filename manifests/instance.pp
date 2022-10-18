@@ -516,6 +516,7 @@ define activemq::instance (
         File["instance ${name} broker.xml"],
         File["instance ${name} management.xml"],
         File_line["instance ${name} set HAWTIO_ROLE"],
+        File_line["instance ${name} set JAVA_ARGS"],
       ],
       require   => [
         File["instance ${name} broker.xml"],
@@ -523,6 +524,7 @@ define activemq::instance (
         File["instance ${name} artemis-users.properties"],
         File["instance ${name} artemis-roles.properties"],
         File_line["instance ${name} set HAWTIO_ROLE"],
+        File_line["instance ${name} set JAVA_ARGS"],
       ],
     }
   }
