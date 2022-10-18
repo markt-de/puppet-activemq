@@ -1,6 +1,11 @@
-# This file can be used to install module dependencies for unit testing
-# See https://github.com/puppetlabs/puppetlabs_spec_helper#using-fixtures for details
 ---
 fixtures:
   forge_modules:
-#     stdlib: "puppetlabs/stdlib"
+    archive: "puppet/archive"
+    stdlib: "puppetlabs/stdlib"
+  repositories:
+    facts: "https://github.com/puppetlabs/puppetlabs-facts.git"
+    provision: "https://github.com/puppetlabs/provision.git"
+    puppet_agent: "https://github.com/puppetlabs/puppetlabs-puppet_agent.git"
+  symlinks:
+    activemq: "#{source_dir}"

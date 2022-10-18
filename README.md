@@ -1,6 +1,6 @@
 # puppet-activemq
 
-[![Build Status](https://travis-ci.org/markt-de/puppet-activemq.png?branch=master)](https://travis-ci.org/markt-de/puppet-activemq)
+[![Build Status](https://github.com/markt-de/puppet-activemq/actions/workflows/ci.yaml/badge.svg)](https://github.com/markt-de/puppet-activemq/actions/workflows/ci.yaml)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/fraenki/activemq.svg)](https://forge.puppetlabs.com/fraenki/activemq)
 [![Puppet Forge](https://img.shields.io/puppetforge/f/fraenki/activemq.svg)](https://forge.puppetlabs.com/fraenki/activemq)
 
@@ -40,8 +40,8 @@ The checksum is available from ActiveMQ's [download page](https://activemq.apach
 ```puppet
 class { 'java': }
 class { 'activemq':
-  admin_password => 'seCReT'
-  admin_user => 'admin'
+  admin_password => 'seCReT',
+  admin_user => 'admin',
   checksum => '84b5a65d8eb2fc8cf3f17df524d586b0c6a2acfa9a09089d5ffdfc1323ff99dfdc775b2e95eec264cfeddc4742839ba9b0f3269351a5c955dd4bbf6d5ec5dfa9',
   version => '2.14.0',
 }
@@ -100,8 +100,11 @@ Instead of using the `$instances` parameter, the defined type can also be used d
 activemq::instance { 'test1':
   bind => $facts['networking']['ip'],
   port => 61616,
+  ...
 }
 ```
+
+But contrary to the `$instances` parameter, all required parameters have to be provided when using the defined type directly.
 
 ### Clusters
 
