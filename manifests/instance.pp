@@ -491,7 +491,8 @@ define activemq::instance (
       path               => $artemis_profile,
       line               => "JAVA_ARGS=\"${java_args_real}\"",
       after              => '^# Java Opts',
-      append_on_no_match => false,
+      match              => '^JAVA_ARGS=',
+      append_on_no_match => true,
       require            => [
         Exec["create instance ${name}"]
       ],
