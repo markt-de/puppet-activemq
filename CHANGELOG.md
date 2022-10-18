@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
+* Add new parameters: `$java_args`, `$java_xms`, `$java_xmx`
 * Add documentation for all parameters
+
+### Changed
+* Manage custom JAVA_ARGS in artemis.profile
 
 ## [v1.3.0] - 2022-07-27
 

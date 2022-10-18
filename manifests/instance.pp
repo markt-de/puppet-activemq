@@ -52,6 +52,17 @@
 # @param initial_replication_sync_timeout
 #   Timeout for initial replication to complete.
 #
+# @param java_args
+#   Options for the JVM. Be careful to not override required default options.
+#   The syntax may look a bit off, but this way it's possible to replace
+#   certain values or to remove an option by adding the value 'DISABLED'.
+#
+# @param java_xms
+#   The initial Java heap size.
+#
+# @param java_xmx
+#   The maximum Java heap size.
+#
 # @param journal_buffer_timeout
 #   The flush timeout for the journal buffer.
 #
@@ -123,6 +134,9 @@ define activemq::instance (
   Boolean $failover_on_shutdown,
   Enum['live-only','replication','shared-storage'] $ha_policy,
   Integer $initial_replication_sync_timeout,
+  Hash $java_args,
+  String $java_xms,
+  String $java_xmx,
   Integer $journal_buffer_timeout,
   Boolean $journal_datasync,
   Integer $journal_max_io,
@@ -456,6 +470,27 @@ define activemq::instance (
       path               => $artemis_profile,
       line               => "ARTEMIS_HOME=\'${$activemq::install_base}/${$activemq::symlink_name}\'",
       match              => '^ARTEMIS_HOME=',
+      append_on_no_match => false,
+      require            => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
+    # Configure JAVA_ARGS.
+    $java_args_tmp = $java_args.reduce([]) |$memo, $x| {
+      if (($x[1] =~ String) and $x[1] == 'DISABLED') {
+        # ignore disabled options
+        $memo
+      } else {
+        $memo + "-${x[0]}${x[1]}"
+      }
+    }
+    $java_args_real = join($java_args_tmp, ' ')
+    file_line { "instance ${name} set JAVA_ARGS":
+      ensure             => 'present',
+      path               => $artemis_profile,
+      line               => "JAVA_ARGS=\"${java_args_real}\"",
+      match              => '^# Java Opts',
       append_on_no_match => false,
       require            => [
         Exec["create instance ${name}"]

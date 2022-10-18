@@ -426,6 +426,26 @@ Data type: `Integer`
 
 Timeout for initial replication to complete.
 
+##### `java_args`
+
+Data type: `Hash`
+
+Options for the JVM. Be careful to not override required default options.
+The syntax may look a bit off, but this way it's possible to replace
+certain values or to remove an option by adding the value 'DISABLED'.
+
+##### `java_xms`
+
+Data type: `String`
+
+The initial Java heap size.
+
+##### `java_xmx`
+
+Data type: `String`
+
+The maximum Java heap size.
+
 ##### `journal_buffer_timeout`
 
 Data type: `Integer`
