@@ -174,12 +174,12 @@ under the License.
 <%     } -%>
 <%   } -%>
 <%   if $ha_policy == 'shared-storage' { -%>
-<%     if $allow_failback and $role == 'slave' { -%>
-               <allow-failback>true</allow-failback>
-<%     } -%>
 <%     if $failover_on_shutdown and $role == 'master' { -%>
                <failover-on-shutdown>true</failover-on-shutdown>
 <%     } -%>
+<%   } -%>
+<%   if $allow_failback and $role == 'slave' { -%>
+               <allow-failback>true</allow-failback>
 <%   } -%>
             </<%= $role %>>
          </<%= $ha_policy %>>

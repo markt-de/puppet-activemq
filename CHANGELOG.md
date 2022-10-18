@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 * Manage custom JAVA_ARGS in artemis.profile
+* Enable allow-failback for all HA policies (not restricted to shared storage anymore)
 
 ### Fixed
 * Fix failed validation when setting `$cluster=false`
