@@ -206,7 +206,7 @@ class activemq (
   ~> class { 'activemq::service': }
 
   # Ensure that a valid cluster configuration is provided.
-  if ($cluster and empty($cluster_name) or !($cluster_name =~ String)) {
+  if ($cluster and (empty($cluster_name) or !($cluster_name =~ String))) {
     fail('Cluster support is enabled but no value for $cluster_name was provided.')
   } elsif ($cluster and empty($cluster_topology)) {
     fail('Cluster support is enabled but no value for $cluster_topology was provided.')

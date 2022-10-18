@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 * Manage custom JAVA_ARGS in artemis.profile
 
+### Fixed
+* Fix failed validation when setting `$cluster=false`
+
 ## [v1.3.0] - 2022-07-27
 
 ### Added
