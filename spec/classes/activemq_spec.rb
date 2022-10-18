@@ -35,11 +35,11 @@ describe 'activemq' do
             instances: {
               instance1: {
                 bind: 'localhost',
-                port: 61616,
+                port: 61_616,
                 web_port: 8161,
                 acceptors: {
                   artemis: {
-                    port: 61616,
+                    port: 61_616,
                   },
                   amqp: {
                     port: 5672,
@@ -48,11 +48,11 @@ describe 'activemq' do
               },
               instance2: {
                 bind: 'localhost',
-                port: 62616,
+                port: 62_616,
                 web_port: 8261,
                 acceptors: {
                   artemis: {
-                    port: 62616,
+                    port: 62_616,
                   },
                   amqp: {
                     port: 5772,
@@ -61,11 +61,11 @@ describe 'activemq' do
               },
               instance3: {
                 bind: 'localhost',
-                port: 63616,
+                port: 63_616,
                 web_port: 8361,
                 acceptors: {
                   artemis: {
-                    port: 63616,
+                    port: 63_616,
                   },
                   amqp: {
                     port: 5872,
