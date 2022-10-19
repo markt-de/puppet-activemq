@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 * Fix failed validation when setting `$cluster=false`
+* Do not try to 'enable' the systemd unit template (fails on recent systemd versions)
 
 ## [v1.3.0] - 2022-07-27
 

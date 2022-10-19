@@ -5,23 +5,12 @@
 #
 # @api private
 class activemq::service {
-  # Install service file for multi-instance support.
+  # Install service template file for multi-instance support.
   file { $activemq::service_file:
     ensure  => file,
     owner   => 'root',
     group   => 0,
     mode    => '0644',
     content => epp($activemq::service_template),
-  }
-
-  # Enable main service.
-  service { "${activemq::service_name}@":
-    enable    => $activemq::service_enable,
-    subscribe => [
-      Class['activemq::install'],
-    ],
-    require   => [
-      File[$activemq::service_file],
-    ],
   }
 }
