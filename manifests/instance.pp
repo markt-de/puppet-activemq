@@ -433,6 +433,12 @@ define activemq::instance (
         require => [
           Exec["create instance ${name}"]
         ],
+        before  => [
+          Service[$instance_service],
+        ],
+        notify  => [
+          Service[$instance_service],
+        ],
       }
     }
 
@@ -448,6 +454,12 @@ define activemq::instance (
         }),
         require => [
           Exec["create instance ${name}"]
+        ],
+        before  => [
+          Service[$instance_service],
+        ],
+        notify  => [
+          Service[$instance_service],
         ],
       }
     }
@@ -516,14 +528,18 @@ define activemq::instance (
         Class['activemq::install'],
         File["instance ${name} broker.xml"],
         File["instance ${name} management.xml"],
+        File["instance ${name} bootstrap.xml"],
+        File["instance ${name} logging.properties"],
+        File["instance ${name} login.config"],
         File_line["instance ${name} set HAWTIO_ROLE"],
         File_line["instance ${name} set JAVA_ARGS"],
       ],
       require   => [
         File["instance ${name} broker.xml"],
         File["instance ${name} management.xml"],
-        File["instance ${name} artemis-users.properties"],
-        File["instance ${name} artemis-roles.properties"],
+        File["instance ${name} bootstrap.xml"],
+        File["instance ${name} logging.properties"],
+        File["instance ${name} login.config"],
         File_line["instance ${name} set HAWTIO_ROLE"],
         File_line["instance ${name} set JAVA_ARGS"],
       ],
