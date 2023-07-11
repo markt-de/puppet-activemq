@@ -1,8 +1,8 @@
 # puppet-activemq
 
 [![Build Status](https://github.com/markt-de/puppet-activemq/actions/workflows/ci.yaml/badge.svg)](https://github.com/markt-de/puppet-activemq/actions/workflows/ci.yaml)
-[![Puppet Forge](https://img.shields.io/puppetforge/v/fraenki/activemq.svg)](https://forge.puppetlabs.com/fraenki/activemq)
-[![Puppet Forge](https://img.shields.io/puppetforge/f/fraenki/activemq.svg)](https://forge.puppetlabs.com/fraenki/activemq)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/markt/activemq.svg)](https://forge.puppetlabs.com/markt/activemq)
+[![Puppet Forge](https://img.shields.io/puppetforge/f/markt/activemq.svg)](https://forge.puppetlabs.com/markt/activemq)
 
 #### Table of Contents
 

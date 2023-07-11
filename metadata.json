@@ -1,5 +1,5 @@
 {
-  "name": "fraenki-activemq",
+  "name": "markt-activemq",
   "version": "1.5.0",
   "author": "markt.de",
   "summary": "Manage ActiveMQ Artemis standalone and clusters",
