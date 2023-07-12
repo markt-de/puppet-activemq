@@ -409,7 +409,7 @@ define activemq::instance (
       file { "instance ${name} log4j2.properties":
         path    => $log4j_properties,
         mode    => '0644',
-        content => epp($activemq::logging_template,{
+        content => epp($activemq::log4j_template,{
             'log4j_level' => $log4j_level,
         }),
         require => [
