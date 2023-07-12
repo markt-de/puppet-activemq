@@ -76,7 +76,10 @@
 #   The type of journal to use.
 #
 # @param log_level
-#   The log levels to use for the various configured loggers.
+#   The log levels to use for the various configured loggers (on versions before 2.27.0).
+#
+# @param log4j_level
+#   The log levels to use for the various configured loggers (on version 2.27.0 and later).
 #
 # @param max_disk_usage
 #   The max percentage of data to use from disks. The broker will block while the disk is full. Disable by setting -1.
@@ -139,6 +142,7 @@ define activemq::instance (
   Integer $journal_max_io,
   Enum['asyncio','mapped','nio'] $journal_type,
   Hash $log_level,
+  Hash $log4j_level,
   Integer $max_disk_usage,
   Integer $max_hops,
   Enum['off','strict','on_demand'] $message_load_balancing,
@@ -172,6 +176,7 @@ define activemq::instance (
     $bootstrap_xml = "${instance_dir}/etc/bootstrap.xml"
     $broker_xml = "${instance_dir}/etc/broker.xml"
     $management_xml = "${instance_dir}/etc/management.xml"
+    $log4j_properties = "${instance_dir}/etc/log4j2.properties"
     $logging_properties = "${instance_dir}/etc/logging.properties"
     $login_config = "${instance_dir}/etc/login.config"
     $instance_service = "${activemq::service_name}@${name}"
@@ -398,16 +403,31 @@ define activemq::instance (
       ],
     }
 
-    # Create logging.properties configuration file.
-    file { "instance ${name} logging.properties":
-      path    => $logging_properties,
-      mode    => '0644',
-      content => epp($activemq::logging_template,{
-          'log_level' => $log_level,
-      }),
-      require => [
-        Exec["create instance ${name}"]
-      ],
+    # Create appropiate logging configuration.
+    if (versioncmp($activemq::version, '2.27.0') >= 0) {
+      # Recent versions use the log4j2.properties configuration file.
+      file { "instance ${name} log4j2.properties":
+        path    => $log4j_properties,
+        mode    => '0644',
+        content => epp($activemq::logging_template,{
+            'log4j_level' => $log4j_level,
+        }),
+        require => [
+          Exec["create instance ${name}"]
+        ],
+      }
+    } else {
+      # Older versions use the logging.properties configuration file.
+      file { "instance ${name} logging.properties":
+        path    => $logging_properties,
+        mode    => '0644',
+        content => epp($activemq::logging_template,{
+            'log_level' => $log_level,
+        }),
+        require => [
+          Exec["create instance ${name}"]
+        ],
+      }
     }
 
     # Create login.config file.

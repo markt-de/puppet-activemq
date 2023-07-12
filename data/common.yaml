@@ -170,6 +170,14 @@ activemq::instance_defaults:
     console: 'ERROR'
     jetty: 'WARN'
     root: 'INFO'
+  log4j_level:
+    analyzer: 'INFO'
+    artemis: 'INFO'
+    audit: 'OFF'
+    curator: 'WARN'
+    jetty: 'WARN'
+    root: 'INFO'
+    zookeeper: 'ERROR'
   max_disk_usage: 90
   max_hops: 0
   message_load_balancing: 'on_demand'
@@ -253,6 +261,7 @@ activemq::java_args:
   'Djolokia.policyLocation=${ARTEMIS_INSTANCE_ETC_URI}jolokia-access.xml': ''
 activemq::java_xms: '512M'
 activemq::java_xmx: '2G'
+activemq::log4j_template: 'activemq/log4j2.properties.epp'
 activemq::logging_template: 'activemq/logging.properties.epp'
 activemq::login_template: 'activemq/login.config.epp'
 activemq::manage_account: true
