@@ -207,7 +207,7 @@ Classes and parameters are documented in [REFERENCE.md](REFERENCE.md).
 
 ## Limitations
 
-Upgrades of ActiveMQ Artemis are currently not supported, but this feature is planned for a later release of this module.
+Upgrades of ActiveMQ Artemis are supported to a certain degree, provided that the new version is compatible with this module. Please note that in-place upgrades are performed and the official upgrade script is not used. This may have unwanted side-effect. Overall this upgrade procedure should be pretty safe for multi-instance primary/backup setups.
 
 ## Development
 
