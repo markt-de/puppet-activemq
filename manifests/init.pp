@@ -13,8 +13,8 @@
 #   The template used to generate broker.xml.
 #
 # @param checksum
-#   Specifies the checksum for the distribution archive, which will be verified
-#   after downloading the file and before starting the installation.
+#   Specifies the checksum for the distribution archive (bin.tar.gz), which will
+#   be verified after downloading the file and before starting the installation.
 #
 # @param checksum_type
 #   Specifies the type of the checksum. Defaults to `sha512`.

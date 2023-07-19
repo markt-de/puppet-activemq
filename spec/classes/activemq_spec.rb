@@ -8,13 +8,16 @@ describe 'activemq' do
       let(:activemq_user) { 'admin' }
       let(:activemq_version) { '2.23.1' }
 
-      context 'with default parameters' do
+      context 'a standalone instance with default parameters' do
         let :params do
           {
             admin_password: activemq_password.to_s,
             admin_user: activemq_user.to_s,
             checksum: activemq_checksum.to_s,
             cluster: false,
+            instances: {
+              'activemq': {},
+            },
             version: activemq_version.to_s,
           }
         end
