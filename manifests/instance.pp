@@ -336,6 +336,26 @@ define activemq::instance (
       $_role_mappings = {}
     }
 
+    # The contents of the subscribe/require parameters depends
+    # on the ActiveMQ Artemis version number.
+    $_service_subscribe_pre = [
+      Class['activemq::install'],
+      File["instance ${name} broker.xml"],
+      File["instance ${name} management.xml"],
+      File["instance ${name} bootstrap.xml"],
+      File["instance ${name} login.config"],
+      File_line["instance ${name} set HAWTIO_ROLE"],
+      File_line["instance ${name} set JAVA_ARGS"],
+    ]
+    $_service_require_pre = [
+      File["instance ${name} broker.xml"],
+      File["instance ${name} management.xml"],
+      File["instance ${name} bootstrap.xml"],
+      File["instance ${name} login.config"],
+      File_line["instance ${name} set HAWTIO_ROLE"],
+      File_line["instance ${name} set JAVA_ARGS"],
+    ]
+
     # Create broker.xml configuration file.
     file { "instance ${name} broker.xml":
       path    => $broker_xml,
@@ -416,6 +436,9 @@ define activemq::instance (
           Exec["create instance ${name}"]
         ],
       }
+      # Update service subscribe/require parameters.
+      $_service_subscribe = $_service_subscribe_pre + [File["instance ${name} log4j2.properties"]]
+      $_service_require = $_service_require_pre + [File["instance ${name} log4j2.properties"]]
     } else {
       # Older versions use the logging.properties configuration file.
       file { "instance ${name} logging.properties":
@@ -428,6 +451,9 @@ define activemq::instance (
           Exec["create instance ${name}"]
         ],
       }
+      # Update service subscribe/require parameters.
+      $_service_subscribe = $_service_subscribe_pre + [File["instance ${name} logging.properties"]]
+      $_service_require = $_service_require_pre + [File["instance ${name} logging.properties"]]
     }
 
     # Create login.config file.
@@ -544,25 +570,8 @@ define activemq::instance (
     service { $instance_service:
       ensure    => $_service_ensure,
       enable    => $_service_enable,
-      subscribe => [
-        Class['activemq::install'],
-        File["instance ${name} broker.xml"],
-        File["instance ${name} management.xml"],
-        File["instance ${name} bootstrap.xml"],
-        File["instance ${name} logging.properties"],
-        File["instance ${name} login.config"],
-        File_line["instance ${name} set HAWTIO_ROLE"],
-        File_line["instance ${name} set JAVA_ARGS"],
-      ],
-      require   => [
-        File["instance ${name} broker.xml"],
-        File["instance ${name} management.xml"],
-        File["instance ${name} bootstrap.xml"],
-        File["instance ${name} logging.properties"],
-        File["instance ${name} login.config"],
-        File_line["instance ${name} set HAWTIO_ROLE"],
-        File_line["instance ${name} set JAVA_ARGS"],
-      ],
+      subscribe => $_service_subscribe,
+      require   => $_service_require,
     }
   }
 }
