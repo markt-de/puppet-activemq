@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 * Setup `log4j2.properties` on version 2.27.0 and later
 * Setup `logging properties` only on versions before 2.27.0
+* Update to PDK 3.0
+
+### Fixed
+* Fix GitHub Actions
 
 ## [v1.5.0] - 2022-10-24
 

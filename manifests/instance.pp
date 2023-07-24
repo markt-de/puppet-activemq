@@ -228,7 +228,7 @@ define activemq::instance (
 
     # Iterate over all acceptors to validate and update their configuration.
     # This keeps this complexity away from the templates.
-    $_acceptors = $acceptors.reduce( {}) |$memo, $x| {
+    $_acceptors = $acceptors.reduce({}) |$memo, $x| {
       # A nested hash contains the configuration.
       if ($x[1] =~ Hash) {
         # Fail if basic information is missing.
@@ -265,7 +265,7 @@ define activemq::instance (
         $_settings_list = join($_settings, ';')
 
         # Finally merge with all other options.
-        $_values = $x[1].deep_merge( {
+        $_values = $x[1].deep_merge({
             'protocols_list' => $_protocols_list,
             'settings' => $_settings,
             'settings_list' => $_settings_list,
@@ -278,7 +278,7 @@ define activemq::instance (
 
     # Iterate over all broker plugins. Only enabled plugins will be passed
     # to the template.
-    $_broker_plugins = $broker_plugins.reduce( {}) |$memo, $x| {
+    $_broker_plugins = $broker_plugins.reduce({}) |$memo, $x| {
       # A nested hash contains the configuration.
       if ($x[1] =~ Hash) {
         # Fail if basic information is missing.
@@ -296,7 +296,7 @@ define activemq::instance (
     # Get a list of all role/user mappings.
     if (('users' in $security) and ($security['users'] =~ Hash)) {
       # Iterate over all users to find roles.
-      $_roles = $security['users'].reduce( []) |$memo, $x| {
+      $_roles = $security['users'].reduce([]) |$memo, $x| {
         # A nested hash contains the user configuration.
         if ($x[1] =~ Hash) {
           # Skip users that are not enabled.
@@ -318,7 +318,7 @@ define activemq::instance (
       }.unique()
 
       # Next iterate over all roles and collect their users.
-      $_role_mappings = $_roles.reduce( {}) |$memo, $x| {
+      $_role_mappings = $_roles.reduce({}) |$memo, $x| {
         $_users_tmp = $security['users'].reduce([]) |$m, $z| {
           # Skip users that are not enabled.
           if (('enable' in $z[1]) and ($z[1]['enable'] == true) and ('roles' in $z[1])) {
@@ -360,7 +360,7 @@ define activemq::instance (
     file { "instance ${name} broker.xml":
       path    => $broker_xml,
       mode    => '0640',
-      content => epp($activemq::broker_template,{
+      content => epp($activemq::broker_template, {
           'acceptors'                        => $_acceptors,
           'address_settings'                 => $address_settings,
           'addresses'                        => $addresses,
@@ -401,7 +401,7 @@ define activemq::instance (
     file { "instance ${name} management.xml":
       path    => $management_xml,
       mode    => '0640',
-      content => epp($activemq::management_template,{
+      content => epp($activemq::management_template, {
           'security' => $security,
       }),
       require => [
@@ -413,7 +413,7 @@ define activemq::instance (
     file { "instance ${name} bootstrap.xml":
       path    => $bootstrap_xml,
       mode    => '0644',
-      content => epp($activemq::bootstrap_template,{
+      content => epp($activemq::bootstrap_template, {
           'broker_xml' => $broker_xml,
           'web_bind'   => $web_bind,
           'web_port'   => $web_port,
@@ -429,7 +429,7 @@ define activemq::instance (
       file { "instance ${name} log4j2.properties":
         path    => $log4j_properties,
         mode    => '0644',
-        content => epp($activemq::log4j_template,{
+        content => epp($activemq::log4j_template, {
             'log4j_level' => $log4j_level,
         }),
         require => [
@@ -444,7 +444,7 @@ define activemq::instance (
       file { "instance ${name} logging.properties":
         path    => $logging_properties,
         mode    => '0644',
-        content => epp($activemq::logging_template,{
+        content => epp($activemq::logging_template, {
             'log_level' => $log_level,
         }),
         require => [
@@ -471,7 +471,7 @@ define activemq::instance (
       file { "instance ${name} artemis-users.properties":
         path    => $users_properties,
         mode    => '0644',
-        content => epp($activemq::users_properties_template,{
+        content => epp($activemq::users_properties_template, {
             'admin_password' => $activemq::admin_password,
             'admin_user'     => $activemq::admin_user,
             'security'       => $security,
@@ -493,7 +493,7 @@ define activemq::instance (
       file { "instance ${name} artemis-roles.properties":
         path    => $roles_properties,
         mode    => '0644',
-        content => epp($activemq::roles_properties_template,{
+        content => epp($activemq::roles_properties_template, {
             'admin_user'    => $activemq::admin_user,
             'role_mappings' => $_role_mappings,
             'security'      => $security,

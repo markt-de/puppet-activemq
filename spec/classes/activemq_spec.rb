@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-ACTIVEMQ_VERSION = '2.23.1'
-ACTIVEMQ_VERSION_CHKSUM = 'a73331cb959bb0ba9667414682c279bc9ce2aec4c8fecbcdee4670bf9d63bf66010c8c55a6b727b1ad6d51bbccadd663b96a70b867721d9388d54a9391c6af85'
-#ACTIVEMQ_VERSION = '2.29.0'
-#ACTIVEMQ_VERSION_CHKSUM = 'b78ed2541a2dd4d3fb8c73032e8526d954bca1089e9c7795815f1321901a1ca97358721acde61bebe11fd057377668691e3d3eaf414d32a72501f97ab6f7facd'
+ACTIVEMQ_VERSION = '2.23.1'.freeze
+ACTIVEMQ_VERSION_CHKSUM = 'a73331cb959bb0ba9667414682c279bc9ce2aec4c8fecbcdee4670bf9d63bf66010c8c55a6b727b1ad6d51bbccadd663b96a70b867721d9388d54a9391c6af85'.freeze
+# ACTIVEMQ_VERSION = '2.29.0'.freeze
+# ACTIVEMQ_VERSION_CHKSUM = 'b78ed2541a2dd4d3fb8c73032e8526d954bca1089e9c7795815f1321901a1ca97358721acde61bebe11fd057377668691e3d3eaf414d32a72501f97ab6f7facd'.freeze
 
 describe 'activemq' do
   on_supported_os.each do |os, facts|
@@ -32,7 +32,7 @@ describe 'activemq' do
         it { is_expected.to contain_class('activemq::install') }
         it { is_expected.to contain_class('activemq::service') }
 
-        it { is_expected.to contain_activemq__instance("#{activemq_instance_name}") }
+        it { is_expected.to contain_activemq__instance(activemq_instance_name.to_s) }
         it {
           is_expected.to contain_service("activemq@#{activemq_instance_name}").with(
             enable: true,
