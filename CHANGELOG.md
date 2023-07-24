@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v1.6.0] - 2023-07-24
 
 ### Added
 * Ensure compatibility with version 2.29.0
@@ -14,8 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add new default logging config for log4j2
 
 ### Changed
-* Setup `log4j2.properties` on version 2.27.0 and later
-* Setup `logging properties` only on versions before 2.27.0
+* Manage `log4j2.properties` on version 2.27.0 and later
+* Manage `logging properties` only on versions before 2.27.0
 * Update to PDK 3.0
 * Bump module dependencies
 
@@ -77,7 +77,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## v1.0.0 - 2020-10-06
 Initial release
 
-[Unreleased]: https://github.com/markt-de/puppet-activemq/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/markt-de/puppet-activemq/compare/v1.6.0...HEAD
+[v1.6.0]: https://github.com/markt-de/puppet-activemq/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/markt-de/puppet-activemq/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/markt-de/puppet-activemq/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/markt-de/puppet-activemq/compare/v1.2.0...v1.3.0
