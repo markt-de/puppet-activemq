@@ -157,33 +157,37 @@ under the License.
          </cluster-connection>
       </cluster-connections>
 
+<%   if $ha_policy { -%>
       <ha-policy>
          <<%= $ha_policy %>>
+<%     if $ha_policy == 'replication' or $ha_policy == 'shared-storage' { -%>
             <<%= $role %>>
-<%   if !empty($group) { -%>
+<%       if !empty($group) { -%>
                <group-name><%= $group %></group-name>
-<%   } -%>
+<%       } -%>
                <cluster-name><%= $activemq::cluster_name %></cluster-name>
-<%   if $ha_policy == 'replication' { -%>
+<%       if $ha_policy == 'replication' { -%>
                <initial-replication-sync-timeout><%= $initial_replication_sync_timeout %></initial-replication-sync-timeout>
-<%     if $check_for_live_server and $role == 'master' { -%>
+<%         if $check_for_live_server and $role == 'master' { -%>
                <check-for-live-server>true</check-for-live-server>
-<%     } -%>
-<%     if $vote_on_replication_failure and $role == 'master' { -%>
+<%         } -%>
+<%         if $vote_on_replication_failure and $role == 'master' { -%>
                <vote-on-replication-failure>true</vote-on-replication-failure>
-<%     } -%>
-<%   } -%>
-<%   if $ha_policy == 'shared-storage' { -%>
-<%     if $failover_on_shutdown and $role == 'master' { -%>
+<%         } -%>
+<%       } -%>
+<%       if $ha_policy == 'shared-storage' { -%>
+<%         if $failover_on_shutdown and $role == 'master' { -%>
                <failover-on-shutdown>true</failover-on-shutdown>
-<%     } -%>
-<%   } -%>
-<%   if $allow_failback and $role == 'slave' { -%>
+<%         } -%>
+<%       } -%>
+<%       if $allow_failback and $role == 'slave' { -%>
                <allow-failback>true</allow-failback>
-<%   } -%>
+<%       } -%>
             </<%= $role %>>
+<%     } -%>
          </<%= $ha_policy %>>
       </ha-policy>
+<%   } -%>
 <% } -%>
 
 <%   if (('enable' in $security) and ($security['enable'] == true)) { -%>
