@@ -135,7 +135,6 @@ define activemq::instance (
   Hash[String[1], Hash] $connectors,
   Array $discovery_groups,
   Boolean $failover_on_shutdown,
-  Enum['live-only','replication','shared-storage'] $ha_policy,
   Integer $initial_replication_sync_timeout,
   Integer $journal_buffer_timeout,
   Boolean $journal_datasync,
@@ -162,6 +161,7 @@ define activemq::instance (
   Optional[Boolean] $service_enable = undef,
   Optional[Enum['running','stopped']] $service_ensure = undef,
   Optional[String] $target_host = undef,
+  Optional[Enum['live-only','replication','shared-storage']] $ha_policy,
   # TODO: broker-plugins (nothing set by default, but it should be supported)
 ) {
   File {

@@ -430,9 +430,11 @@ Default value: ``undef``
 
 ##### `ha_policy`
 
-Data type: `Enum['live-only','replication','shared-storage']`
+Data type: `Optional[Enum['live-only','replication','shared-storage']]`
 
 ActiveMQ Artemis HA policy.
+
+Default value: ``undef``
 
 ##### `initial_replication_sync_timeout`
 
