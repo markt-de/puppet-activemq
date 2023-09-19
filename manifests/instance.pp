@@ -12,7 +12,10 @@
 #
 # @param addresses
 #   A hash containing configuration for addresses (messaging endpoints),
-#   queues and routing types.
+#   queues and routing types. Note: Setting adresses and queues to
+#   `enable: false` will remove them from the configuration file, but
+#   they will still be available in Artemis. In order to completely
+#   remove them, the `config-delete-*` options may be set to `FORCE`.
 #
 # @param allow_failback
 #   Should stop backup on live restart.
