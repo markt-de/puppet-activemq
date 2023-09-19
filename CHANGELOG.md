@@ -19,6 +19,7 @@ values.
 * Manage `jolokia-access.xml`, existing file will be replaced
 * Add defaults for `config-delete-*` to address settings
 * Set a default management notification address
+* Update Puppet version requirements
 
 ## [v1.6.0] - 2023-07-24
 
