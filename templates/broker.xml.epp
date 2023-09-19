@@ -211,6 +211,8 @@ under the License.
       </security-settings>
 <%   } -%>
 
+      <management-notification-address><%= $management_notification_address %></management-notification-address>
+
       <address-settings>
 <%#  # Iterate over all global address settings. -%>
 <%   if ($address_settings =~ Hash) { -%>

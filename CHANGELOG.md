@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unrelease]
 
+### Added
+* Add new parameter `$management_notification_address`
+
 ### Changed
 * Add defaults for `config-delete-*` to address settings
+* Set a default management notification address
 
 ## [v1.6.0] - 2023-07-24
 
