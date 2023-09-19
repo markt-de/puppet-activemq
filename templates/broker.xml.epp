@@ -255,32 +255,35 @@ under the License.
 <%   if ($addresses =~ Hash) { -%>
       <addresses>
 <%     $addresses.each |$key, $value| { -%>
-<%#      # Only add enabled items. -%>
-<%       if (('enable' in $value) and ($value['enable'] == true)) { -%>
          <address name="<%= $key %>">
-<%#        # Add opening tag for routing type. -%>
-<%         if ('type' in $value) { -%>
+<%#      # Force removal of disabled items. -%>
+<%       if (('enable' in $value) and ($value['enable'] == false)) { -%>
+           <config-delete-addresses>FORCE</config-delete-addresses>
+           <config-delete-diverts>FORCE</config-delete-diverts>
+           <config-delete-queues>FORCE</config-delete-queues>
+<%       } -%>
+<%#      # Add opening tag for routing type. -%>
+<%       if ('type' in $value) { -%>
             <<%= $value['type'] %>>
-<%         } -%>
-<%#        # Iterate over all queues (if available). -%>
-<%         if (('queues' in $value) and ($value['queues'] =~ Hash)) { -%>
-<%           $value['queues'].each |$q_key, $q_value| { -%>
+<%       } -%>
+<%#      # Iterate over all queues (if available). -%>
+<%       if (('queues' in $value) and ($value['queues'] =~ Hash)) { -%>
+<%         $value['queues'].each |$q_key, $q_value| { -%>
                <queue name="<%= $q_key %>">
-<%#            # Iterate over all filters (if available). -%>
-<%             if (('filters' in $q_value) and ($q_value['filters'] =~ Array)) { -%>
+<%#          # Iterate over all filters (if available). -%>
+<%           if (('filters' in $q_value) and ($q_value['filters'] =~ Array)) { -%>
 <%               $q_value['filters'].each |$filter| { -%>
                  <filter string="<%= $filter %>"/>
-<%               } -%>
 <%             } -%>
-               </queue>
 <%           } -%>
+               </queue>
 <%         } -%>
-<%#        # Add closing tag for routing type. -%>
-<%         if ('type' in $value) { -%>
-            </<%= $value['type'] %>>
-<%         } -%>
-         </address>
 <%       } -%>
+<%#      # Add closing tag for routing type. -%>
+<%       if ('type' in $value) { -%>
+            </<%= $value['type'] %>>
+<%       } -%>
+         </address>
 <%     } -%>
       </addresses>
 <%   } -%>
