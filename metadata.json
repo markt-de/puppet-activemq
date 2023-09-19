@@ -1,6 +1,6 @@
 {
   "name": "markt-activemq",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "author": "markt.de",
   "summary": "Manage ActiveMQ Artemis standalone and clusters",
   "license": "BSD-2-Clause",
