@@ -92,6 +92,9 @@ activemq::instance_defaults:
         auto-create-jms-queues: true
         auto-create-jms-topics: true
         auto-create-queues: true
+        config-delete-addresses: 'OFF'
+        config-delete-diverts: 'OFF'
+        config-delete-queues: 'OFF'
         dead-letter-address: 'DLQ'
         expiry-address: 'ExpiryQueue'
         max-size-bytes: -1
