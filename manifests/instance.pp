@@ -81,6 +81,9 @@
 # @param log4j_level
 #   The log levels to use for the various configured loggers (on version 2.27.0 and later).
 #
+# @param management_notification_address
+#   The address to receive management notifications.
+#
 # @param max_disk_usage
 #   The max percentage of data to use from disks. The broker will block while the disk is full. Disable by setting -1.
 #
@@ -142,6 +145,7 @@ define activemq::instance (
   Enum['asyncio','mapped','nio'] $journal_type,
   Hash $log_level,
   Hash $log4j_level,
+  String $management_notification_address,
   Integer $max_disk_usage,
   Integer $max_hops,
   Enum['off','strict','on_demand'] $message_load_balancing,
@@ -382,10 +386,11 @@ define activemq::instance (
           'journal_datasync'                 => $journal_datasync,
           'journal_max_io'                   => $journal_max_io,
           'journal_type'                     => upcase($journal_type),
-          'name'                             => $name,
+          'management_notification_address'  => $management_notification_address,
           'max_disk_usage'                   => $max_disk_usage,
           'max_hops'                         => $max_hops,
           'message_load_balancing'           => upcase($message_load_balancing),
+          'name'                             => $name,
           'persistence'                      => $persistence,
           'port'                             => $port,
           'role'                             => $role,

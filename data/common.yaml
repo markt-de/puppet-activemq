@@ -181,6 +181,7 @@ activemq::instance_defaults:
     jetty: 'WARN'
     root: 'INFO'
     zookeeper: 'ERROR'
+  management_notification_address: 'activemq.notifications'
   max_disk_usage: 90
   max_hops: 0
   message_load_balancing: 'on_demand'
