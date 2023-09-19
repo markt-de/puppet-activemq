@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unrelease]
+This is a new major release which may contain breaking changes for some
+users, because it may replace existing configuration with new default
+values.
 
 ### Added
 * Add new parameter `$management_notification_address`
 * Add support for managing Jolokia allow-origin CORS option
 
 ### Changed
+* Do not produce a HA policy config when `$ha_policy` is empty ([#6])
 * Manage `jolokia-access.xml`, existing file will be replaced
 * Add defaults for `config-delete-*` to address settings
 * Set a default management notification address
@@ -95,4 +99,5 @@ Initial release
 [v1.3.0]: https://github.com/markt-de/puppet-activemq/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/markt-de/puppet-activemq/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/markt-de/puppet-activemq/compare/v1.0.0...v1.1.0
+[#6]: https://github.com/markt-de/puppet-activemq/pull/6
 [#2]: https://github.com/markt-de/puppet-activemq/pull/2
