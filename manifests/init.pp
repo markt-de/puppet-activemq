@@ -82,6 +82,9 @@
 # @param java_xmx
 #   The maximum Java heap size.
 #
+# @param jolokia_access_template
+#   The template used to generate jolokia-access.xml.
+#
 # @param log4j_template
 #   The template used to generate log4j2.properties (on version 2.27.0 and later).
 #
@@ -177,6 +180,7 @@ class activemq (
   Hash $java_args,
   String $java_xms,
   String $java_xmx,
+  String $jolokia_access_template,
   String $log4j_template,
   String $logging_template,
   String $login_template,

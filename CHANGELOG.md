@@ -9,8 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 * Add new parameter `$management_notification_address`
+* Add support for managing Jolokia allow-origin CORS option
 
 ### Changed
+* Manage `jolokia-access.xml`, existing file will be replaced
 * Add defaults for `config-delete-*` to address settings
 * Set a default management notification address
 

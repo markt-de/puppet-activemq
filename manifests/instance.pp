@@ -63,6 +63,9 @@
 # @param java_xmx
 #   The maximum Java heap size.
 #
+# @param jmx
+#   A hash containing settings for the Jolokia JMX console.
+#
 # @param journal_buffer_timeout
 #   The flush timeout for the journal buffer.
 #
@@ -139,6 +142,7 @@ define activemq::instance (
   Array $discovery_groups,
   Boolean $failover_on_shutdown,
   Integer $initial_replication_sync_timeout,
+  Hash $jmx,
   Integer $journal_buffer_timeout,
   Boolean $journal_datasync,
   Integer $journal_max_io,
@@ -180,6 +184,7 @@ define activemq::instance (
     $bootstrap_xml = "${instance_dir}/etc/bootstrap.xml"
     $broker_xml = "${instance_dir}/etc/broker.xml"
     $management_xml = "${instance_dir}/etc/management.xml"
+    $jolokia_access_xml = "${instance_dir}/etc/jolokia-access.xml"
     $log4j_properties = "${instance_dir}/etc/log4j2.properties"
     $logging_properties = "${instance_dir}/etc/logging.properties"
     $login_config = "${instance_dir}/etc/login.config"
@@ -422,6 +427,18 @@ define activemq::instance (
           'broker_xml' => $broker_xml,
           'web_bind'   => $web_bind,
           'web_port'   => $web_port,
+      }),
+      require => [
+        Exec["create instance ${name}"]
+      ],
+    }
+
+    # Create jolokia-access.xml configuration file.
+    file { "instance ${name} jolokia-access.xml":
+      path    => $jolokia_access_xml,
+      mode    => '0644',
+      content => epp($activemq::jolokia_access_template, {
+          'jmx' => $jmx,
       }),
       require => [
         Exec["create instance ${name}"]

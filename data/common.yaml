@@ -161,6 +161,9 @@ activemq::instance_defaults:
   failover_on_shutdown: true
   ha_policy: 'replication'
   initial_replication_sync_timeout: 30000
+  jmx:
+    cors_allow_origin:
+      - '*://localhost*'
   journal_buffer_timeout: 2500000
   journal_datasync: true
   journal_max_io: 4096
@@ -265,6 +268,7 @@ activemq::java_args:
   'Djolokia.policyLocation=${ARTEMIS_INSTANCE_ETC_URI}jolokia-access.xml': ''
 activemq::java_xms: '512M'
 activemq::java_xmx: '2G'
+activemq::jolokia_access_template: 'activemq/jolokia-access.xml.epp'
 activemq::log4j_template: 'activemq/log4j2.properties.epp'
 activemq::logging_template: 'activemq/logging.properties.epp'
 activemq::login_template: 'activemq/login.config.epp'
