@@ -17,100 +17,148 @@
 
 ### Defined types
 
-* [`activemq::instance`](#activemqinstance): Create an instance of ActiveMQ Artemis broker
+* [`activemq::instance`](#activemq--instance): Create an instance of ActiveMQ Artemis broker
 
 ## Classes
 
-### `activemq`
+### <a name="activemq"></a>`activemq`
 
 Install and configure ActiveMQ Artemis
 
 #### Parameters
 
-The following parameters are available in the `activemq` class.
+The following parameters are available in the `activemq` class:
 
-##### `admin_password`
+* [`admin_password`](#-activemq--admin_password)
+* [`admin_user`](#-activemq--admin_user)
+* [`bootstrap_template`](#-activemq--bootstrap_template)
+* [`broker_template`](#-activemq--broker_template)
+* [`checksum`](#-activemq--checksum)
+* [`checksum_type`](#-activemq--checksum_type)
+* [`cluster`](#-activemq--cluster)
+* [`cluster_name`](#-activemq--cluster_name)
+* [`cluster_password`](#-activemq--cluster_password)
+* [`cluster_user`](#-activemq--cluster_user)
+* [`cluster_topology`](#-activemq--cluster_topology)
+* [`distribution_name`](#-activemq--distribution_name)
+* [`download_url`](#-activemq--download_url)
+* [`gid`](#-activemq--gid)
+* [`group`](#-activemq--group)
+* [`hawtio_role`](#-activemq--hawtio_role)
+* [`install_base`](#-activemq--install_base)
+* [`instance_defaults`](#-activemq--instance_defaults)
+* [`instances`](#-activemq--instances)
+* [`instances_base`](#-activemq--instances_base)
+* [`java_args`](#-activemq--java_args)
+* [`java_xms`](#-activemq--java_xms)
+* [`java_xmx`](#-activemq--java_xmx)
+* [`jolokia_access_template`](#-activemq--jolokia_access_template)
+* [`log4j_template`](#-activemq--log4j_template)
+* [`logging_template`](#-activemq--logging_template)
+* [`login_template`](#-activemq--login_template)
+* [`manage_account`](#-activemq--manage_account)
+* [`manage_instances_base`](#-activemq--manage_instances_base)
+* [`manage_roles`](#-activemq--manage_roles)
+* [`manage_users`](#-activemq--manage_users)
+* [`management_template`](#-activemq--management_template)
+* [`port`](#-activemq--port)
+* [`proxy_server`](#-activemq--proxy_server)
+* [`proxy_type`](#-activemq--proxy_type)
+* [`roles_properties_template`](#-activemq--roles_properties_template)
+* [`server_discovery`](#-activemq--server_discovery)
+* [`service_enable`](#-activemq--service_enable)
+* [`service_ensure`](#-activemq--service_ensure)
+* [`service_file`](#-activemq--service_file)
+* [`service_name`](#-activemq--service_name)
+* [`service_template`](#-activemq--service_template)
+* [`symlink_name`](#-activemq--symlink_name)
+* [`uid`](#-activemq--uid)
+* [`user`](#-activemq--user)
+* [`users_properties_template`](#-activemq--users_properties_template)
+* [`version`](#-activemq--version)
+
+##### <a name="-activemq--admin_password"></a>`admin_password`
 
 Data type: `String`
 
 Specifies the password to use for standalone instances.
 
-##### `admin_user`
+##### <a name="-activemq--admin_user"></a>`admin_user`
 
 Data type: `String`
 
 Specifies the name of the user to use for standalone instances.
 
-##### `bootstrap_template`
+##### <a name="-activemq--bootstrap_template"></a>`bootstrap_template`
 
 Data type: `String`
 
 The template used to generate bootstrap.xml.
 
-##### `broker_template`
+##### <a name="-activemq--broker_template"></a>`broker_template`
 
 Data type: `String`
 
 The template used to generate broker.xml.
 
-##### `checksum`
+##### <a name="-activemq--checksum"></a>`checksum`
 
 Data type: `Optional[String]`
 
-Specifies the checksum for the distribution archive, which will be verified
-after downloading the file and before starting the installation.
+Specifies the checksum for the distribution archive (bin.tar.gz), which will
+be verified after downloading the file and before starting the installation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `checksum_type`
+##### <a name="-activemq--checksum_type"></a>`checksum_type`
 
 Data type: `Optional[String]`
 
 Specifies the type of the checksum. Defaults to `sha512`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `cluster`
+##### <a name="-activemq--cluster"></a>`cluster`
 
 Data type: `Boolean`
 
 Whether to setup a cluster or a standalone instance.
 
-##### `cluster_name`
+##### <a name="-activemq--cluster_name"></a>`cluster_name`
 
 Data type: `Optional[String]`
 
 Specifies the name to use for the cluster.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `cluster_password`
+##### <a name="-activemq--cluster_password"></a>`cluster_password`
 
 Data type: `String`
 
 Specifies the password to use for clustered instances.
 
-##### `cluster_user`
+##### <a name="-activemq--cluster_user"></a>`cluster_user`
 
 Data type: `String`
 
 Specifies the name of the user to use for clustered instances.
 
-##### `cluster_topology`
+##### <a name="-activemq--cluster_topology"></a>`cluster_topology`
 
 Data type: `Hash[String[1], Hash]`
 
 The topology of the cluster, which should contain ALL instances across the
 whole cluster (not only local instances), their settings and relationships.
 
-##### `distribution_name`
+##### <a name="-activemq--distribution_name"></a>`distribution_name`
 
 Data type: `String`
 
 Specifies the name of the distribution, which is usually used to build
 the actual download URL.
 
-##### `download_url`
+##### <a name="-activemq--download_url"></a>`download_url`
 
 Data type: `String`
 
@@ -118,34 +166,34 @@ Specifies the download location. It should contain a `%s` string which
 is automatically replaced with the actual filename during installation.
 The latter makes it easier to use mirror redirection URLs.
 
-##### `gid`
+##### <a name="-activemq--gid"></a>`gid`
 
 Data type: `Optional[Integer]`
 
 Specifies an optional GID that should be used when creating the group.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `group`
+##### <a name="-activemq--group"></a>`group`
 
 Data type: `String`
 
 Specifies the name of the group to use for the service/instance.
 
-##### `hawtio_role`
+##### <a name="-activemq--hawtio_role"></a>`hawtio_role`
 
 Data type: `String`
 
 Access to the JMX web console is only allow to users with this role.
 
-##### `install_base`
+##### <a name="-activemq--install_base"></a>`install_base`
 
-Data type: `Stdlib::Compat::Absolute_path`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the installation directory. This directory must already exist.
 A subdirectory for every version is automatically created.
 
-##### `instance_defaults`
+##### <a name="-activemq--instance_defaults"></a>`instance_defaults`
 
 Data type: `Hash`
 
@@ -154,170 +202,188 @@ instance-specific parameters. This makes it obsolete to specify ALL
 required parameters for every instance, but only parameters that differ
 from these defaults.
 
-##### `instances`
+##### <a name="-activemq--instances"></a>`instances`
 
 Data type: `Hash[String[1], Hash]`
 
 A list of instances that should be created.
 
-##### `instances_base`
+##### <a name="-activemq--instances_base"></a>`instances_base`
 
-Data type: `Stdlib::Compat::Absolute_path`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the directory where broker instances should be installed.
 This directory must already exist. A subdirectory for every instance is
 automatically created.
 
-##### `java_args`
+##### <a name="-activemq--java_args"></a>`java_args`
+
+Data type: `Hash`
 
 Options for the JVM. Be careful to not override required default options.
 The syntax may look a bit off, but this way it's possible to replace
 certain values or to remove an option by adding the value 'DISABLED'.
 
-##### `java_xms`
-
-The initial Java heap size.
-
-##### `java_xmx`
-
-The maximum Java heap size.
-
-##### `logging_template`
+##### <a name="-activemq--java_xms"></a>`java_xms`
 
 Data type: `String`
 
-The template used to generate logging.properties.
+The initial Java heap size.
 
-##### `login_template`
+##### <a name="-activemq--java_xmx"></a>`java_xmx`
+
+Data type: `String`
+
+The maximum Java heap size.
+
+##### <a name="-activemq--jolokia_access_template"></a>`jolokia_access_template`
+
+Data type: `String`
+
+The template used to generate jolokia-access.xml.
+
+##### <a name="-activemq--log4j_template"></a>`log4j_template`
+
+Data type: `String`
+
+The template used to generate log4j2.properties (on version 2.27.0 and later).
+
+##### <a name="-activemq--logging_template"></a>`logging_template`
+
+Data type: `String`
+
+The template used to generate logging.properties (on versions before 2.27.0).
+
+##### <a name="-activemq--login_template"></a>`login_template`
 
 Data type: `String`
 
 The template used to generate login.config.
 
-##### `manage_account`
+##### <a name="-activemq--manage_account"></a>`manage_account`
 
 Data type: `Boolean`
 
 Whether or not to create the user and group.
 
-##### `manage_instances_base`
+##### <a name="-activemq--manage_instances_base"></a>`manage_instances_base`
 
 Data type: `Boolean`
 
 Whether or not to create the directory specified in `$instances_base`.
 
-##### `manage_roles`
+##### <a name="-activemq--manage_roles"></a>`manage_roles`
 
 Data type: `Boolean`
 
 Whether or not to manage ActiveMQ roles.
 
-##### `manage_users`
+##### <a name="-activemq--manage_users"></a>`manage_users`
 
 Data type: `Boolean`
 
 Whether or not to manage ActiveMQ users.
 
-##### `management_template`
+##### <a name="-activemq--management_template"></a>`management_template`
 
 Data type: `String`
 
 The template used to generate management.xml.
 
-##### `port`
+##### <a name="-activemq--port"></a>`port`
 
 Data type: `Integer`
 
 Specifies the port to use for the artemis connector and will also be used
 as default port for the acceptor.
 
-##### `proxy_server`
+##### <a name="-activemq--proxy_server"></a>`proxy_server`
 
 Data type: `Optional[String]`
 
 Specify a proxy server, with port number if needed. ie: https://example.com:8080
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `proxy_type`
+##### <a name="-activemq--proxy_type"></a>`proxy_type`
 
 Data type: `Optional[String]`
 
 Specify the proxy_type: proxy server type (none|http|https|ftp)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `roles_properties_template`
+##### <a name="-activemq--roles_properties_template"></a>`roles_properties_template`
 
 Data type: `String`
 
 The template used to generate roles.properties.
 
-##### `server_discovery`
+##### <a name="-activemq--server_discovery"></a>`server_discovery`
 
 Data type: `Enum['dynamic','static']`
 
 Controls how servers can propagate their connection details.
 
-##### `service_enable`
+##### <a name="-activemq--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
 Specifies whether the service should be enabled.
 
-##### `service_ensure`
+##### <a name="-activemq--service_ensure"></a>`service_ensure`
 
 Data type: `Enum['running','stopped']`
 
 Specifies the desired state for the service.
 
-##### `service_file`
+##### <a name="-activemq--service_file"></a>`service_file`
 
-Data type: `Stdlib::Compat::Absolute_path`
+Data type: `Stdlib::Absolutepath`
 
 Specifies the filename of the service file.
 
-##### `service_name`
+##### <a name="-activemq--service_name"></a>`service_name`
 
 Data type: `String`
 
 Controls the name of the system service. Must NOT be changed while
 instances are running.
 
-##### `service_template`
+##### <a name="-activemq--service_template"></a>`service_template`
 
 Data type: `String`
 
 The template used to generate the service definition.
 
-##### `symlink_name`
+##### <a name="-activemq--symlink_name"></a>`symlink_name`
 
 Data type: `String`
 
 Controls the name of a version-independent symlink. It will always point
 to the release specified by `$version`.
 
-##### `uid`
+##### <a name="-activemq--uid"></a>`uid`
 
 Data type: `Optional[Integer]`
 
 Specifies an optional UID that should be used when creating the user.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `user`
+##### <a name="-activemq--user"></a>`user`
 
 Data type: `String`
 
 Specifies the name of the user to use for the service/instance.
 
-##### `users_properties_template`
+##### <a name="-activemq--users_properties_template"></a>`users_properties_template`
 
 Data type: `String`
 
 The template used to generate users.properties.
 
-##### `version`
+##### <a name="-activemq--version"></a>`version`
 
 Data type: `String`
 
@@ -328,121 +394,163 @@ default value.
 
 ## Defined types
 
-### `activemq::instance`
+### <a name="activemq--instance"></a>`activemq::instance`
 
 Create an instance of ActiveMQ Artemis broker
 
 #### Parameters
 
-The following parameters are available in the `activemq::instance` defined type.
+The following parameters are available in the `activemq::instance` defined type:
 
-##### `acceptors`
+* [`acceptors`](#-activemq--instance--acceptors)
+* [`acceptor_settings`](#-activemq--instance--acceptor_settings)
+* [`address_settings`](#-activemq--instance--address_settings)
+* [`addresses`](#-activemq--instance--addresses)
+* [`allow_failback`](#-activemq--instance--allow_failback)
+* [`bind`](#-activemq--instance--bind)
+* [`broadcast_groups`](#-activemq--instance--broadcast_groups)
+* [`broker_plugins`](#-activemq--instance--broker_plugins)
+* [`check_for_live_server`](#-activemq--instance--check_for_live_server)
+* [`connectors`](#-activemq--instance--connectors)
+* [`discovery_groups`](#-activemq--instance--discovery_groups)
+* [`failover_on_shutdown`](#-activemq--instance--failover_on_shutdown)
+* [`global_max_size_mb`](#-activemq--instance--global_max_size_mb)
+* [`group`](#-activemq--instance--group)
+* [`ha_policy`](#-activemq--instance--ha_policy)
+* [`initial_replication_sync_timeout`](#-activemq--instance--initial_replication_sync_timeout)
+* [`java_args`](#-activemq--instance--java_args)
+* [`java_xms`](#-activemq--instance--java_xms)
+* [`java_xmx`](#-activemq--instance--java_xmx)
+* [`jmx`](#-activemq--instance--jmx)
+* [`journal_buffer_timeout`](#-activemq--instance--journal_buffer_timeout)
+* [`journal_datasync`](#-activemq--instance--journal_datasync)
+* [`journal_max_io`](#-activemq--instance--journal_max_io)
+* [`journal_type`](#-activemq--instance--journal_type)
+* [`log_level`](#-activemq--instance--log_level)
+* [`log4j_level`](#-activemq--instance--log4j_level)
+* [`management_notification_address`](#-activemq--instance--management_notification_address)
+* [`max_disk_usage`](#-activemq--instance--max_disk_usage)
+* [`max_hops`](#-activemq--instance--max_hops)
+* [`message_load_balancing`](#-activemq--instance--message_load_balancing)
+* [`persistence`](#-activemq--instance--persistence)
+* [`port`](#-activemq--instance--port)
+* [`role`](#-activemq--instance--role)
+* [`security`](#-activemq--instance--security)
+* [`service_enable`](#-activemq--instance--service_enable)
+* [`service_ensure`](#-activemq--instance--service_ensure)
+* [`target_host`](#-activemq--instance--target_host)
+* [`vote_on_replication_failure`](#-activemq--instance--vote_on_replication_failure)
+* [`web_bind`](#-activemq--instance--web_bind)
+* [`web_port`](#-activemq--instance--web_port)
+
+##### <a name="-activemq--instance--acceptors"></a>`acceptors`
 
 Data type: `Hash[String[1], Hash]`
 
 ActiveMQ Artemis acceptors.
 
-##### `acceptor_settings`
+##### <a name="-activemq--instance--acceptor_settings"></a>`acceptor_settings`
 
 Data type: `Array`
 
 Shared settings that should be used for ALL acceptors.
 
-##### `address_settings`
+##### <a name="-activemq--instance--address_settings"></a>`address_settings`
 
 Data type: `Hash[String[1], Hash]`
 
 A hash containing global address settings. This is especially useful
 for wildcard/catch all matches.
 
-##### `addresses`
+##### <a name="-activemq--instance--addresses"></a>`addresses`
 
 Data type: `Hash[String[1], Hash]`
 
 A hash containing configuration for addresses (messaging endpoints),
-queues and routing types.
+queues and routing types. Note: Setting adresses and queues to
+`enable: false` will remove them from the configuration file, but
+they will still be available in Artemis. In order to completely
+remove them, the `config-delete-*` options may be set to `FORCE`.
 
-##### `allow_failback`
+##### <a name="-activemq--instance--allow_failback"></a>`allow_failback`
 
 Data type: `Boolean`
 
 Should stop backup on live restart.
 
-##### `bind`
+##### <a name="-activemq--instance--bind"></a>`bind`
 
 Data type: `String`
 
 Configure which IP address to listen on. Should be either a FQDN
 or an IP address.
 
-##### `broadcast_groups`
+##### <a name="-activemq--instance--broadcast_groups"></a>`broadcast_groups`
 
 Data type: `Array`
 
 ActiveMQ Artemis broadcast groups.
 
-##### `broker_plugins`
+##### <a name="-activemq--instance--broker_plugins"></a>`broker_plugins`
 
 Data type: `Hash[String[1], Hash]`
 
 A hash containing a list of broker plugins and their configuration.
 Each plugin can be enabled by setting `enable` to `true`.
 
-##### `check_for_live_server`
+##### <a name="-activemq--instance--check_for_live_server"></a>`check_for_live_server`
 
 Data type: `Boolean`
 
 Used for a live server to verify if there are other nodes with the same ID on the topology.
 
-##### `connectors`
+##### <a name="-activemq--instance--connectors"></a>`connectors`
 
 Data type: `Hash[String[1], Hash]`
 
 ActiveMQ Artemis connectors.
 
-##### `discovery_groups`
+##### <a name="-activemq--instance--discovery_groups"></a>`discovery_groups`
 
 Data type: `Array`
 
 ActiveMQ Artemis discovery groups.
 
-##### `failover_on_shutdown`
+##### <a name="-activemq--instance--failover_on_shutdown"></a>`failover_on_shutdown`
 
 Data type: `Boolean`
 
 This will cause a HA failover to occur on normal server shutdown.
 
-##### `global_max_size_mb`
+##### <a name="-activemq--instance--global_max_size_mb"></a>`global_max_size_mb`
 
 Data type: `Optional[Integer]`
 
 The amount in Mb before all addresses are considered full.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `group`
+##### <a name="-activemq--instance--group"></a>`group`
 
 Data type: `Optional[String]`
 
 The group for ActiveMQ Artemis.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `ha_policy`
+##### <a name="-activemq--instance--ha_policy"></a>`ha_policy`
 
 Data type: `Optional[Enum['live-only','replication','shared-storage']]`
 
 ActiveMQ Artemis HA policy.
 
-Default value: ``undef``
-
-##### `initial_replication_sync_timeout`
+##### <a name="-activemq--instance--initial_replication_sync_timeout"></a>`initial_replication_sync_timeout`
 
 Data type: `Integer`
 
 Timeout for initial replication to complete.
 
-##### `java_args`
+##### <a name="-activemq--instance--java_args"></a>`java_args`
 
 Data type: `Hash`
 
@@ -452,7 +560,7 @@ certain values or to remove an option by adding the value 'DISABLED'.
 
 Default value: `$activemq::java_args`
 
-##### `java_xms`
+##### <a name="-activemq--instance--java_xms"></a>`java_xms`
 
 Data type: `String`
 
@@ -460,7 +568,7 @@ The initial Java heap size.
 
 Default value: `$activemq::java_xms`
 
-##### `java_xmx`
+##### <a name="-activemq--instance--java_xmx"></a>`java_xmx`
 
 Data type: `String`
 
@@ -468,95 +576,113 @@ The maximum Java heap size.
 
 Default value: `$activemq::java_xmx`
 
-##### `journal_buffer_timeout`
+##### <a name="-activemq--instance--jmx"></a>`jmx`
+
+Data type: `Hash`
+
+A hash containing settings for the Jolokia JMX console.
+
+##### <a name="-activemq--instance--journal_buffer_timeout"></a>`journal_buffer_timeout`
 
 Data type: `Integer`
 
 The flush timeout for the journal buffer.
 
-##### `journal_datasync`
+##### <a name="-activemq--instance--journal_datasync"></a>`journal_datasync`
 
 Data type: `Boolean`
 
 Whether ActiveMQ Artemis will use msync/fsync on journal operations.
 
-##### `journal_max_io`
+##### <a name="-activemq--instance--journal_max_io"></a>`journal_max_io`
 
 Data type: `Integer`
 
 The maximum number of write requests that can be in the ASYNCIO queue at any one time.
 
-##### `journal_type`
+##### <a name="-activemq--instance--journal_type"></a>`journal_type`
 
 Data type: `Enum['asyncio','mapped','nio']`
 
 The type of journal to use.
 
-##### `log_level`
+##### <a name="-activemq--instance--log_level"></a>`log_level`
 
 Data type: `Hash`
 
-The log levels to use for the various configured loggers.
+The log levels to use for the various configured loggers (on versions before 2.27.0).
 
-##### `max_disk_usage`
+##### <a name="-activemq--instance--log4j_level"></a>`log4j_level`
+
+Data type: `Hash`
+
+The log levels to use for the various configured loggers (on version 2.27.0 and later).
+
+##### <a name="-activemq--instance--management_notification_address"></a>`management_notification_address`
+
+Data type: `String`
+
+The address to receive management notifications.
+
+##### <a name="-activemq--instance--max_disk_usage"></a>`max_disk_usage`
 
 Data type: `Integer`
 
 The max percentage of data to use from disks. The broker will block while the disk is full. Disable by setting -1.
 
-##### `max_hops`
+##### <a name="-activemq--instance--max_hops"></a>`max_hops`
 
 Data type: `Integer`
 
 Maximum number of hops cluster topology is propagated.
 
-##### `message_load_balancing`
+##### <a name="-activemq--instance--message_load_balancing"></a>`message_load_balancing`
 
 Data type: `Enum['off','strict','on_demand']`
 
 Specifies how messages should be load balanced.
 
-##### `persistence`
+##### <a name="-activemq--instance--persistence"></a>`persistence`
 
 Data type: `Boolean`
 
 Whether the server will use the file based journal for persistence.
 
-##### `port`
+##### <a name="-activemq--instance--port"></a>`port`
 
 Data type: `Integer`
 
 The port to use.
 
-##### `role`
+##### <a name="-activemq--instance--role"></a>`role`
 
 Data type: `Enum['master','slave']`
 
 The replication role.
 
-##### `security`
+##### <a name="-activemq--instance--security"></a>`security`
 
 Data type: `Hash`
 
 A hash containing the security configuration, includes users and roles.
 
-##### `service_enable`
+##### <a name="-activemq--instance--service_enable"></a>`service_enable`
 
 Data type: `Optional[Boolean]`
 
 Specifies whether the service should be enabled for this instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `service_ensure`
+##### <a name="-activemq--instance--service_ensure"></a>`service_ensure`
 
 Data type: `Optional[Enum['running','stopped']]`
 
 Specifies the desired service state for this instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `target_host`
+##### <a name="-activemq--instance--target_host"></a>`target_host`
 
 Data type: `Optional[String]`
 
@@ -564,21 +690,21 @@ Specifies the target host where this instance should be installed.
 The value will be matched against `$facts['networking']['fqdn']`.
 This is especially useful for cluster configurations.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### `vote_on_replication_failure`
+##### <a name="-activemq--instance--vote_on_replication_failure"></a>`vote_on_replication_failure`
 
 Data type: `Boolean`
 
 Configuration for classic replication (not needed for Pluggable Quorum Vote Replication).
 
-##### `web_bind`
+##### <a name="-activemq--instance--web_bind"></a>`web_bind`
 
 Data type: `String`
 
 The host name to use for embedded web server.
 
-##### `web_port`
+##### <a name="-activemq--instance--web_port"></a>`web_port`
 
 Data type: `Integer`
 
