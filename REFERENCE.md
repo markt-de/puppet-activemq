@@ -407,6 +407,7 @@ The following parameters are available in the `activemq::instance` defined type:
 * [`address_settings`](#-activemq--instance--address_settings)
 * [`addresses`](#-activemq--instance--addresses)
 * [`allow_failback`](#-activemq--instance--allow_failback)
+* [`allow_direct_connections_only`](#-activemq--instance--allow_direct_connections_only)
 * [`bind`](#-activemq--instance--bind)
 * [`broadcast_groups`](#-activemq--instance--broadcast_groups)
 * [`broker_plugins`](#-activemq--instance--broker_plugins)
@@ -477,6 +478,16 @@ remove them, the `config-delete-*` options may be set to `FORCE`.
 Data type: `Boolean`
 
 Should stop backup on live restart.
+
+##### <a name="-activemq--instance--allow_direct_connections_only"></a>`allow_direct_connections_only`
+
+Data type: `Optional[Boolean]`
+
+When using `static` for [`server_discovery`](#-activemq--server_discovery)
+only make connections to the defined connectors and not any other
+broker in the cluser.
+
+Default value: `true`
 
 ##### <a name="-activemq--instance--bind"></a>`bind`
 
