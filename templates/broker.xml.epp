@@ -148,9 +148,12 @@ under the License.
             <message-load-balancing><%= $message_load_balancing %></message-load-balancing>
             <max-hops><%= $max_hops %></max-hops>
 <%   if $activemq::server_discovery == 'static' { -%>
-            <static-connectors allow-direct-connections-only="true">
+            <static-connectors allow-direct-connections-only="<%= $allow_direct_connections_only %>">
 <%   $connectors.each |$key, $value| { -%>
+<%#    # Do not add the connector that matches the name of this instance. -%>
+<%     if ($key != "artemis-${name}") { -%>
                <connector-ref><%= $key %></connector-ref>
+<%     } -%>
 <%   } -%>
             </static-connectors>
 <%   } -%>

@@ -20,6 +20,10 @@
 # @param allow_failback
 #   Should stop backup on live restart.
 #
+# @param allow_direct_connections_only
+#   When using static server discovery only make connections to the
+#   defined connectors and not any other broker in the cluser.
+#
 # @param bind
 #   Configure which IP address to listen on. Should be either a FQDN
 #   or an IP address.
@@ -167,6 +171,7 @@ define activemq::instance (
   String $java_xms = $activemq::java_xms,
   String $java_xmx = $activemq::java_xmx,
   # Optional parameters
+  Optional[Boolean] $allow_direct_connections_only = true,
   Optional[Integer] $global_max_size_mb = undef,
   Optional[String] $group = undef,
   Optional[Boolean] $service_enable = undef,
@@ -379,6 +384,7 @@ define activemq::instance (
           'address_settings'                 => $address_settings,
           'addresses'                        => $addresses,
           'allow_failback'                   => $allow_failback,
+          'allow_direct_connections_only'    => $allow_direct_connections_only,
           'bind'                             => $bind,
           'broadcast_groups'                 => $broadcast_groups,
           'broker_plugins'                   => $_broker_plugins,
