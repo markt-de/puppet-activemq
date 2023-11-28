@@ -111,5 +111,6 @@ Initial release
 [v1.3.0]: https://github.com/markt-de/puppet-activemq/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/markt-de/puppet-activemq/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/markt-de/puppet-activemq/compare/v1.0.0...v1.1.0
+[#7]: https://github.com/markt-de/puppet-activemq/pull/7
 [#6]: https://github.com/markt-de/puppet-activemq/pull/6
 [#2]: https://github.com/markt-de/puppet-activemq/pull/2
