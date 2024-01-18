@@ -170,14 +170,14 @@ define activemq::instance (
   Hash $java_args = $activemq::java_args,
   String $java_xms = $activemq::java_xms,
   String $java_xmx = $activemq::java_xmx,
+  Boolean $allow_direct_connections_only = true,
   # Optional parameters
-  Optional[Boolean] $allow_direct_connections_only = true,
   Optional[Integer] $global_max_size_mb = undef,
   Optional[String] $group = undef,
   Optional[Boolean] $service_enable = undef,
   Optional[Enum['running','stopped']] $service_ensure = undef,
   Optional[String] $target_host = undef,
-  Optional[Enum['live-only','replication','shared-storage']] $ha_policy,
+  Optional[Enum['live-only','replication','shared-storage']] $ha_policy = undef,
   # TODO: broker-plugins (nothing set by default, but it should be supported)
 ) {
   File {
