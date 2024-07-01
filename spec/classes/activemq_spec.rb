@@ -14,7 +14,7 @@ describe 'activemq' do
       let(:activemq_user) { 'admin' }
 
       context 'a standalone instance with default parameters' do
-        let :params do
+        let(:params) do
           {
             admin_password: activemq_password.to_s,
             admin_user: activemq_user.to_s,
@@ -66,7 +66,7 @@ describe 'activemq' do
       end
 
       context 'with multiple instances' do
-        let :params do
+        let(:params) do
           {
             admin_password: activemq_password.to_s,
             admin_user: activemq_user.to_s,
