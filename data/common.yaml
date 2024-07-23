@@ -134,7 +134,7 @@ activemq::instance_defaults:
       # An optional wildcard that will be used when adding the address settings.
       wildcard: '#'
   allow_failback: true
-  bind: '%{fqdn}'
+  bind: '%{facts.networking.fqdn}'
   broadcast_groups:
     - name: 'bg-group1'
       group_address: '231.7.7.7'
