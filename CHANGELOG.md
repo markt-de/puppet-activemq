@@ -10,6 +10,7 @@ WARNING: This release may contain breaking changes.
 
 ### Changed
 * Change default value of `$allow_direct_connections_only` to `false`
+* Change default value of `$max_hops` to `1`
 
 ## [v2.1.0] - 2023-11-28
 
