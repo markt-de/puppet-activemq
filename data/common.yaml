@@ -133,6 +133,7 @@ activemq::instance_defaults:
         redelivery-delay-multiplier: '1.5'
       # An optional wildcard that will be used when adding the address settings.
       wildcard: '#'
+  allow_direct_connections_only: false
   allow_failback: true
   bind: '%{facts.networking.fqdn}'
   broadcast_groups:

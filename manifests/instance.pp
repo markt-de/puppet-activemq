@@ -170,7 +170,7 @@ define activemq::instance (
   Hash $java_args = $activemq::java_args,
   String $java_xms = $activemq::java_xms,
   String $java_xmx = $activemq::java_xmx,
-  Boolean $allow_direct_connections_only = true,
+  Boolean $allow_direct_connections_only,
   # Optional parameters
   Optional[Integer] $global_max_size_mb = undef,
   Optional[String] $group = undef,
