@@ -95,7 +95,7 @@ describe 'activemq' do
         .to match(%r{instance2})
         .and not_match(%r{:activemq_instance_name})
     }
-    it { expect(file("#{activemq_instance_base}/#{activemq_instance_name}/etc/broker.xml").content).to match(%r{allow-direct-connections-only="true"}) }
+    it { expect(file("#{activemq_instance_base}/#{activemq_instance_name}/etc/broker.xml").content).to match(%r{allow-direct-connections-only="false"}) }
 
     it 'sets up the service' do
       expect(service("activemq@#{activemq_instance_name}")).to be_running
