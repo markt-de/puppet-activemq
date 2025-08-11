@@ -543,6 +543,37 @@ define activemq::instance (
       }
     }
 
+    if (versioncmp($activemq::version, '2.42.0') >= 0) {
+      # Remove obsolete variables from profile.
+      file_line { "instance ${name} remove ARTEMIS_INSTANCE_URI":
+        ensure            => 'absent',
+        path              => $artemis_profile,
+        match             => '^ARTEMIS_INSTANCE_URI=',
+        match_for_absence => true,
+        require           => [
+          Exec["create instance ${name}"]
+        ],
+      }
+      file_line { "instance ${name} remove ARTEMIS_INSTANCE_ETC_URI":
+        ensure            => 'absent',
+        path              => $artemis_profile,
+        match             => '^ARTEMIS_INSTANCE_ETC_URI=',
+        match_for_absence => true,
+        require           => [
+          Exec["create instance ${name}"]
+        ],
+      }
+      file_line { "instance ${name} remove ARTEMIS_ETC_DIR":
+        ensure            => 'absent',
+        path              => $artemis_profile,
+        match             => '^ARTEMIS_ETC_DIR=',
+        match_for_absence => true,
+        require           => [
+          Exec["create instance ${name}"]
+        ],
+      }
+    }
+
     # Configure HAWTIO role.
     file_line { "instance ${name} set HAWTIO_ROLE":
       ensure             => 'present',
