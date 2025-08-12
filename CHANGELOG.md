@@ -5,13 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-WARNING: This release may contain breaking changes.
+## [v3.0.0] - 2025-08-12
+WARNING: This release may contain breaking changes (see below).
+
+### Added
+* Ensure compatibility with version 2.42.0
 
 ### Changed
 * Change default value of `$allow_direct_connections_only` to `false`
 * Change default value of `$max_hops` to `1`
 * Change `broker.xml` for Hawtio 4 compatibility (on 2.40.0 and later)
+* Update PDK to 3.4
+* Update OS support and dependencies
 
 ### Removed
 * Remove variables from profile: ARTEMIS_INSTANCE_URI, ARTEMIS_INSTANCE_ETC_URI, ARTEMIS_ETC_DIR (on 2.42.0 and later)
@@ -113,7 +118,8 @@ values.
 ## v1.0.0 - 2020-10-06
 Initial release
 
-[Unreleased]: https://github.com/markt-de/puppet-activemq/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/markt-de/puppet-activemq/compare/v3.0.0...HEAD
+[v3.0.0]: https://github.com/markt-de/puppet-activemq/compare/v2.1.0...v3.0.0
 [v2.1.0]: https://github.com/markt-de/puppet-activemq/compare/v2.0.0...v2.1.0
 [v2.0.0]: https://github.com/markt-de/puppet-activemq/compare/v1.6.0...v2.0.0
 [v1.6.0]: https://github.com/markt-de/puppet-activemq/compare/v1.5.0...v1.6.0

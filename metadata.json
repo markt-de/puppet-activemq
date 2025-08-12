@@ -1,6 +1,6 @@
 {
   "name": "markt-activemq",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "author": "markt.de",
   "summary": "Manage ActiveMQ Artemis standalone and clusters",
   "license": "BSD-2-Clause",
@@ -25,7 +25,6 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7",
         "8",
         "9"
       ]
@@ -33,7 +32,6 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "7",
         "8",
         "9"
       ]
@@ -48,7 +46,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "20.04",
         "22.04",
         "24.04"
       ]
