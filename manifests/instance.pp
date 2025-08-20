@@ -362,7 +362,6 @@ define activemq::instance (
       File["instance ${name} bootstrap.xml"],
       File["instance ${name} jolokia-access.xml"],
       File["instance ${name} login.config"],
-      File_line["instance ${name} set HAWTIO_ROLE"],
       File_line["instance ${name} set JAVA_ARGS"],
     ]
     $_service_require_pre = [
@@ -371,7 +370,6 @@ define activemq::instance (
       File["instance ${name} bootstrap.xml"],
       File["instance ${name} jolokia-access.xml"],
       File["instance ${name} login.config"],
-      File_line["instance ${name} set HAWTIO_ROLE"],
       File_line["instance ${name} set JAVA_ARGS"],
     ]
 
@@ -543,6 +541,45 @@ define activemq::instance (
       }
     }
 
+    # Changes for Artemis 2.39.0 and later.
+    if (versioncmp($activemq::version, '2.39.0') >= 0) {
+      # Remove old HAWTIO role.
+      file_line { "instance ${name} remove HAWTIO_ROLE":
+        ensure            => 'absent',
+        path              => $artemis_profile,
+        match             => '^HAWTIO_ROLE=',
+        match_for_absence => true,
+        require           => [
+          Exec["create instance ${name}"]
+        ],
+      }
+      # Configure HAWTIO roles.
+      file_line { "instance ${name} set HAWTIO_ROLES":
+        ensure             => 'present',
+        path               => $artemis_profile,
+        line               => "HAWTIO_ROLES=\'${$activemq::hawtio_role}\'",
+        match              => '^HAWTIO_ROLES=',
+        after              => '^# Hawtio Properties',
+        append_on_no_match => true,
+        require            => [
+          Exec["create instance ${name}"]
+        ],
+      }
+    } else {
+      # Configure HAWTIO role (legacy).
+      file_line { "instance ${name} set HAWTIO_ROLE":
+        ensure             => 'present',
+        path               => $artemis_profile,
+        line               => "HAWTIO_ROLE=\'${$activemq::hawtio_role}\'",
+        match              => '^HAWTIO_ROLE=',
+        append_on_no_match => false,
+        require            => [
+          Exec["create instance ${name}"]
+        ],
+      }
+    }
+
+    # Changes for Artemis 2.42.0 and later.
     if (versioncmp($activemq::version, '2.42.0') >= 0) {
       # Remove obsolete variables from profile.
       file_line { "instance ${name} remove ARTEMIS_INSTANCE_URI":
@@ -572,18 +609,6 @@ define activemq::instance (
           Exec["create instance ${name}"]
         ],
       }
-    }
-
-    # Configure HAWTIO role.
-    file_line { "instance ${name} set HAWTIO_ROLE":
-      ensure             => 'present',
-      path               => $artemis_profile,
-      line               => "HAWTIO_ROLE=\'${$activemq::hawtio_role}\'",
-      match              => '^HAWTIO_ROLE=',
-      append_on_no_match => false,
-      require            => [
-        Exec["create instance ${name}"]
-      ],
     }
 
     # Configure ARTEMIS_HOME.

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+* Add HAWTIO_ROLES to artemis profile (on 2.39.0 and later)
+
+### Removed
+* Remove HAWTIO_ROLE from artemis profile (on 2.39.0 and later)
+
 ## [v3.0.0] - 2025-08-12
 WARNING: This release may contain breaking changes (see below).
 
