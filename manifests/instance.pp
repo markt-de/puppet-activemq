@@ -541,8 +541,8 @@ define activemq::instance (
       }
     }
 
-    # Changes for Artemis 2.39.0 and later.
-    if (versioncmp($activemq::version, '2.39.0') >= 0) {
+    # Changes for Artemis 2.40.0 and later.
+    if (versioncmp($activemq::version, '2.40.0') >= 0) {
       # Remove old HAWTIO role.
       file_line { "instance ${name} remove HAWTIO_ROLE":
         ensure            => 'absent',
@@ -624,7 +624,18 @@ define activemq::instance (
     }
 
     # Configure JAVA_ARGS.
-    $java_args_tmp = $java_args.reduce([]) |$memo, $x| {
+    if !empty(keys($java_args).filter |$k| { $k =~ 'jolokia.policyLocation=' }) {
+      # Use the user-specified option (even if it is set to DISABLED).
+      $java_args_pre = $java_args
+    } else {
+      # Add the version specific jolokia policy config.
+      if (versioncmp($activemq::version, '2.40.0') >= 0) {
+        $java_args_pre = $java_args + { 'Djolokia.policyLocation=file://${ARTEMIS_INSTANCE}/etc/jolokia-access.xml' => '' }
+      } else {
+        $java_args_pre = $java_args + { 'Djolokia.policyLocation=${ARTEMIS_INSTANCE_ETC_URI}jolokia-access.xml' => '' }
+      }
+    }
+    $java_args_tmp = $java_args_pre.reduce([]) |$memo, $x| {
       if (($x[1] =~ String) and $x[1] == 'DISABLED') {
         # ignore disabled options
         $memo

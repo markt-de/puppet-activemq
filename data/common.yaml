@@ -266,7 +266,6 @@ activemq::java_args:
   'Dhawtio.realm=activemq': ''
   'Dhawtio.offline=true': ''
   'Dhawtio.rolePrincipalClasses=org.apache.activemq.artemis.spi.core.security.jaas.RolePrincipal': ''
-  'Djolokia.policyLocation=${ARTEMIS_INSTANCE_ETC_URI}jolokia-access.xml': ''
 activemq::java_xms: '512M'
 activemq::java_xmx: '2G'
 activemq::jolokia_access_template: 'activemq/jolokia-access.xml.epp'
