@@ -570,7 +570,7 @@ define activemq::instance (
       file_line { "instance ${name} fix artemis script hawtio.roles":
         ensure             => 'present',
         path               => $artemis_cmd,
-        line               => '    -Dhawtio.roles="$HAWTIO_ROLES"',
+        line               => '    -Dhawtio.roles="$HAWTIO_ROLES" \\',
         match              => '^    -Dhawtio.role=',
         append_on_no_match => false,
         require            => [
