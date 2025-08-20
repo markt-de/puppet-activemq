@@ -11,7 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add HAWTIO_ROLES to artemis profile (on 2.39.0 and later)
 
 ### Fixed
+* Fix broken Management Console (on 2.40.0 and later)
 * Fix jolokia.policyLocation (on 2.40.0 and later)
+* Fix hawtio.roles (on 2.40.0 and later)
 
 ### Removed
 * Remove HAWTIO_ROLE from artemis profile (on 2.39.0 and later)

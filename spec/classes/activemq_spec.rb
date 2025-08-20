@@ -65,9 +65,11 @@ describe 'activemq' do
         if Gem::Version.new(ACTIVEMQ_VERSION.to_s) >= Gem::Version.new('2.40.0')
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} remove HAWTIO_ROLE]") }
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} set HAWTIO_ROLES]") }
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} fix artemis script hawtio.roles]") }
 
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} remove HAWTIO_ROLE]") }
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} set HAWTIO_ROLES]") }
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} fix artemis script hawtio.roles]") }
         else
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} set HAWTIO_ROLE]") }
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} set HAWTIO_ROLE]") }

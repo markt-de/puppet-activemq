@@ -189,6 +189,7 @@ define activemq::instance (
   if (empty($target_host) or ($target_host == $facts['networking']['fqdn'])) {
     # Construct paths and filenames for this insance.
     $instance_dir = "${activemq::instances_base}/${name}"
+    $artemis_cmd = "${instance_dir}/bin/artemis"
     $bootstrap_xml = "${instance_dir}/etc/bootstrap.xml"
     $broker_xml = "${instance_dir}/etc/broker.xml"
     $management_xml = "${instance_dir}/etc/management.xml"
@@ -565,14 +566,27 @@ define activemq::instance (
           Exec["create instance ${name}"]
         ],
       }
+      # Fix artemis script.
+      file_line { "instance ${name} fix artemis script hawtio.roles":
+        ensure             => 'present',
+        path               => $artemis_cmd,
+        line               => '    -Dhawtio.roles="$HAWTIO_ROLES"',
+        match              => '^    -Dhawtio.role=',
+        append_on_no_match => false,
+        require            => [
+          Exec["create instance ${name}"]
+        ],
+      }
       # Update service subscribe/require parameters.
       $_service_subscribe_pre3 = $_service_subscribe_pre2 + [
         File_line["instance ${name} remove HAWTIO_ROLE"],
-        File_line["instance ${name} set HAWTIO_ROLES"]
+        File_line["instance ${name} set HAWTIO_ROLES"],
+        File_line["instance ${name} fix artemis script hawtio.roles"]
       ]
       $_service_require_pre3 = $_service_require_pre2 + [
         File_line["instance ${name} remove HAWTIO_ROLE"],
-        File_line["instance ${name} set HAWTIO_ROLES"]
+        File_line["instance ${name} set HAWTIO_ROLES"],
+        File_line["instance ${name} fix artemis script hawtio.roles"]
       ]
     } else {
       # Configure HAWTIO role (legacy).
