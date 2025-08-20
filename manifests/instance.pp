@@ -468,8 +468,8 @@ define activemq::instance (
         ],
       }
       # Update service subscribe/require parameters.
-      $_service_subscribe = $_service_subscribe_pre + [File["instance ${name} log4j2.properties"]]
-      $_service_require = $_service_require_pre + [File["instance ${name} log4j2.properties"]]
+      $_service_subscribe_pre2 = $_service_subscribe_pre + [File["instance ${name} log4j2.properties"]]
+      $_service_require_pre2 = $_service_require_pre + [File["instance ${name} log4j2.properties"]]
     } else {
       # Older versions use the logging.properties configuration file.
       file { "instance ${name} logging.properties":
@@ -483,8 +483,8 @@ define activemq::instance (
         ],
       }
       # Update service subscribe/require parameters.
-      $_service_subscribe = $_service_subscribe_pre + [File["instance ${name} logging.properties"]]
-      $_service_require = $_service_require_pre + [File["instance ${name} logging.properties"]]
+      $_service_subscribe_pre2 = $_service_subscribe_pre + [File["instance ${name} logging.properties"]]
+      $_service_require_pre2 = $_service_require_pre + [File["instance ${name} logging.properties"]]
     }
 
     # Create login.config file.
@@ -565,6 +565,15 @@ define activemq::instance (
           Exec["create instance ${name}"]
         ],
       }
+      # Update service subscribe/require parameters.
+      $_service_subscribe_pre3 = $_service_subscribe_pre2 + [
+        File_line["instance ${name} remove HAWTIO_ROLE"],
+        File_line["instance ${name} set HAWTIO_ROLES"]
+      ]
+      $_service_require_pre3 = $_service_require_pre2 + [
+        File_line["instance ${name} remove HAWTIO_ROLE"],
+        File_line["instance ${name} set HAWTIO_ROLES"]
+      ]
     } else {
       # Configure HAWTIO role (legacy).
       file_line { "instance ${name} set HAWTIO_ROLE":
@@ -577,6 +586,9 @@ define activemq::instance (
           Exec["create instance ${name}"]
         ],
       }
+      # Update service subscribe/require parameters.
+      $_service_subscribe_pre3 = $_service_subscribe_pre2 + [File_line["instance ${name} set HAWTIO_ROLE"]]
+      $_service_require_pre = $_service_require_pre2 + [File_line["instance ${name} set HAWTIO_ROLE"]]
     }
 
     # Changes for Artemis 2.42.0 and later.
@@ -609,6 +621,20 @@ define activemq::instance (
           Exec["create instance ${name}"]
         ],
       }
+      # Update service subscribe/require parameters.
+      $_service_subscribe = $_service_subscribe_pre3 + [
+        File_line["instance ${name} remove ARTEMIS_INSTANCE_URI"],
+        File_line["instance ${name} remove ARTEMIS_INSTANCE_ETC_URI"],
+        File_line["instance ${name} remove ARTEMIS_ETC_DIR"]
+      ]
+      $_service_require = $_service_require_pre3 + [
+        File_line["instance ${name} remove ARTEMIS_INSTANCE_URI"],
+        File_line["instance ${name} remove ARTEMIS_INSTANCE_ETC_URI"],
+        File_line["instance ${name} remove ARTEMIS_ETC_DIR"]
+      ]
+    } else {
+      $_service_subscribe = $_service_subscribe_pre3
+      $_service_require = $_service_require_pre3
     }
 
     # Configure ARTEMIS_HOME.
