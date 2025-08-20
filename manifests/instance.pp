@@ -588,7 +588,7 @@ define activemq::instance (
       }
       # Update service subscribe/require parameters.
       $_service_subscribe_pre3 = $_service_subscribe_pre2 + [File_line["instance ${name} set HAWTIO_ROLE"]]
-      $_service_require_pre = $_service_require_pre2 + [File_line["instance ${name} set HAWTIO_ROLE"]]
+      $_service_require_pre3 = $_service_require_pre2 + [File_line["instance ${name} set HAWTIO_ROLE"]]
     }
 
     # Changes for Artemis 2.42.0 and later.

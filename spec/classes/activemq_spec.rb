@@ -45,7 +45,6 @@ describe 'activemq' do
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File[instance #{activemq_instance_name} management.xml]") }
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File[instance #{activemq_instance_name} bootstrap.xml]") }
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File[instance #{activemq_instance_name} login.config]") }
-        it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} set HAWTIO_ROLE]") }
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} set JAVA_ARGS]") }
 
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires('Class[activemq::install]') }
@@ -53,7 +52,6 @@ describe 'activemq' do
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File[instance #{activemq_instance_name} management.xml]") }
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File[instance #{activemq_instance_name} bootstrap.xml]") }
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File[instance #{activemq_instance_name} login.config]") }
-        it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} set HAWTIO_ROLE]") }
         it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} set JAVA_ARGS]") }
 
         if Gem::Version.new(ACTIVEMQ_VERSION.to_s) >= Gem::Version.new('2.27.0')
@@ -62,6 +60,23 @@ describe 'activemq' do
         else
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File[instance #{activemq_instance_name} logging.properties]") }
           it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File[instance #{activemq_instance_name} logging.properties]") }
+        end
+
+        if Gem::Version.new(ACTIVEMQ_VERSION.to_s) >= Gem::Version.new('2.40.0')
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} remove HAWTIO_ROLE]") }
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} set HAWTIO_ROLES]") }
+
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} remove HAWTIO_ROLE]") }
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} set HAWTIO_ROLES]") }
+        else
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} set HAWTIO_ROLE]") }
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_requires("File_line[instance #{activemq_instance_name} set HAWTIO_ROLE]") }
+        end
+
+        if Gem::Version.new(ACTIVEMQ_VERSION.to_s) >= Gem::Version.new('2.42.0')
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} remove ARTEMIS_INSTANCE_URI]") }
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} remove ARTEMIS_INSTANCE_ETC_URI]") }
+          it { is_expected.to contain_service("activemq@#{activemq_instance_name}").that_subscribes_to("File_line[instance #{activemq_instance_name} remove ARTEMIS_ETC_DIR]") }
         end
       end
 
