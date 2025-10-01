@@ -213,12 +213,9 @@ class activemq (
   Optional[Integer] $gid = undef,
   Optional[Integer] $uid = undef,
 ) {
-  if ($service_restart) {
-    Class['activemq::install'] ~> Class['activemq::service']
-  }
-
   # Perform basic installation steps
   class { 'activemq::install': }
+  ~> class { 'activemq::service': }
 
   # Ensure that a valid cluster configuration is provided.
   if ($cluster and (empty($cluster_name) or !($cluster_name =~ String))) {

@@ -707,11 +707,13 @@ define activemq::instance (
     }
 
     # Configure service for this instance.
+    $_restart = $activemq::service_restart ? { true => undef, default => ':' }
     service { $instance_service:
       ensure    => $_service_ensure,
       enable    => $_service_enable,
       subscribe => $_service_subscribe,
       require   => $_service_require,
+      restart   => $_restart,
     }
   }
 }
