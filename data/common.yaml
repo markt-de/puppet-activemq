@@ -286,6 +286,7 @@ activemq::service_enable: true
 activemq::service_ensure: 'running'
 activemq::service_file: "/etc/systemd/system/%{lookup('activemq::service_name')}@.service"
 activemq::service_name: 'activemq'
+activemq::service_restart: true
 activemq::service_template: 'activemq/service_systemd.epp'
 activemq::symlink_name: 'activemq'
 activemq::uid: 15000

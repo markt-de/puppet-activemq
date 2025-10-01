@@ -138,6 +138,9 @@
 #   Controls the name of the system service. Must NOT be changed while
 #   instances are running.
 #
+# @param service_restart
+#   Whether to restart the service on config change.
+#
 # @param service_template
 #   The template used to generate the service definition.
 #
@@ -196,6 +199,7 @@ class activemq (
   Enum['running','stopped'] $service_ensure,
   Stdlib::Absolutepath $service_file,
   String $service_name,
+  Boolean $service_restart,
   String $service_template,
   String $symlink_name,
   String $user,
@@ -209,9 +213,12 @@ class activemq (
   Optional[Integer] $gid = undef,
   Optional[Integer] $uid = undef,
 ) {
+  if ($service_restart) {
+    Class['activemq::install'] ~> Class['activemq::service']
+  }
+
   # Perform basic installation steps
   class { 'activemq::install': }
-  ~> class { 'activemq::service': }
 
   # Ensure that a valid cluster configuration is provided.
   if ($cluster and (empty($cluster_name) or !($cluster_name =~ String))) {
