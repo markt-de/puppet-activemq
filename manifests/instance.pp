@@ -470,7 +470,9 @@ define activemq::instance (
         path    => $log4j_properties,
         mode    => '0644',
         content => epp($activemq::log4j_template, {
-            'log4j_level' => $log4j_level,
+            'log4j_level'            => $log4j_level,
+            'log4j_retention_days'   => $log4j_retention_days,
+            'log4j_retention_enable' => $log4j_retention_enable,
         }),
         require => [
           Exec["create instance ${name}"]
@@ -484,7 +486,9 @@ define activemq::instance (
       file { "instance ${name} logging.properties":
         path    => $logging_properties,
         mode    => '0644',
-        content => epp($activemq::logging_template),
+        content => epp($activemq::logging_template, {
+            'log_level' => $log_level,
+        }),
         require => [
           Exec["create instance ${name}"]
         ],
