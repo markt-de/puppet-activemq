@@ -185,6 +185,8 @@ activemq::instance_defaults:
     jetty: 'WARN'
     root: 'INFO'
     zookeeper: 'ERROR'
+  log4j_retention_days: 30
+  log4j_retention_enable: true
   management_notification_address: 'activemq.notifications'
   max_disk_usage: 90
   max_hops: 1

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 * Add new parameter `$service_restart` ([#17])
+* Add new instance parameters: `$log4j_retention_days`, `$log4j_retention_enable`
+
+### Changed
+* Enable log4j log retention with a 30d retention period
 
 ## [v3.1.0] - 2025-08-20
 

@@ -91,6 +91,12 @@
 # @param log4j_level
 #   The log levels to use for the various configured loggers (on version 2.27.0 and later).
 #
+# @param log4j_retention_days
+#   Number of days to keep rotated log files.
+#
+# @param log4j_retention_enable
+#   Enables automated log file deletion.
+#
 # @param management_notification_address
 #   The address to receive management notifications.
 #
@@ -157,6 +163,8 @@ define activemq::instance (
   Enum['asyncio','mapped','nio'] $journal_type,
   Hash $log_level,
   Hash $log4j_level,
+  Integer $log4j_retention_days,
+  Boolean $log4j_retention_enable,
   String $management_notification_address,
   Integer $max_disk_usage,
   Integer $max_hops,
@@ -476,9 +484,7 @@ define activemq::instance (
       file { "instance ${name} logging.properties":
         path    => $logging_properties,
         mode    => '0644',
-        content => epp($activemq::logging_template, {
-            'log_level' => $log_level,
-        }),
+        content => epp($activemq::logging_template),
         require => [
           Exec["create instance ${name}"]
         ],

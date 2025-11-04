@@ -77,6 +77,17 @@ appender.log_file.policies.type = Policies
 appender.log_file.policies.cron.type = CronTriggeringPolicy
 appender.log_file.policies.cron.schedule = 0 0 0 * * ?
 appender.log_file.policies.cron.evaluateOnStartup = true
+<% if $log4j_retention_enable { -%>
+# Delete old log files
+appender.log_file.strategy.type = DefaultRolloverStrategy
+appender.log_file.strategy.action.type = Delete
+appender.log_file.strategy.action.basepath = ${sys:artemis.instance}/log
+appender.log_file.strategy.action.maxDepth = 1
+appender.log_file.strategy.action.ifLastModified.type = IfLastModified
+appender.log_file.strategy.action.ifLastModified.age = <%= $log4j_retention_days %>D
+appender.log_file.strategy.action.ifFileName.type = IfFileName
+appender.log_file.strategy.action.ifFileName.glob = artemis.log.*
+<% } -%>
 
 # Audit log file appender
 appender.audit_log_file.type = RollingFile
