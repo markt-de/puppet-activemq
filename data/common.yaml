@@ -177,6 +177,7 @@ activemq::instance_defaults:
     console: 'ERROR'
     jetty: 'WARN'
     root: 'INFO'
+  log4j_gzip_compression_enable: false
   log4j_level:
     analyzer: 'INFO'
     artemis: 'INFO'
@@ -185,7 +186,6 @@ activemq::instance_defaults:
     jetty: 'WARN'
     root: 'INFO'
     zookeeper: 'ERROR'
-  log4j_gzip_compression_enable: false
   log4j_retention_days: 30
   log4j_retention_enable: true
   management_notification_address: 'activemq.notifications'
