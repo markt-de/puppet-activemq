@@ -185,6 +185,7 @@ activemq::instance_defaults:
     jetty: 'WARN'
     root: 'INFO'
     zookeeper: 'ERROR'
+  log4j_gzip_compression_enable: false
   log4j_retention_days: 30
   log4j_retention_enable: true
   management_notification_address: 'activemq.notifications'

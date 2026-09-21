@@ -97,6 +97,9 @@
 # @param log4j_retention_enable
 #   Enables automated log file deletion.
 #
+# @param log4j_gzip_compression_enable
+#   Enables gzip compression for rotated log files.
+#
 # @param management_notification_address
 #   The address to receive management notifications.
 #
@@ -163,6 +166,7 @@ define activemq::instance (
   Enum['asyncio','mapped','nio'] $journal_type,
   Hash $log_level,
   Hash $log4j_level,
+  Boolean $log4j_gzip_compression_enable,
   Integer $log4j_retention_days,
   Boolean $log4j_retention_enable,
   String $management_notification_address,
@@ -470,9 +474,10 @@ define activemq::instance (
         path    => $log4j_properties,
         mode    => '0644',
         content => epp($activemq::log4j_template, {
-            'log4j_level'            => $log4j_level,
-            'log4j_retention_days'   => $log4j_retention_days,
-            'log4j_retention_enable' => $log4j_retention_enable,
+            'log4j_level'                   => $log4j_level,
+            'log4j_retention_days'          => $log4j_retention_days,
+            'log4j_retention_enable'        => $log4j_retention_enable,
+            'log4j_gzip_compression_enable' => $log4j_gzip_compression_enable,
         }),
         require => [
           Exec["create instance ${name}"]
